@@ -9,6 +9,7 @@ collections:
     label: Pagini
     folder: content/pages
     create: true
+    delete: true
     slug: '{{slug}}'
     fields:
       - {label: Titlu, name: title, widget: string}
@@ -16,10 +17,23 @@ collections:
       - {label: Layout, name: layout, widget: hidden, default: page}
       - {label: Imagine, name: image, widget: image, required: false}
       - {label: Conținut, name: body, widget: markdown}
+  - name: categories
+    label: Categorii produse
+    folder: content/categories
+    create: true
+    delete: true
+    slug: '{{slug}}'
+    fields:
+      - {label: Titlu categorie, name: title, widget: string}
+      - {label: Slug, name: slug, widget: string}
+      - {label: Imagine, name: image, widget: image, required: false}
+      - {label: Descriere, name: description, widget: text}
+      - {label: Conținut, name: body, widget: markdown, required: false}
   - name: products
     label: Produse
     folder: content/products
     create: true
+    delete: true
     slug: '{{slug}}'
     fields:
       - {label: Titlu, name: title, widget: string}
@@ -35,6 +49,7 @@ collections:
     label: Portofoliu
     folder: content/portfolio
     create: true
+    delete: true
     slug: '{{slug}}'
     fields:
       - {label: Titlu, name: title, widget: string}
@@ -47,6 +62,7 @@ collections:
     label: Recenzii
     folder: content/testimonials
     create: true
+    delete: true
     slug: '{{slug}}'
     fields:
       - {label: Titlu, name: title, widget: string}
@@ -65,8 +81,9 @@ collections:
           - {label: Telefon secundar, name: phone_secondary, widget: string}
           - {label: Email, name: email, widget: string}
           - {label: Adresă, name: address, widget: string}
-          - {label: Facebook, name: facebook_url, widget: string}
-          - {label: Instagram, name: instagram_url, widget: string}
-          - {label: TikTok, name: tiktok_url, widget: string}
+          - {label: Program, name: business_hours, widget: string, required: false}
+          - {label: Facebook, name: facebook_url, widget: string, required: false}
+          - {label: Instagram, name: instagram_url, widget: string, required: false}
+          - {label: TikTok, name: tiktok_url, widget: string, required: false}
           - {label: Garanție luni, name: warranty_months, widget: number, value_type: int}
           - {label: Livrare săptămâni, name: delivery_weeks, widget: number, value_type: int}
