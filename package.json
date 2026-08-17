@@ -1,0 +1,11 @@
+{
+  "name": "rosini-site",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "dependencies": {
+    "@netlify/blobs": "latest",
+    "@netlify/functions": "latest",
+    "@netlify/identity": "latest"
+  }
+}
