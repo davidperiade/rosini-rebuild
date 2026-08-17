@@ -2,7 +2,7 @@
 title: Canapele living & extensie
 slug: canapele-living
 category: Canapele
- description: Canapele pentru living, configurate la comandă.
+description: Canapele pentru living, configurate la comandă.
 features:
   - Structură metalică în funcție de model
   - Mecanisme metalice pentru extensie
