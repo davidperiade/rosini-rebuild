@@ -7,6 +7,7 @@
 <meta name="description" content="Rosini produce din 2006 mobilier tapițat la comandă în Iași: canapele, colțare, paturi, fotolii și mobilier Horeca, cu structură și mecanisme metalice.">
 <meta name="keywords" content="canapele Iași, mobilă la comandă Iași, paturi Iași, mobilier Horeca Iași">
 <link rel="stylesheet" href="css/style.css">
+<script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
 </head>
 <body>
 <header class="site-header"><div class="container nav-wrap"><a class="logo" href="index.html">ROSINI<span>mobilier tapițat</span></a><button class="menu-toggle" aria-label="Deschide meniul">☰</button><nav class="nav"><a href="index.html">Acasă</a><a href="despre.html">Despre</a><a href="produse.html">Produse</a><a href="portofoliu.html">Portofoliu</a><a href="recenzii.html">Recenzii</a><a href="contact.html" class="nav-cta">Solicită ofertă</a></nav></div></header>
@@ -20,4 +21,15 @@
 </main>
 <footer class="footer"><div class="container footer-grid"><div><div class="logo logo-footer">ROSINI<span>mobilier tapițat</span></div><p>Mobilier tapițat la comandă din 2006.</p></div><div><h3>Contact</h3><p>RAVENA EST TRADE S.R.L.<br>CUI: 44109248<br>Șos. Păcurari Nr. 54, Bl. 554, Sc. B, P, Iași</p></div><div><h3>Date directe</h3><p><a href="tel:0742056286">0742 056 286</a><br><a href="tel:0747788231">0747 788 231</a><br><a href="mailto:rosinigrup@yahoo.com">rosinigrup@yahoo.com</a></p></div><div><h3>Online</h3><p><a href="#">Facebook</a><br><a href="#">Instagram</a><br><a href="#">TikTok</a></p></div></div><div class="container footer-bottom"><span>© 2006–2026 Rosini · RAVENA EST TRADE S.R.L.</span><span><a href="contact.html">Politica de confidențialitate</a> · <a href="contact.html">Cookie</a></span></div></footer>
 <script src="js/main.js"></script>
+<script>
+if (window.netlifyIdentity) {
+  window.netlifyIdentity.on('init', function(user) {
+    if (!user) {
+      window.netlifyIdentity.on('login', function() {
+        window.location.href = '/admin/';
+      });
+    }
+  });
+}
+</script>
 </body></html>
