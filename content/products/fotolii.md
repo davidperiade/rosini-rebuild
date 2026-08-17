@@ -1,6 +1,6 @@
 ---
 title: Fotolii
-a slug: fotolii
+slug: fotolii
 category: Fotolii
 description: Fotolii tapițate pentru locuințe și spații comerciale.
 features:
