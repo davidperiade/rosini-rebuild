@@ -1,6 +1,6 @@
 [build]
   command = "node build.mjs"
-  publish = "."
+  publish = "_site"
 
 [build.environment]
   NODE_VERSION = "20.12.2"
