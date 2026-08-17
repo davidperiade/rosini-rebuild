@@ -1,1 +1,85 @@
-<!doctype html><html lang="ro"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Rosini CMS</title></head><body><script>window.CMS_MANUAL_INIT=true;</script><script src="https://unpkg.com/decap-cms@3.8.3/dist/decap-cms.js"></script><script>if(window.CMS){window.CMS.init({config:{backend:{name:'git-gateway',branch:'main'},media_folder:'content/images',public_folder:'/content/images',collections:[]}})}</script></body></html>
+<!doctype html>
+<html lang="ro">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Rosini CMS</title>
+</head>
+<body>
+  <script>window.CMS_MANUAL_INIT = true;</script>
+  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+  <script src="https://unpkg.com/decap-cms@3.8.3/dist/decap-cms.js"></script>
+  <script>
+    window.CMS.init({
+      config: {
+        backend: { name: 'git-gateway', branch: 'main' },
+        media_folder: 'content/images',
+        public_folder: '/content/images',
+        collections: [
+          {
+            name: 'pages', label: 'Pagini', folder: 'content/pages', create: true, slug: '{{slug}}',
+            fields: [
+              {label:'Titlu',name:'title',widget:'string'},
+              {label:'Slug',name:'slug',widget:'string'},
+              {label:'Layout',name:'layout',widget:'hidden',default:'page'},
+              {label:'Imagine',name:'image',widget:'image',required:false},
+              {label:'Conținut',name:'body',widget:'markdown'}
+            ]
+          },
+          {
+            name: 'products', label: 'Produse', folder: 'content/products', create: true, slug: '{{slug}}',
+            fields: [
+              {label:'Titlu',name:'title',widget:'string'},
+              {label:'Slug',name:'slug',widget:'string'},
+              {label:'Categorie',name:'category',widget:'string'},
+              {label:'Descriere',name:'description',widget:'text'},
+              {label:'Caracteristici',name:'features',widget:'list'},
+              {label:'Livrare',name:'delivery_time',widget:'string'},
+              {label:'Garanție',name:'warranty',widget:'string'},
+              {label:'Imagine',name:'image',widget:'image',required:false},
+              {label:'Conținut',name:'body',widget:'markdown'}
+            ]
+          },
+          {
+            name: 'portfolio', label: 'Portofoliu', folder: 'content/portfolio', create: true, slug: '{{slug}}',
+            fields: [
+              {label:'Titlu',name:'title',widget:'string'},
+              {label:'Slug',name:'slug',widget:'string'},
+              {label:'Categorie',name:'category',widget:'string'},
+              {label:'Imagine',name:'image',widget:'image'},
+              {label:'Descriere',name:'description',widget:'text'},
+              {label:'Conținut',name:'body',widget:'markdown'}
+            ]
+          },
+          {
+            name: 'testimonials', label: 'Recenzii', folder: 'content/testimonials', create: true, slug: '{{slug}}',
+            fields: [
+              {label:'Titlu',name:'title',widget:'string'},
+              {label:'Autor',name:'author',widget:'string'},
+              {label:'Rating',name:'rating',widget:'number',value_type:'int',min:1,max:5},
+              {label:'Data',name:'date',widget:'datetime'},
+              {label:'Text',name:'body',widget:'markdown'}
+            ]
+          },
+          {
+            name: 'site_settings', label: 'Setări site', files: [{
+              label:'Setări generale', name:'general', file:'content/site-settings.md',
+              fields: [
+                {label:'Telefon principal',name:'phone_primary',widget:'string'},
+                {label:'Telefon secundar',name:'phone_secondary',widget:'string'},
+                {label:'Email',name:'email',widget:'string'},
+                {label:'Adresă',name:'address',widget:'string'},
+                {label:'Facebook',name:'facebook_url',widget:'string'},
+                {label:'Instagram',name:'instagram_url',widget:'string'},
+                {label:'TikTok',name:'tiktok_url',widget:'string'},
+                {label:'Garanție luni',name:'warranty_months',widget:'number',value_type:'int'},
+                {label:'Livrare săptămâni',name:'delivery_weeks',widget:'number',value_type:'int'}
+              ]
+            }]
+          }
+        ]
+      }
+    });
+  </script>
+</body>
+</html>
