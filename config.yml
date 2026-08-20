@@ -43,7 +43,19 @@ collections:
       - {label: Caracteristici, name: features, widget: list}
       - {label: Livrare, name: delivery_time, widget: string}
       - {label: Garanție, name: warranty, widget: string}
-      - {label: Imagine, name: image, widget: image, required: false}
+      - {label: Imagine principală, name: image, widget: image, required: false}
+      - label: Configurații produs
+        name: configuration_options
+        widget: list
+        required: false
+        hint: 'Format: Etichetă: opțiune 1 | opțiune 2 | opțiune 3'
+      - label: Imagini 360°
+        name: gallery_360
+        widget: list
+        required: false
+        field: {label: Imagine, name: image, widget: image}
+        hint: 'Încarcă imaginile în ordinea rotației, ideal 24–36 cadre.'
+      - {label: Activare Vezi în camera ta cu AI, name: ai_room_preview, widget: boolean, default: true, required: false}
       - {label: Conținut, name: body, widget: markdown}
   - name: portfolio
     label: Portofoliu
@@ -77,8 +89,8 @@ collections:
         name: general
         file: content/site-settings.md
         fields:
-          - {label: Telefon principal, name: phone_primary, widget: string}
-          - {label: Telefon secundar, name: phone_secondary, widget: string}
+          - {label: Telefon principal, name: phone_primary, widget: string, required: false}
+          - {label: Telefon secundar, name: phone_secondary, widget: string, required: false}
           - {label: Email, name: email, widget: string}
           - {label: Adresă, name: address, widget: string}
           - {label: Program, name: business_hours, widget: string, required: false}
