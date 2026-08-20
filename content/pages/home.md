@@ -2,6 +2,7 @@
 title: Rosini
 slug: home
 layout: home
+image: /content/images/rosini.svg
 ---
 # Mobilier tapițat la comandă în Iași
 
