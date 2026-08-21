@@ -19,3 +19,11 @@
   from = "/admin"
   to = "/admin/"
   status = 301
+
+# The site code already references this logo path.
+# Keep the exact Rosini SVG asset as the source of truth.
+[[redirects]]
+  from = "/content/images/rosini-logo.png"
+  to = "/content/images/rosini.svg"
+  status = 200
+  force = true
