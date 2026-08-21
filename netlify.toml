@@ -15,6 +15,14 @@
     X-Frame-Options = "SAMEORIGIN"
     X-Content-Type-Options = "nosniff"
 
+# Explicitly keep the public homepage at the site root.
+# This prevents the CMS entry point from being served at "/".
+[[redirects]]
+  from = "/"
+  to = "/index.html"
+  status = 200
+  force = true
+
 [[redirects]]
   from = "/admin"
   to = "/admin/"
