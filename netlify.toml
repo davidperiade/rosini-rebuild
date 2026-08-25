@@ -15,16 +15,7 @@
     X-Frame-Options = "SAMEORIGIN"
     X-Content-Type-Options = "nosniff"
 
-# The root URL must always open the public Rosini website.
-# Use a real redirect rather than a rewrite so the browser cannot remain
-# on the Decap CMS route when navigating to the site root.
-[[redirects]]
-  from = "/"
-  to = "/index.html"
-  status = 301
-  force = true
-
-# Keep the CMS entry point available only under /admin/.
+# Keep the CMS entry point available under /admin/.
 [[redirects]]
   from = "/admin"
   to = "/admin/"
