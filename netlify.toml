@@ -15,26 +15,8 @@
     X-Frame-Options = "SAMEORIGIN"
     X-Content-Type-Options = "nosniff"
 
-# Explicitly serve the public homepage without a redirect.
-[[redirects]]
-  from = "/"
-  to = "/index.html"
-  status = 200
-  force = true
-
-# Explicitly serve the CMS entry point without any redirect.
-# This prevents /admin and /admin/ from entering a slash-normalization loop.
-[[redirects]]
-  from = "/admin"
-  to = "/admin/index.html"
-  status = 200
-  force = true
-
-[[redirects]]
-  from = "/admin/"
-  to = "/admin/index.html"
-  status = 200
-  force = true
+# No root/admin redirects: Netlify serves index.html and /admin/index.html
+# naturally. This avoids redirect loops between /admin and /admin/.
 
 # The site code references this logo path; keep the exact Rosini SVG asset as the source of truth.
 [[redirects]]
