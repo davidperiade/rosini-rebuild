@@ -1,0 +1,23 @@
+import { getStore } from '@netlify/blobs';
+import { getUser } from '@netlify/identity';
+const store=()=>getStore({name:'rosini-leads',consistency:'strong'});
+const statuses=['Lead nou','Contactat','A venit în showroom','Vânzare realizată','Fără vânzare','Anulat'];
+const bootstrapAdmins=new Set(['rosinigrup@gmail.com','davidperiade@gmail.com']);
+const json=(data,status=200)=>Response.json(data,{status,headers:{'Cache-Control':'no-store'}});
+async function currentAdmin(){const u=await getUser();if(!u)return null;if(u.roles?.includes('admin')||bootstrapAdmins.has(String(u.email).toLowerCase()))return u;return null}
+const clean=(v,n)=>String(v??'').trim().slice(0,n);
+const csvCell=v=>`"${String(v??'').replaceAll('"','""')}"`;
+function toCsv(leads){const h=['ID lead','Nume','Telefon','Produs','Data creare','Sursa','Status','Valoare vânzare','Comision %','Comision','Observații'];const rows=leads.map(l=>[l.id,l.name,l.phone,l.product,l.createdAt,l.source,l.status,l.saleValue,l.commissionRate,l.commission,l.notes].map(csvCell).join(','));return '\ufeff'+[h.map(csvCell).join(','),...rows].join('\r\n')}
+async function listLeads(){const s=store(),{blobs}=await s.list({prefix:'leads/'});return (await Promise.all(blobs.map(x=>s.get(x.key,{type:'json',consistency:'strong'})))).filter(Boolean).sort((a,b)=>String(b.createdAt).localeCompare(String(a.createdAt)))}
+async function nextLeadId(){const s=store(),key='meta/next-id',current=await s.get(key,{type:'json',consistency:'strong'}),next=Number.isInteger(current)&&current>=1001?current:1001;await s.setJSON(key,next+1);return `ROS-${next}`}
+export default async req=>{const s=store();try{
+if(req.method==='POST'){const b=await req.json(),name=clean(b.name,100),phone=clean(b.phone,25),product=clean(b.product,180),message=clean(b.message,1000);if(name.length<2||!/^[+0-9 ()-]{7,25}$/.test(phone)||product.length<2||b.consent!==true)return json({error:'Completează datele obligatorii și confirmă acordul privind prelucrarea datelor.'},400);const id=await nextLeadId(),createdAt=new Date().toISOString(),lead={id,name,phone,product,message,source:'Site Rosini',status:'Lead nou',saleValue:0,commissionRate:0,commission:0,notes:'',createdAt,history:[{at:createdAt,status:'Lead nou',note:'Lead creat prin formularul Site Rosini.'}]};await s.setJSON(`leads/${id}`,lead);return json({ok:true,leadId:id})}
+const admin=await currentAdmin();if(!admin)return json({error:'Forbidden'},403);
+if(req.method==='GET'){const u=new URL(req.url),leads=await listLeads();if(u.searchParams.get('export')==='csv')return new Response(toCsv(leads),{status:200,headers:{'Content-Type':'text/csv; charset=utf-8','Content-Disposition':'attachment; filename="rosini-leads.csv"','Cache-Control':'no-store'}});return json({leads,statuses})}
+if(req.method==='PATCH'){const b=await req.json(),id=clean(b.id,30).toUpperCase();if(!/^ROS-\d+$/.test(id))return json({error:'ID lead invalid.'},400);const key=`leads/${id}`,lead=await s.get(key,{type:'json',consistency:'strong'});if(!lead)return json({error:'Lead-ul nu există.'},404);const c={};
+if(b.status!==undefined){const status=clean(b.status,40);if(!statuses.includes(status))return json({error:'Status invalid.'},400);if(status!==lead.status){c.status=status;c.history=[...(lead.history||[]),{at:new Date().toISOString(),status,note:clean(b.statusNote,500)}];if(status==='A venit în showroom'&&!lead.showroomAt)c.showroomAt=new Date().toISOString()}}
+if(b.saleValue!==undefined){const v=Math.max(0,Number(b.saleValue));if(!Number.isFinite(v))return json({error:'Valoarea vânzării este invalidă.'},400);c.saleValue=Math.round(v*100)/100}
+if(b.commissionRate!==undefined){const r=Math.max(0,Math.min(100,Number(b.commissionRate)));if(!Number.isFinite(r))return json({error:'Procentul comisionului este invalid.'},400);c.commissionRate=Math.round(r*100)/100}
+if(b.notes!==undefined)c.notes=clean(b.notes,2000);const saleValue=c.saleValue??Number(lead.saleValue||0),rate=c.commissionRate??Number(lead.commissionRate||0);c.commission=Math.round(saleValue*rate)/100;if(c.saleValue>0&&b.status===undefined&&lead.status!=='Vânzare realizată'){c.status='Vânzare realizată';c.history=[...(c.history||lead.history||[]),{at:new Date().toISOString(),status:'Vânzare realizată',note:'Status actualizat automat după introducerea valorii vânzării.'}]};if(!Object.keys(c).length)return json({ok:true,lead});const updated={...lead,...c,id:lead.id,createdAt:lead.createdAt,source:'Site Rosini'};await s.setJSON(key,updated);return json({ok:true,lead:updated})}
+return new Response('Method not allowed',{status:405})}catch(e){return json({error:e?.message||'Eroare server.'},500)}};
+export const config={path:'/api/leads'};
