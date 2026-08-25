@@ -11,9 +11,10 @@ document.addEventListener('DOMContentLoaded',async()=>{
     const showWhatsApp=s.show_whatsapp_button!==false;
     document.querySelectorAll('a[href*="0747788231"],a[href*="0747 788 231"]').forEach(a=>a.remove());
     const updateProductActions=()=>document.querySelectorAll('.product-actions').forEach(wrap=>{
-      [...wrap.querySelectorAll('a')].slice(1).forEach(a=>a.remove());
-      const first=wrap.querySelector('a'); if(!first)return;
-      const product=wrap.closest('.product-card')?.querySelector('h3')?.textContent||document.querySelector('.page-hero h1')?.textContent||'produsul Rosini';
+      const primary=[...wrap.querySelectorAll('a:not([data-contact-call])')];
+      primary.slice(1).forEach(a=>a.remove());
+      const first=primary[0]; if(!first)return;
+      const product=document.querySelector('.page-hero h1')?.textContent?.trim()||'produsul Rosini';
       const message=baseMessage.replaceAll('{produs}',product);
       const link='https://wa.me/'+wa(whatsappNumber)+'?text='+encodeURIComponent(message);
       if(showWhatsApp&&whatsappNumber){first.hidden=false;first.className='btn btn-whatsapp';first.textContent='WhatsApp';first.target='_blank';first.rel='noopener';first.href=link}
@@ -22,7 +23,7 @@ document.addEventListener('DOMContentLoaded',async()=>{
       if(showCall&&callNumber&&showWhatsApp&&whatsappNumber){
         let call=wrap.querySelector('[data-contact-call]');
         if(!call){call=document.createElement('a');call.dataset.contactCall='1';wrap.appendChild(call)}
-        call.className='btn btn-primary';call.textContent=callNumber;call.href='tel:'+clean(callNumber);
+        call.className='btn btn-primary';call.textContent=callNumber;call.href='tel:'+clean(callNumber);call.hidden=false;
       }else wrap.querySelector('[data-contact-call]')?.remove();
     });
     updateProductActions();
