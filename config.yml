@@ -89,6 +89,7 @@ collections:
         name: general
         file: content/site-settings.md
         fields:
+          - {label: Logo site, name: logo, widget: image, required: false, hint: 'Poți încărca logo-ul Rosini. Dacă este gol, se folosește logo-ul implicit.'}
           - {label: Telefon principal, name: phone_primary, widget: string, required: false}
           - {label: Telefon secundar, name: phone_secondary, widget: string, required: false}
           - {label: Email, name: email, widget: string}
