@@ -11,21 +11,35 @@ collections:
     create: true
     delete: true
     slug: '{{slug}}'
+    summary: '{{title}} — {{category}}'
     fields:
-      - {label: Titlu, name: title, widget: string}
-      - {label: Slug, name: slug, widget: string}
-      - {label: Categorie, name: category, widget: string}
-      - {label: Descriere, name: description, widget: text}
-      - {label: Caracteristici, name: features, widget: list}
-      - {label: Livrare, name: delivery_time, widget: string}
-      - {label: Garanție, name: warranty, widget: string}
-      - {label: Imagine principală, name: image, widget: image, required: false}
-      - label: Fotografii produs
+      - {label: Nume produs, name: title, widget: string}
+      - {label: Categorie, name: category, widget: relation, collection: categories, search_fields: [title], value_field: title, display_fields: [title]}
+      - {label: Fotografie principală, name: image, widget: image, required: false}
+      - label: Fotografii suplimentare
         name: gallery
         widget: list
         required: false
         field: {label: Fotografie, name: image, widget: image}
-      - {label: Conținut, name: body, widget: markdown, required: false}
+      - label: Dimensiuni produs
+        name: dimensions
+        widget: object
+        required: false
+        fields:
+          - {label: Lățime, name: width, widget: string, required: false, hint: 'Exemplu: 240 cm'}
+          - {label: Adâncime, name: depth, widget: string, required: false, hint: 'Exemplu: 100 cm'}
+          - {label: Înălțime, name: height, widget: string, required: false, hint: 'Exemplu: 85 cm'}
+          - {label: Înălțime șezut, name: seat_height, widget: string, required: false}
+          - {label: Lungime extinsă, name: extended_length, widget: string, required: false}
+      - {label: Descriere produs, name: description, widget: text, required: false}
+      - label: Caracteristici
+        name: features
+        widget: list
+        required: false
+        field: {label: Caracteristică, name: item, widget: string}
+      - {label: Termen de livrare, name: delivery_time, widget: string, required: false}
+      - {label: Garanție, name: warranty, widget: string, required: false}
+      - {label: Detalii suplimentare, name: body, widget: markdown, required: false}
   - name: categories
     label: Categorii
     folder: content/categories
