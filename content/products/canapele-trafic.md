@@ -1,6 +1,8 @@
 ---
-title: Canapele trafic intens
 slug: canapele-trafic
+image_note: Fotografie orientativă – se poate înlocui sau șterge din panoul de
+  administrare.
+title: Canapele trafic intens
 category: Trafic intens
 description: Canapele pentru spații comerciale și Horeca.
 features:
@@ -9,8 +11,7 @@ features:
   - Materiale potrivite proiectului
 delivery_time: 5–6 săptămâni
 warranty: 24 luni
-image: https://images.unsplash.com/photo-1550226891-ef816aed4a98?auto=format&fit=crop&w=1200&q=85
-image_note: Fotografie orientativă – se poate înlocui sau șterge din panoul de administrare.
+image: /content/images/1000003664.jpg
 ---
 Canapele proiectate pentru spații cu utilizare repetată, unde rezistența și întreținerea sunt criterii importante.
 
