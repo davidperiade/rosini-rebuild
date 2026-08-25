@@ -5,7 +5,7 @@ const root = process.cwd();
 const out = join(root, '_site');
 
 function parseValue(v) {
-  v = v.trim();
+  v = String(v ?? '').trim();
   if (v.startsWith('[') && v.endsWith(']')) return v.slice(1, -1).split(',').map(x => x.trim().replace(/^['\"]|['\"]$/g, ''));
   if ((v.startsWith('"') && v.endsWith('"')) || (v.startsWith("'") && v.endsWith("'"))) return v.slice(1, -1);
   if (v === 'true') return true;
@@ -19,10 +19,27 @@ function parseMd(text) {
   if (!m) return { data: {}, body: text };
   const data = {};
   let current = null;
-  for (const line of m[1].split(/\r?\n/)) {
+  let listObject = null;
+  for (const raw of m[1].split(/\r?\n/)) {
+    const line = raw.trimEnd();
     if (/^\s*-\s+/.test(line) && current) {
-      data[current] = data[current] || [];
-      data[current].push(parseValue(line.replace(/^\s*-\s+/, '')));
+      const item = line.replace(/^\s*-\s+/, '');
+      const nested = item.match(/^([A-Za-z0-9_-]+):\s*(.*)$/);
+      if (nested) {
+        if (!Array.isArray(data[current])) data[current] = [];
+        listObject = {};
+        listObject[nested[1]] = parseValue(nested[2]);
+        data[current].push(listObject);
+      } else {
+        if (!Array.isArray(data[current])) data[current] = [];
+        data[current].push(parseValue(item));
+        listObject = null;
+      }
+      continue;
+    }
+    const nestedField = line.match(/^\s{2,}([A-Za-z0-9_-]+):\s*(.*)$/);
+    if (nestedField && listObject) {
+      listObject[nestedField[1]] = parseValue(nestedField[2]);
       continue;
     }
     const i = line.indexOf(':');
@@ -31,6 +48,7 @@ function parseMd(text) {
     const v = line.slice(i + 1);
     data[k] = parseValue(v);
     current = k;
+    listObject = null;
   }
   return { data, body: m[2].trim() };
 }
@@ -39,13 +57,13 @@ async function load(dir) {
   const path = join(root, 'content', dir);
   let names = [];
   try { names = await readdir(path); } catch { return []; }
-  const out = [];
+  const result = [];
   for (const name of names.filter(n => n.endsWith('.md'))) {
     const text = await readFile(join(path, name), 'utf8');
     const parsed = parseMd(text);
-    out.push({ ...parsed.data, body: parsed.body, file: name });
+    result.push({ ...parsed.data, body: parsed.body, file: name });
   }
-  return out;
+  return result;
 }
 
 const pages = await load('pages');
