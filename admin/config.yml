@@ -5,30 +5,6 @@ media_folder: content/images
 public_folder: /content/images
 site_url: /
 collections:
-  - name: pages
-    label: Pagini
-    folder: content/pages
-    create: true
-    delete: true
-    slug: '{{slug}}'
-    fields:
-      - {label: Titlu, name: title, widget: string}
-      - {label: Slug, name: slug, widget: string}
-      - {label: Layout, name: layout, widget: hidden, default: page}
-      - {label: Imagine, name: image, widget: image, required: false}
-      - {label: Conținut, name: body, widget: markdown}
-  - name: categories
-    label: Categorii produse
-    folder: content/categories
-    create: true
-    delete: true
-    slug: '{{slug}}'
-    fields:
-      - {label: Titlu categorie, name: title, widget: string}
-      - {label: Slug, name: slug, widget: string}
-      - {label: Imagine, name: image, widget: image, required: false}
-      - {label: Descriere, name: description, widget: text}
-      - {label: Conținut, name: body, widget: markdown, required: false}
   - name: products
     label: Produse
     folder: content/products
@@ -43,8 +19,24 @@ collections:
       - {label: Caracteristici, name: features, widget: list}
       - {label: Livrare, name: delivery_time, widget: string}
       - {label: Garanție, name: warranty, widget: string}
+      - {label: Imagine principală, name: image, widget: image, required: false}
+      - label: Fotografii produs
+        name: gallery
+        widget: list
+        required: false
+        field: {label: Fotografie, name: image, widget: image}
+      - {label: Conținut, name: body, widget: markdown, required: false}
+  - name: categories
+    label: Categorii
+    folder: content/categories
+    create: true
+    delete: true
+    slug: '{{slug}}'
+    fields:
+      - {label: Titlu categorie, name: title, widget: string}
+      - {label: Slug, name: slug, widget: string}
       - {label: Imagine, name: image, widget: image, required: false}
-      - {label: Conținut, name: body, widget: markdown}
+      - {label: Descriere, name: description, widget: text, required: false}
   - name: portfolio
     label: Portofoliu
     folder: content/portfolio
@@ -55,21 +47,20 @@ collections:
       - {label: Titlu, name: title, widget: string}
       - {label: Slug, name: slug, widget: string}
       - {label: Categorie, name: category, widget: string}
-      - {label: Imagine, name: image, widget: image}
-      - {label: Descriere, name: description, widget: text}
-      - {label: Conținut, name: body, widget: markdown}
-  - name: testimonials
-    label: Recenzii
-    folder: content/testimonials
+      - {label: Imagine, name: image, widget: image, required: false}
+      - {label: Descriere, name: description, widget: text, required: false}
+      - {label: Conținut, name: body, widget: markdown, required: false}
+  - name: factory
+    label: Fotografii din fabrică
+    folder: content/factory
     create: true
     delete: true
     slug: '{{slug}}'
     fields:
       - {label: Titlu, name: title, widget: string}
-      - {label: Autor, name: author, widget: string}
-      - {label: Rating, name: rating, widget: number, value_type: int, min: 1, max: 5}
-      - {label: Data, name: date, widget: datetime}
-      - {label: Text, name: body, widget: markdown}
+      - {label: Imagine, name: image, widget: image}
+      - {label: Descriere, name: description, widget: text, required: false}
+      - {label: Conținut, name: body, widget: markdown, required: false}
   - name: site_settings
     label: Setări site
     files:
@@ -77,13 +68,13 @@ collections:
         name: general
         file: content/site-settings.md
         fields:
+          - {label: Logo, name: logo, widget: image, required: false}
           - {label: Telefon principal, name: phone_primary, widget: string}
-          - {label: Telefon secundar, name: phone_secondary, widget: string}
+          - {label: Telefon secundar, name: phone_secondary, widget: string, required: false}
           - {label: Email, name: email, widget: string}
           - {label: Adresă, name: address, widget: string}
-          - {label: Program, name: business_hours, widget: string, required: false}
+          - {label: Garanție luni, name: warranty_months, widget: number, value_type: int}
+          - {label: Livrare săptămâni, name: delivery_weeks, widget: number, value_type: int}
           - {label: Facebook, name: facebook_url, widget: string, required: false}
           - {label: Instagram, name: instagram_url, widget: string, required: false}
           - {label: TikTok, name: tiktok_url, widget: string, required: false}
-          - {label: Garanție luni, name: warranty_months, widget: number, value_type: int}
-          - {label: Livrare săptămâni, name: delivery_weeks, widget: number, value_type: int}
