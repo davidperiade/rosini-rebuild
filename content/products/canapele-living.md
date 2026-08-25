@@ -9,7 +9,8 @@ features:
   - Textile UE, piele naturală sau ecologică
 delivery_time: 5–6 săptămâni
 warranty: 24 luni
-image: https://placehold.co/800x600/png?text=Canapele+Living
+image: https://images.unsplash.com/photo-1555041469-a586c61ea9bc?auto=format&fit=crop&w=1200&q=85
+image_note: Fotografie orientativă – se poate înlocui sau șterge din panoul de administrare.
 ---
 Canapele pentru living adaptate dimensiunilor și stilului încăperii. Configurația, extensia și tapițeria se stabilesc în funcție de proiect.
 
