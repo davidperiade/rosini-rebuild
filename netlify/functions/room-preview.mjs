@@ -22,8 +22,9 @@ export default async (req) => {
     form.append('model', 'gpt-image-2');
     form.append('prompt', `Integrează realist produsul Rosini „${productName}” în fotografia camerei. Folosește fotografia produsului ca referință exactă pentru forma, proporțiile, tapițeria și designul produsului. Păstrează camera, arhitectura și obiectele existente cât mai neschimbate. Respectă perspectiva, scara, iluminarea și umbrele. Nu înlocui produsul cu alt model și nu modifica designul lui. Rezultatul trebuie să arate ca o fotografie realistă a aceleiași camere cu produsul amplasat natural.`);
     form.append('image[]', dataUrlToBlob(roomImage), 'camera.png');
-    if (productImage && /^https?:\/\//i.test(productImage)) {
-      const r = await fetch(productImage);
+    if (productImage) {
+      const productUrl = /^https?:\/\//i.test(productImage) ? productImage : new URL(productImage, req.url).href;
+      const r = await fetch(productUrl);
       if (r.ok) form.append('image[]', await r.blob(), 'product.png');
     }
     form.append('size', '1536x1024');
