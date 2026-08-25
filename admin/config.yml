@@ -83,8 +83,11 @@ collections:
         file: content/site-settings.md
         fields:
           - {label: Logo, name: logo, widget: image, required: false}
-          - {label: Telefon principal, name: phone_primary, widget: string}
-          - {label: Telefon secundar, name: phone_secondary, widget: string, required: false}
+          - {label: Telefon pentru apel, name: phone_primary, widget: string}
+          - {label: Număr WhatsApp, name: whatsapp_phone, widget: string}
+          - {label: Mesaj prestabilit WhatsApp, name: whatsapp_message, widget: text, required: false, hint: 'Poți folosi {produs} pentru numele produsului.'}
+          - {label: Afișează caseta Apel, name: show_call_button, widget: boolean, default: true}
+          - {label: Afișează caseta WhatsApp, name: show_whatsapp_button, widget: boolean, default: true}
           - {label: Email, name: email, widget: string}
           - {label: Adresă, name: address, widget: string}
           - {label: Garanție luni, name: warranty_months, widget: number, value_type: int}
