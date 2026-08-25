@@ -15,18 +15,21 @@
     X-Frame-Options = "SAMEORIGIN"
     X-Content-Type-Options = "nosniff"
 
-# Explicitly keep the public homepage at the site root.
-# This prevents the CMS entry point from being served at "/".
+# The root URL must always open the public Rosini website.
+# Use a real redirect rather than a rewrite so the browser cannot remain
+# on the Decap CMS route when navigating to the site root.
 [[redirects]]
   from = "/"
   to = "/index.html"
-  status = 200
+  status = 301
   force = true
 
+# Keep the CMS entry point available only under /admin/.
 [[redirects]]
   from = "/admin"
   to = "/admin/"
   status = 301
+  force = true
 
 # The site code already references this logo path.
 # Keep the exact Rosini SVG asset as the source of truth.
