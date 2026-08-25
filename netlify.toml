@@ -15,6 +15,14 @@
     X-Frame-Options = "SAMEORIGIN"
     X-Content-Type-Options = "nosniff"
 
+# Serve the public homepage at the root without a browser redirect.
+# This keeps / and /admin/ as separate entry points.
+[[redirects]]
+  from = "/"
+  to = "/index.html"
+  status = 200
+  force = true
+
 # Keep the CMS entry point available under /admin/.
 [[redirects]]
   from = "/admin"
@@ -22,8 +30,7 @@
   status = 301
   force = true
 
-# The site code already references this logo path.
-# Keep the exact Rosini SVG asset as the source of truth.
+# The site code references this logo path; keep the exact Rosini SVG asset as the source of truth.
 [[redirects]]
   from = "/content/images/rosini-logo.png"
   to = "/content/images/rosini.svg"
