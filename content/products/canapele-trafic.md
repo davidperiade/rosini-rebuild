@@ -9,7 +9,8 @@ features:
   - Materiale potrivite proiectului
 delivery_time: 5–6 săptămâni
 warranty: 24 luni
-image: https://placehold.co/800x600/png?text=Trafic+Intens
+image: https://images.unsplash.com/photo-1550226891-ef816aed4a98?auto=format&fit=crop&w=1200&q=85
+image_note: Fotografie orientativă – se poate înlocui sau șterge din panoul de administrare.
 ---
 Canapele proiectate pentru spații cu utilizare repetată, unde rezistența și întreținerea sunt criterii importante.
 
