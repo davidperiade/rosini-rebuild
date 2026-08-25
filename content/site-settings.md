@@ -1,4 +1,5 @@
 ---
+logo: "/content/images/rosini.svg"
 phone_primary: "0742 056 286"
 phone_secondary: "0747 788 231"
 email: "rosinigrup@yahoo.com"
