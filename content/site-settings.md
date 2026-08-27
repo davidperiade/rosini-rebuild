@@ -1,5 +1,5 @@
 ---
-logo: /content/images/rosini.svg
+logo: /content/images/rosini-logo.svg
 phone_primary: 0742 056 286
 whatsapp_phone: 0742 056 286
 whatsapp_message: "Bună ziua! Sunt interesat(ă) de produsul {produs}."
@@ -13,6 +13,5 @@ delivery_weeks: 5
 facebook_url: https://www.facebook.com/rosini.canapele
 instagram_url: https://www.instagram.com/canapelerosini/
 tiktok_url: ""
-business_hours: "Luni vineri : test"
 ---
 Setările generale ale site-ului Rosini. Numărul de apel, numărul WhatsApp, mesajul WhatsApp și afișarea butoanelor pot fi modificate din panoul de administrare.
