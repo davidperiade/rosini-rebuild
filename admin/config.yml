@@ -1,17 +1,15 @@
 backend:
   name: git-gateway
   branch: main
-
 media_folder: "content/images/uploads"
 public_folder: "/content/images/uploads"
 locale: "ro"
 site_url: "https://rosini-site.netlify.app"
-
 collections:
   - name: "settings"
-    label: "Setări generale și homepage"
+    label: "Setări Rosini și homepage"
     files:
-      - label: "Setări Rosini"
+      - label: "Setări generale + homepage"
         name: "site"
         file: "content/site-settings.md"
         fields:
@@ -34,8 +32,11 @@ collections:
           - { label: "Instagram", name: "instagram_url", widget: "string", required: false }
           - { label: "TikTok", name: "tiktok_url", widget: "string", required: false }
           - { label: "Link recenzii externe", name: "reviews_url", widget: "string", required: false }
+          - { label: "Afișează apelul", name: "show_call_button", widget: "boolean", default: true }
+          - { label: "Afișează WhatsApp", name: "show_whatsapp_button", widget: "boolean", default: true }
           - { label: "Garanție (luni)", name: "warranty_months", widget: "number", required: false }
           - { label: "Termen livrare (săptămâni)", name: "delivery_weeks", widget: "number", required: false }
+          - { label: "Experiență din", name: "experience_since", widget: "string", required: false }
           - { label: "Tagline footer", name: "footer_tagline", widget: "string", required: false }
           - { label: "Eyebrow hero", name: "hero_eyebrow", widget: "string" }
           - { label: "Titlu hero", name: "hero_title", widget: "string" }
@@ -43,15 +44,16 @@ collections:
           - { label: "Imagine hero desktop", name: "hero_image", widget: "image", required: false }
           - { label: "Imagine hero mobil", name: "hero_image_mobile", widget: "image", required: false }
           - { label: "Alt text hero", name: "hero_alt_text", widget: "string", required: false }
-          - { label: "CTA produse", name: "hero_primary_cta", widget: "string" }
-          - { label: "CTA WhatsApp", name: "hero_whatsapp_cta", widget: "string" }
-          - label: "Beneficii"
-            name: "benefits"
-            widget: "list"
-            required: false
-            fields:
-              - { label: "Titlu", name: "title", widget: "string" }
-              - { label: "Descriere", name: "description", widget: "string", required: false }
+          - { label: "Text CTA produse", name: "hero_primary_cta", widget: "string" }
+          - { label: "Text CTA WhatsApp", name: "hero_whatsapp_cta", widget: "string" }
+          - { label: "Etichetă imagine hero", name: "hero_overlay_label", widget: "string", required: false }
+          - { label: "Titlu peste imagine hero", name: "hero_overlay_title", widget: "string", required: false }
+          - { label: "CTA peste imagine hero", name: "hero_overlay_cta", widget: "string", required: false }
+          - { label: "Eyebrow poveste", name: "story_eyebrow", widget: "string", required: false }
+          - { label: "Titlu poveste", name: "story_title", widget: "string", required: false }
+          - { label: "Paragraf poveste 1", name: "story_paragraph_1", widget: "text", required: false }
+          - { label: "Paragraf poveste 2", name: "story_paragraph_2", widget: "text", required: false }
+          - { label: "CTA poveste", name: "story_cta", widget: "string", required: false }
           - { label: "Eyebrow diferențiatori", name: "differentiators_eyebrow", widget: "string", required: false }
           - { label: "Titlu diferențiatori", name: "differentiators_title", widget: "string", required: false }
           - { label: "Intro diferențiatori", name: "differentiators_intro", widget: "text", required: false }
@@ -62,6 +64,13 @@ collections:
             fields:
               - { label: "Titlu", name: "title", widget: "string" }
               - { label: "Descriere", name: "description", widget: "text" }
+          - label: "Beneficii hero"
+            name: "benefits"
+            widget: "list"
+            required: false
+            fields:
+              - { label: "Titlu", name: "title", widget: "string" }
+              - { label: "Descriere", name: "description", widget: "string", required: false }
           - { label: "Eyebrow colecții", name: "collections_eyebrow", widget: "string", required: false }
           - { label: "Titlu colecții", name: "collections_title", widget: "string", required: false }
           - { label: "CTA colecții", name: "collections_cta", widget: "string", required: false }
@@ -102,14 +111,15 @@ collections:
       - { label: "Alt text", name: "alt_text", widget: "string", required: false }
       - { label: "Ordine", name: "order", widget: "number", value_type: "int", required: false }
       - { label: "Activ", name: "active", widget: "boolean", default: true }
+      - { label: "Conținut suplimentar", name: "body", widget: "markdown", required: false }
   - name: "products"
     label: "Produse"
     folder: "content/products"
     create: true
     slug: "{{slug}}"
     fields:
-      - { label: "Nume", name: "name", widget: "string" }
-      - { label: "Slug", name: "slug", widget: "string" }
+      - { label: "Nume produs", name: "title", widget: "string" }
+      - { label: "Slug", name: "slug", widget: "string", required: false }
       - { label: "Categorie", name: "category", widget: "string", required: false }
       - { label: "Categorie slug", name: "category_slug", widget: "string", required: false }
       - { label: "Activ", name: "active", widget: "boolean", default: true }
@@ -121,28 +131,32 @@ collections:
         widget: "list"
         required: false
         field: { label: "Imagine", name: "image", widget: "image" }
-      - { label: "Descriere scurtă", name: "short_description", widget: "text", required: false }
-      - { label: "Descriere completă", name: "description", widget: "markdown", required: false }
+      - { label: "Descriere", name: "description", widget: "text", required: false }
+      - { label: "Caracteristici", name: "features", widget: "list", required: false, field: { label: "Caracteristică", name: "feature", widget: "string" } }
       - { label: "Dimensiuni", name: "dimensions", widget: "string", required: false }
       - { label: "Materiale", name: "materials", widget: "text", required: false }
       - { label: "Opțiuni", name: "options", widget: "text", required: false }
       - { label: "Termen livrare", name: "delivery_time", widget: "string", required: false }
       - { label: "Garanție", name: "warranty", widget: "string", required: false }
+      - { label: "Notă imagine", name: "image_note", widget: "string", required: false }
       - { label: "SEO title", name: "seo_title", widget: "string", required: false }
       - { label: "SEO description", name: "seo_description", widget: "text", required: false }
       - { label: "Imagine Open Graph", name: "og_image", widget: "image", required: false }
+      - { label: "Conținut complet", name: "body", widget: "markdown", required: false }
   - name: "testimonials"
     label: "Recenzii"
     folder: "content/testimonials"
     create: true
     slug: "{{slug}}"
     fields:
-      - { label: "Nume / inițiale", name: "name", widget: "string" }
+      - { label: "Titlu intern", name: "title", widget: "string", required: false }
+      - { label: "Nume / inițiale", name: "author", widget: "string" }
       - { label: "Localitate", name: "location", widget: "string", required: false }
-      - { label: "Text", name: "text", widget: "text" }
       - { label: "Rating", name: "rating", widget: "number", value_type: "int", min: 1, max: 5, default: 5 }
+      - { label: "Data", name: "date", widget: "datetime", required: false }
       - { label: "Aprobat", name: "approved", widget: "boolean", default: false }
       - { label: "Ordine", name: "order", widget: "number", value_type: "int", required: false }
+      - { label: "Recenzia", name: "body", widget: "markdown" }
   - name: "gallery"
     label: "Galerie"
     folder: "content/gallery"
@@ -162,10 +176,8 @@ collections:
       - label: "Politica de confidențialitate"
         name: "privacy"
         file: "content/pages/politica-confidentialitate.md"
-        fields:
-          - { label: "Conținut", name: "body", widget: "markdown" }
+        fields: [{ label: "Conținut", name: "body", widget: "markdown" }]
       - label: "Politica de cookie-uri"
         name: "cookies"
         file: "content/pages/politica-cookie-uri.md"
-        fields:
-          - { label: "Conținut", name: "body", widget: "markdown" }
+        fields: [{ label: "Conținut", name: "body", widget: "markdown" }]
