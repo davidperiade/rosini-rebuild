@@ -1,9 +1,9 @@
 ---
-logo: /content/images/rosini-logo.svg
-hero_image: /content/images/1000003664.jpg
+logo: ""
+hero_image: ""
 phone_primary: 0742 056 286
 whatsapp_phone: 0742 056 286
-whatsapp_message: "Bună ziua! Sunt interesat(ă) de produsele Rosini."
+whatsapp_message: "Bună ziua! Doresc să discut despre produsele Rosini."
 show_call_button: true
 show_whatsapp_button: true
 phone_secondary: ""
@@ -15,4 +15,4 @@ facebook_url: https://www.facebook.com/rosini.canapele
 instagram_url: https://www.instagram.com/canapelerosini/
 tiktok_url: ""
 ---
-Setările generale ale site-ului Rosini.
+Setările generale ale site-ului Rosini. Fotografia principală este opțională și poate fi încărcată ulterior din panoul de administrare.
