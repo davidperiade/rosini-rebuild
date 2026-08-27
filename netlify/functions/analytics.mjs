@@ -1,4 +1,4 @@
 import { getStore } from '@netlify/blobs';
-const allowed=new Set(['page_view','phone_click','whatsapp_click','email_click','contact_submit','review_submit','cta_click','engagement']);
+const allowed=new Set(['page_view','phone_click','whatsapp_click','email_click','review_submit','cta_click','engagement']);
 export default async req=>{if(req.method!=='POST')return new Response('Method not allowed',{status:405});try{const b=await req.json(),type=String(b.type||'');if(!allowed.has(type))return new Response('Invalid event',{status:400});const event={id:crypto.randomUUID(),type,sessionId:String(b.sessionId||'anonymous').slice(0,100),path:String(b.path||'/').slice(0,300),referrer:String(b.referrer||'').slice(0,500),timestamp:new Date().toISOString(),durationSeconds:Math.max(0,Math.min(Number(b.durationSeconds||0),86400))};await getStore({name:'rosini-analytics'}).setJSON(`events/${event.id}`,event);return Response.json({ok:true})}catch{return new Response('Invalid request',{status:400})}};
 export const config={path:'/api/analytics'};
