@@ -1,6 +1,6 @@
 ---
 logo: /content/images/rosini-logo.svg
-hero_image: /content/images/rosini-hero.jpg
+hero_image: /content/images/1000003664.jpg
 phone_primary: 0742 056 286
 whatsapp_phone: 0742 056 286
 whatsapp_message: "Bună ziua! Sunt interesat(ă) de produsele Rosini."
