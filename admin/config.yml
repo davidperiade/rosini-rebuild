@@ -1,9 +1,12 @@
 backend:
   name: git-gateway
   branch: main
+
+publish_mode: editorial_workflow
 media_folder: content/images
 public_folder: /content/images
-site_url: /
+site_url: https://main--rosini-site.netlify.app
+
 collections:
   - name: products
     label: Produse
@@ -11,75 +14,132 @@ collections:
     create: true
     delete: true
     slug: '{{slug}}'
-    summary: '{{title}} — {{category}}'
     fields:
-      - {label: Nume produs, name: title, widget: string}
-      - {label: Categorie, name: category, widget: relation, collection: categories, search_fields: [title], value_field: title, display_fields: [title]}
-      - {label: Fotografie principală, name: image, widget: image, required: false}
-      - label: Fotografii suplimentare
+      - {label: Titlu, name: title, widget: string}
+      - {label: Slug, name: slug, widget: string}
+      - {label: Categorie, name: category, widget: string}
+      - {label: Descriere, name: description, widget: text}
+      - {label: Caracteristici, name: features, widget: list, required: false}
+      - {label: Livrare, name: delivery_time, widget: string, required: false}
+      - {label: Garanție, name: warranty, widget: string, required: false}
+      - {label: Imagine principală, name: image, widget: image, required: false}
+      - label: Galerie foto produs
         name: gallery
         widget: list
         required: false
         field: {label: Fotografie, name: image, widget: image}
-      - label: Dimensiuni produs
-        name: dimensions
-        widget: object
-        required: false
-        fields:
-          - {label: Lățime, name: width, widget: string, required: false}
-          - {label: Adâncime, name: depth, widget: string, required: false}
-          - {label: Înălțime, name: height, widget: string, required: false}
-          - {label: Înălțime șezut, name: seat_height, widget: string, required: false}
-          - {label: Lungime extinsă, name: extended_length, widget: string, required: false}
-      - {label: Descriere produs, name: description, widget: text, required: false}
-      - label: Caracteristici
-        name: features
+      - label: Configurații produs
+        name: configuration_options
         widget: list
         required: false
-        field: {label: Caracteristică, name: item, widget: string}
-      - {label: Termen de livrare, name: delivery_time, widget: string, required: false}
-      - {label: Garanție, name: warranty, widget: string, required: false}
-      - {label: Detalii suplimentare, name: body, widget: markdown, required: false}
+      - label: Imagini 360°
+        name: gallery_360
+        widget: list
+        required: false
+        field: {label: Imagine, name: image, widget: image}
+      - {label: Activare Vezi în camera ta cu AI, name: ai_room_preview, widget: boolean, default: false, required: false}
+      - {label: Conținut, name: body, widget: markdown, required: false}
+
   - name: categories
-    label: Categorii
+    label: Categorii produse
     folder: content/categories
     create: true
     delete: true
     slug: '{{slug}}'
     fields:
-      - {label: Titlu categorie, name: title, widget: string}
+      - {label: Titlu, name: title, widget: string}
       - {label: Slug, name: slug, widget: string}
-      - {label: Imagine categorie, name: image, widget: image, required: false}
+      - {label: Imagine, name: image, widget: image, required: false}
       - {label: Descriere, name: description, widget: text, required: false}
-  - name: factory
-    label: Fotografii din fabrică
-    folder: content/factory
+
+  - name: testimonials
+    label: Recenzii
+    folder: content/testimonials
     create: true
     delete: true
     slug: '{{slug}}'
     fields:
-      - {label: Titlu, name: title, widget: string}
-      - {label: Imagine, name: image, widget: image}
-      - {label: Descriere, name: description, widget: text, required: false}
-      - {label: Conținut, name: body, widget: markdown, required: false}
+      - {label: Titlu, name: title, widget: string, required: false}
+      - {label: Autor, name: author, widget: string}
+      - {label: Rating, name: rating, widget: number, value_type: int, min: 1, max: 5, default: 5}
+      - {label: Data, name: date, widget: datetime, required: false}
+      - {label: Text, name: body, widget: markdown}
+
   - name: site_settings
-    label: Setări site
+    label: Setări și pagină principală
     files:
-      - label: Setări generale
+      - label: Conținut Rosini
         name: general
         file: content/site-settings.md
         fields:
+          - {label: Titlu site, name: site_title, widget: string}
+          - {label: Descriere SEO, name: site_description, widget: text}
           - {label: Logo, name: logo, widget: image, required: false}
-          - {label: Imagine informativă prima pagină, name: hero_image, widget: image, required: false, hint: 'Imaginea principală afișată în partea de sus a paginii Acasă.'}
-          - {label: Telefon pentru apel, name: phone_primary, widget: string}
-          - {label: Număr WhatsApp, name: whatsapp_phone, widget: string}
-          - {label: Mesaj prestabilit WhatsApp, name: whatsapp_message, widget: text, required: false}
-          - {label: Afișează caseta Apel, name: show_call_button, widget: boolean, default: true}
-          - {label: Afișează caseta WhatsApp, name: show_whatsapp_button, widget: boolean, default: true}
+          - {label: Telefon principal, name: phone_primary, widget: string}
+          - {label: Telefon secundar, name: phone_secondary, widget: string, required: false}
           - {label: Email, name: email, widget: string}
           - {label: Adresă, name: address, widget: string}
-          - {label: Garanție luni, name: warranty_months, widget: number, value_type: int}
-          - {label: Livrare săptămâni, name: delivery_weeks, widget: number, value_type: int}
+          - {label: Link WhatsApp / număr, name: whatsapp_phone, widget: string}
+          - {label: Mesaj WhatsApp, name: whatsapp_message, widget: string}
+          - {label: Afișează buton apel, name: show_call_button, widget: boolean, default: true}
+          - {label: Afișează buton WhatsApp, name: show_whatsapp_button, widget: boolean, default: true}
+          - {label: Imagine Hero, name: hero_image, widget: image, required: false}
+          - {label: Text mic Hero, name: hero_eyebrow, widget: string}
+          - {label: Titlu Hero, name: hero_title, widget: string}
+          - {label: Subtitlu Hero, name: hero_subtitle, widget: text}
+          - {label: Etichetă imagine Hero, name: hero_overlay_label, widget: string}
+          - {label: Titlu peste imagine Hero, name: hero_overlay_title, widget: string}
+          - {label: CTA principal Hero, name: hero_primary_cta, widget: string}
+          - {label: CTA WhatsApp Hero, name: hero_whatsapp_cta, widget: string}
+          - {label: Etichetă Povestea noastră, name: story_eyebrow, widget: string}
+          - {label: Titlu Povestea noastră, name: story_title, widget: string}
+          - {label: Paragraf Povestea noastră 1, name: story_paragraph_1, widget: text}
+          - {label: Paragraf Povestea noastră 2, name: story_paragraph_2, widget: text}
+          - {label: CTA Povestea noastră, name: story_cta, widget: string}
+          - {label: Etichetă Diferențiatori, name: differentiators_eyebrow, widget: string}
+          - {label: Titlu Diferențiatori, name: differentiators_title, widget: string}
+          - {label: Intro Diferențiatori, name: differentiators_intro, widget: text}
+          - label: Ce nu se vede — cele 3 carduri
+            name: differentiators
+            widget: list
+            min: 3
+            max: 3
+            fields:
+              - {label: Titlu, name: title, widget: string}
+              - {label: Descriere, name: description, widget: text}
+          - {label: Etichetă Colecții, name: collections_eyebrow, widget: string}
+          - {label: Titlu Colecții, name: collections_title, widget: string}
+          - {label: Link toate produsele, name: collections_cta, widget: string}
+          - {label: Etichetă Proces, name: process_eyebrow, widget: string}
+          - {label: Titlu Proces, name: process_title, widget: string}
+          - label: Cei 3 pași ai procesului
+            name: process_steps
+            widget: list
+            min: 3
+            max: 3
+            fields:
+              - {label: Titlu pas, name: title, widget: string}
+              - {label: Descriere pas, name: description, widget: text}
+          - {label: Etichetă Showroom, name: showroom_eyebrow, widget: string}
+          - {label: Titlu Showroom, name: showroom_title, widget: string}
+          - {label: Text invitație Showroom, name: showroom_text, widget: text}
+          - {label: Program Luni - Vineri, name: showroom_hours_weekdays, widget: string}
+          - {label: Program Sâmbătă, name: showroom_hours_saturday, widget: string}
+          - {label: Link Google Maps Showroom, name: showroom_maps_url, widget: string}
+          - {label: CTA Google Maps, name: showroom_cta, widget: string}
+          - label: Galerie Showroom
+            name: showroom_gallery
+            widget: list
+            max: 4
+            required: false
+            field: {label: Fotografie, name: image, widget: image, required: false}
+          - {label: Etichetă Recenzii, name: reviews_eyebrow, widget: string}
+          - {label: Titlu Recenzii, name: reviews_title, widget: string}
+          - {label: Text invitație recenzie, name: review_invite_text, widget: text}
+          - {label: CTA publicare recenzie, name: review_invite_cta, widget: string}
+          - {label: Text footer, name: footer_tagline, widget: string}
           - {label: Facebook, name: facebook_url, widget: string, required: false}
           - {label: Instagram, name: instagram_url, widget: string, required: false}
           - {label: TikTok, name: tiktok_url, widget: string, required: false}
+          - {label: Garanție în luni, name: warranty_months, widget: number, value_type: int}
+          - {label: Livrare în săptămâni, name: delivery_weeks, widget: number}
