@@ -25,33 +25,28 @@ collections:
         widget: list
         required: false
         field: {label: Fotografie, name: image, widget: image}
-        hint: 'Adaugă oricâte fotografii dorești pentru același produs.'
       - label: Configurații produs
         name: configuration_options
         widget: list
         required: false
-        hint: 'Format: Etichetă: opțiune 1 | opțiune 2 | opțiune 3'
       - label: Imagini 360°
         name: gallery_360
         widget: list
         required: false
         field: {label: Imagine, name: image, widget: image}
-        hint: 'Încarcă imaginile în ordinea rotației, ideal 24–36 cadre.'
-      - {label: Activare Vezi în camera ta cu AI, name: ai_room_preview, widget: boolean, default: true, required: false}
+      - {label: Activare Vezi în camera ta cu AI, name: ai_room_preview, widget: boolean, default: false, required: false}
       - {label: Conținut, name: body, widget: markdown}
-  - name: portfolio
-    label: Portofoliu
-    folder: content/portfolio
+  - name: categories
+    label: Categorii
+    folder: content/categories
     create: true
     delete: true
     slug: '{{slug}}'
     fields:
       - {label: Titlu, name: title, widget: string}
       - {label: Slug, name: slug, widget: string}
-      - {label: Categorie, name: category, widget: string}
-      - {label: Imagine, name: image, widget: image}
-      - {label: Descriere, name: description, widget: text}
-      - {label: Conținut, name: body, widget: markdown}
+      - {label: Imagine, name: image, widget: image, required: false}
+      - {label: Descriere, name: description, widget: text, required: false}
   - name: factory
     label: Din fabrică
     folder: content/factory
@@ -90,8 +85,8 @@ collections:
           - {label: Email, name: email, widget: string}
           - {label: Adresă, name: address, widget: string}
           - {label: Program, name: business_hours, widget: string, required: false}
+          - {label: Garanție luni, name: warranty_months, widget: number, value_type: int}
+          - {label: Livrare săptămâni, name: delivery_weeks, widget: number, value_type: int}
           - {label: Facebook, name: facebook_url, widget: string, required: false}
           - {label: Instagram, name: instagram_url, widget: string, required: false}
           - {label: TikTok, name: tiktok_url, widget: string, required: false}
-          - {label: Garanție luni, name: warranty_months, widget: number, value_type: int}
-          - {label: Livrare săptămâni, name: delivery_weeks, widget: number, value_type: int}
