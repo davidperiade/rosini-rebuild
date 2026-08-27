@@ -9,6 +9,16 @@
 [functions]
   directory = "netlify/functions"
 
+[[redirects]]
+  from = "/produse.html"
+  to = "/produse-v2.html"
+  status = 200
+
+[[redirects]]
+  from = "/produse"
+  to = "/produse-v2.html"
+  status = 200
+
 [[headers]]
   for = "/admin/*"
   [headers.values]
