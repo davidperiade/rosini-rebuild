@@ -15,18 +15,7 @@
     X-Frame-Options = "SAMEORIGIN"
     X-Content-Type-Options = "nosniff"
 
-# No root/admin redirects: Netlify serves index.html and /admin/index.html naturally.
-
-# Keep the original Rosini logo available at the stable site path.
-# The source is the exact SVG asset from the repository version where the logo was originally stored.
-[[redirects]]
-  from = "/content/images/rosini.svg"
-  to = "https://raw.githubusercontent.com/davidperiade/rosini-rebuild/21f308a825572edc19e3d45ea182e00c8130ceec/content/images/rosini.svg"
-  status = 200
-  force = true
-
-[[redirects]]
-  from = "/content/images/rosini-logo.png"
-  to = "/content/images/rosini.svg"
-  status = 200
-  force = true
+[[headers]]
+  for = "/site-data.json"
+  [headers.values]
+    Cache-Control = "no-store"
