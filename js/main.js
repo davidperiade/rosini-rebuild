@@ -1,3 +1,13 @@
+const rosiniFetch = window.fetch.bind(window);
+window.fetch = (input, init) => {
+  const raw = typeof input === 'string' ? input : input?.url;
+  if (raw) {
+    const url = new URL(raw, window.location.href);
+    if (url.pathname === '/site-data.json') return rosiniFetch('/api/site-data' + url.search, init);
+  }
+  return rosiniFetch(input, init);
+};
+
 document.addEventListener('DOMContentLoaded',()=>{
 const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]));
 const cleanPhone=n=>String(n||'').replace(/[^\d+]/g,'');
