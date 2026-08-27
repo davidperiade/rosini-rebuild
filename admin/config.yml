@@ -51,19 +51,6 @@ collections:
       - {label: Slug, name: slug, widget: string}
       - {label: Imagine, name: image, widget: image, required: false}
       - {label: Descriere, name: description, widget: text, required: false}
-  - name: portfolio
-    label: Portofoliu
-    folder: content/portfolio
-    create: true
-    delete: true
-    slug: '{{slug}}'
-    fields:
-      - {label: Titlu, name: title, widget: string}
-      - {label: Slug, name: slug, widget: string}
-      - {label: Categorie, name: category, widget: string}
-      - {label: Imagine, name: image, widget: image, required: false}
-      - {label: Descriere, name: description, widget: text, required: false}
-      - {label: Conținut, name: body, widget: markdown, required: false}
   - name: factory
     label: Fotografii din fabrică
     folder: content/factory
