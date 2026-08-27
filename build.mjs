@@ -1,12 +1,164 @@
 import { readdir, readFile, writeFile, mkdir, cp } from 'node:fs/promises';
 import { join } from 'node:path';
-const root=process.cwd(),out=join(root,'_site');
-function parseValue(v){v=String(v??'').trim();if(v.startsWith('[')&&v.endsWith(']'))return v.slice(1,-1).split(',').map(x=>x.trim().replace(/^['\"]|['\"]$/g,''));if((v.startsWith('"')&&v.endsWith('"'))||(v.startsWith("'")&&v.endsWith("'")))return v.slice(1,-1);if(v==='true')return true;if(v==='false')return false;if(/^\d+$/.test(v))return Number(v);return v}
-function parseMd(text){const m=text.match(/^---\s*\n([\s\S]*?)\n---\s*\n([\s\S]*)$/);if(!m)return{data:{},body:text};const data={};let current=null,listObject=null;for(const raw of m[1].split(/\r?\n/)){const line=raw.trimEnd();if(/^\s*-\s+/.test(line)&&current){const item=line.replace(/^\s*-\s+/,'');const nested=item.match(/^([A-Za-z0-9_-]+):\s*(.*)$/);if(nested){if(!Array.isArray(data[current]))data[current]=[];listObject={};listObject[nested[1]]=parseValue(nested[2]);data[current].push(listObject)}else{if(!Array.isArray(data[current]))data[current]=[];data[current].push(parseValue(item));listObject=null}continue}const nestedField=line.match(/^\s{2,}([A-Za-z0-9_-]+):\s*(.*)$/);if(nestedField&&listObject){listObject[nestedField[1]]=parseValue(nestedField[2]);continue}const i=line.indexOf(':');if(i<0)continue;const k=line.slice(0,i).trim(),v=line.slice(i+1);data[k]=parseValue(v);current=k;listObject=null}return{data,body:m[2].trim()}}
-async function load(dir){const path=join(root,'content',dir);let names=[];try{names=await readdir(path)}catch{return[]}const result=[];for(const name of names.filter(n=>n.endsWith('.md'))){const text=await readFile(join(path,name),'utf8');const parsed=parseMd(text);result.push({...parsed.data,body:parsed.body,file:name})}return result}
-const pages=await load('pages'),products=await load('products'),categories=await load('categories'),portfolio=await load('portfolio'),testimonials=await load('testimonials'),factory=await load('factory');let siteSettings={};try{siteSettings=parseMd(await readFile(join(root,'content/site-settings.md'),'utf8')).data}catch{}
-await mkdir(out,{recursive:true});for(const entry of await readdir(root,{withFileTypes:true})){if(['_site','.git','node_modules'].includes(entry.name)||entry.name==='site-data.json')continue;await cp(join(root,entry.name),join(out,entry.name),{recursive:true})}
-const productPages=['canapele-living-extensie.html','canapele-trafic-intens.html','paturi-matrimoniale.html','fotolii.html','tabureti.html','paturi-copii.html','mobilier-horeca.html'];for(const file of productPages){const path=join(out,file);try{const html=await readFile(path,'utf8');if(!html.includes('js/leads.js'))await writeFile(path,html.replace('</body>','<script src="js/leads.js"></script></body>'))}catch{}}
-const adminPath=join(out,'admin/dashboard.html');try{let html=await readFile(adminPath,'utf8');const marker='<script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>';const logo=`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 620 145" role="img" aria-label="Rosini" style="width:205px;height:auto;display:block"><rect width="620" height="145" fill="#fff"/><path fill="#000" d="M18 18c4-11 18-15 29-8 13 8 20 23 18 40-2 16-11 28-24 39 25-15 54-27 83-28 31-2 59 6 80 21 7 5 11 14 8 22-3 8-11 13-20 13-58-1-112 5-168 27-10 4-20-3-19-14l4-91c1-9 3-16 9-21z"/><text x="190" y="78" font-family="Arial, Helvetica, sans-serif" font-size="62" fill="#d30d14">ROSINI</text><text x="192" y="112" font-family="Arial, Helvetica, sans-serif" font-size="22" fill="#111">confort. calitate. durabilitate.</text></svg>`;html=html.replace('<img src="/content/images/rosini-logo.svg" alt="Rosini">',logo);const init=`<script>if(window.netlifyIdentity){const identityUrl=window.location.origin+'/.netlify/identity';netlifyIdentity.init({APIUrl:identityUrl});const stripCommission=()=>{document.querySelectorAll('#leadStats .card,#leadQuickStats .card').forEach(c=>{if(/comision/i.test(c.textContent))c.remove()});document.querySelectorAll('.lead-table').forEach(t=>{const ths=[...t.querySelectorAll('thead th')];const i=ths.findIndex(th=>/comision/i.test(th.textContent));if(i>=0){ths[i].remove();t.querySelectorAll('tbody tr').forEach(tr=>tr.children[i]?.remove())}})};new MutationObserver(stripCommission).observe(document.documentElement,{childList:true,subtree:true});stripCommission()}</script>`;if(html.includes(marker)&&!html.includes('identityUrl=window.location.origin'))html=html.replace(marker,marker+init);await writeFile(adminPath,html)}catch{}
-const adminPanelPath=join(out,'admin/panel.html');try{let html=await readFile(adminPanelPath,'utf8');const logoMarker='<!-- rosini-admin-dynamic-logo -->';const logoScript=`<script id="rosini-admin-dynamic-logo">(()=>{const fallback='/content/images/rosini.svg';const applyLogo=src=>{const img=document.querySelector('.brand img');if(!img)return;img.src=src||fallback;img.alt='Rosini';img.onerror=()=>{if(img.src!==location.origin+fallback)img.src=fallback}};fetch('/site-data.json',{cache:'no-store'}).then(r=>r.ok?r.json():null).then(data=>applyLogo(data?.siteSettings?.logo||fallback)).catch(()=>applyLogo(fallback))})();</script>`;if(!html.includes('id="rosini-admin-dynamic-logo"')){html=html.replace('</head>',logoMarker+logoScript+'</head>');await writeFile(adminPanelPath,html)}}catch{}
-await writeFile(join(out,'site-data.json'),JSON.stringify({generatedAt:new Date().toISOString(),siteSettings,pages,products,categories,portfolio,testimonials,factory},null,2));console.log(`Rosini data built: ${categories.length} categorii, ${products.length} produse, ${portfolio.length} proiecte, ${factory.length} fotografii din fabrică, ${testimonials.length} recenzii.`);
+
+const root = process.cwd();
+const out = join(root, '_site');
+
+function parseScalar(value) {
+  const v = String(value ?? '').trim();
+  if (!v) return '';
+  if ((v.startsWith('"') && v.endsWith('"')) || (v.startsWith("'") && v.endsWith("'"))) return v.slice(1, -1);
+  if (v === 'true') return true;
+  if (v === 'false') return false;
+  if (/^-?\d+(\.\d+)?$/.test(v)) return Number(v);
+  if (v.startsWith('[') && v.endsWith(']')) {
+    return v.slice(1, -1).split(',').map(x => parseScalar(x)).filter(x => x !== '');
+  }
+  return v;
+}
+
+function indentation(line) {
+  return line.match(/^\s*/)?.[0].length ?? 0;
+}
+
+function parseFrontmatter(text) {
+  const match = text.match(/^---\s*\n([\s\S]*?)\n---\s*\n?([\s\S]*)$/);
+  if (!match) return { data: {}, body: text.trim() };
+
+  const lines = match[1].split(/\r?\n/);
+  const data = {};
+  let i = 0;
+
+  while (i < lines.length) {
+    const raw = lines[i];
+    if (!raw.trim()) { i++; continue; }
+    if (indentation(raw) !== 0) { i++; continue; }
+
+    const m = raw.match(/^([^:#][^:]*):\s*(.*)$/);
+    if (!m) { i++; continue; }
+    const key = m[1].trim();
+    const value = m[2].trim();
+
+    if (value === '>- ' || value === '>' || value === '>-') {
+      i++;
+      const parts = [];
+      while (i < lines.length && (lines[i].trim() === '' || indentation(lines[i]) > 0)) {
+        if (lines[i].trim()) parts.push(lines[i].trim());
+        i++;
+      }
+      data[key] = parts.join(' ').replace(/\s+/g, ' ').trim();
+      continue;
+    }
+
+    if (value === '|' || value === '|-' || value === '|+') {
+      i++;
+      const parts = [];
+      while (i < lines.length && (lines[i].trim() === '' || indentation(lines[i]) > 0)) {
+        parts.push(lines[i].replace(/^\s{2}/, ''));
+        i++;
+      }
+      data[key] = parts.join('\n').trim();
+      continue;
+    }
+
+    if (value !== '') {
+      data[key] = parseScalar(value);
+      i++;
+      continue;
+    }
+
+    const next = i + 1;
+    if (next >= lines.length || !lines[next].trim()) {
+      data[key] = '';
+      i++;
+      continue;
+    }
+
+    const childIndent = indentation(lines[next]);
+    if (childIndent === 0) {
+      data[key] = '';
+      i++;
+      continue;
+    }
+
+    if (lines[next].trim().startsWith('- ')) {
+      const list = [];
+      i = next;
+      while (i < lines.length) {
+        const line = lines[i];
+        if (!line.trim()) { i++; continue; }
+        const ind = indentation(line);
+        if (ind < childIndent) break;
+        const itemMatch = line.trim().match(/^-\s*(.*)$/);
+        if (!itemMatch) break;
+        const itemText = itemMatch[1].trim();
+        if (/^[A-Za-z0-9_-]+:\s*/.test(itemText)) {
+          const obj = {};
+          const first = itemText.match(/^([^:]+):\s*(.*)$/);
+          obj[first[1].trim()] = parseScalar(first[2]);
+          i++;
+          while (i < lines.length && lines[i].trim() && indentation(lines[i]) > childIndent) {
+            const nested = lines[i].trim().match(/^([^:]+):\s*(.*)$/);
+            if (!nested) { i++; continue; }
+            obj[nested[1].trim()] = parseScalar(nested[2]);
+            i++;
+          }
+          list.push(obj);
+        } else {
+          list.push(parseScalar(itemText));
+          i++;
+        }
+      }
+      data[key] = list;
+      continue;
+    }
+
+    const obj = {};
+    i = next;
+    while (i < lines.length && lines[i].trim()) {
+      if (indentation(lines[i]) <= 0) break;
+      const nested = lines[i].trim().match(/^([^:]+):\s*(.*)$/);
+      if (!nested) { i++; continue; }
+      obj[nested[1].trim()] = parseScalar(nested[2]);
+      i++;
+    }
+    data[key] = obj;
+  }
+
+  return { data, body: match[2].trim() };
+}
+
+async function load(directory) {
+  const path = join(root, 'content', directory);
+  let names = [];
+  try { names = await readdir(path); } catch { return []; }
+  const result = [];
+  for (const name of names.filter(n => n.endsWith('.md'))) {
+    const text = await readFile(join(path, name), 'utf8');
+    const parsed = parseFrontmatter(text);
+    result.push({ ...parsed.data, body: parsed.body, file: name });
+  }
+  return result;
+}
+
+const pages = await load('pages');
+const products = await load('products');
+const categories = await load('categories');
+const portfolio = await load('portfolio');
+const testimonials = await load('testimonials');
+const factory = await load('factory');
+let siteSettings = {};
+try { siteSettings = parseFrontmatter(await readFile(join(root, 'content/site-settings.md'), 'utf8')).data; } catch {}
+
+await mkdir(out, { recursive: true });
+for (const entry of await readdir(root, { withFileTypes: true })) {
+  if (['_site', '.git', 'node_modules'].includes(entry.name) || entry.name === 'site-data.json') continue;
+  await cp(join(root, entry.name), join(out, entry.name), { recursive: true });
+}
+
+await writeFile(
+  join(out, 'site-data.json'),
+  JSON.stringify({ generatedAt: new Date().toISOString(), siteSettings, pages, products, categories, portfolio, testimonials, factory }, null, 2)
+);
+
+console.log(`Rosini data built: ${categories.length} categorii, ${products.length} produse, ${portfolio.length} proiecte, ${factory.length} fotografii din fabrică, ${testimonials.length} recenzii.`);
