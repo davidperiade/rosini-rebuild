@@ -1,13 +1,3 @@
-const rosiniFetch = window.fetch.bind(window);
-window.fetch = (input, init) => {
-  const raw = typeof input === 'string' ? input : input?.url;
-  if (raw) {
-    const url = new URL(raw, window.location.href);
-    if (url.pathname === '/site-data.json') return rosiniFetch('/api/site-data' + url.search, init);
-  }
-  return rosiniFetch(input, init);
-};
-
 document.addEventListener('DOMContentLoaded',()=>{
 const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]));
 const cleanPhone=n=>String(n||'').replace(/[^\d+]/g,'');
@@ -22,15 +12,27 @@ document.addEventListener('visibilitychange',()=>{if(document.visibilityState===
 window.addEventListener('pagehide',engagement);
 
 const toggle=document.querySelector('.menu-toggle'),nav=document.querySelector('.nav');
-if(toggle&&nav){toggle.addEventListener('click',()=>nav.classList.toggle('open'));nav.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>nav.classList.remove('open')))}
+if(toggle&&nav){
+  toggle.type='button';
+  if(!nav.id)nav.id='site-navigation';
+  toggle.setAttribute('aria-controls',nav.id);
+  toggle.setAttribute('aria-expanded','false');
+  toggle.setAttribute('aria-label','Deschide meniul');
+  const setMenu=(open)=>{nav.classList.toggle('open',open);toggle.setAttribute('aria-expanded',String(open));toggle.setAttribute('aria-label',open?'Închide meniul':'Deschide meniul')};
+  toggle.addEventListener('click',()=>setMenu(!nav.classList.contains('open')));
+  nav.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>setMenu(false)));
+  document.addEventListener('keydown',e=>{if(e.key==='Escape')setMenu(false)});
+}
 
-const setLogo=src=>document.querySelectorAll('.logo').forEach(el=>{const img=document.createElement('img');img.className='brand-logo';img.src=src||'/content/images/rosini-logo.svg';img.alt='Rosini';img.onerror=()=>{if(!img.src.endsWith('/content/images/rosini-logo.svg'))img.src='/content/images/rosini-logo.svg'};el.textContent='';el.appendChild(img);el.setAttribute('aria-label','Rosini')});
+const FALLBACK_LOGO='/content/images/rosini-logo.svg';
+const setLogo=src=>document.querySelectorAll('#site-logo,#footer-logo').forEach(img=>{img.src=src||FALLBACK_LOGO;img.onerror=()=>{if(img.dataset.fallbackApplied==='true')return;img.dataset.fallbackApplied='true';img.src=FALLBACK_LOGO}});
 const setPhoneLink=(a,n)=>{if(n){a.href='tel:'+cleanPhone(n);a.textContent=n;a.hidden=false}else a.hidden=true};
 const setWhatsApp=(a,n,message)=>{if(n){a.href='https://wa.me/'+waNumber(n)+'?text='+encodeURIComponent(message);a.hidden=false}else a.hidden=true};
 const renderPhones=s=>{const p1=s.phone_primary||'',p2=s.phone_secondary||'';document.querySelectorAll('[data-phone-slot="primary"]').forEach(a=>setPhoneLink(a,p1));document.querySelectorAll('[data-phone-slot="secondary"]').forEach(a=>setPhoneLink(a,p2));document.querySelectorAll('[data-phone-group="primary"]').forEach(g=>g.hidden=!p1);document.querySelectorAll('[data-phone-group="secondary"]').forEach(g=>g.hidden=!p2);document.querySelectorAll('[data-whatsapp-slot="primary"]').forEach(a=>setWhatsApp(a,p1,'Bună ziua! Doresc să discut despre produsele Rosini.'));document.querySelectorAll('[data-whatsapp-slot="secondary"]').forEach(a=>setWhatsApp(a,p2,'Bună ziua! Doresc să discut despre produsele Rosini.'))};
 function renderHours(hours){const footer=document.querySelector('footer');if(!footer||footer.querySelector('.business-hours'))return;const box=document.createElement('div');box.className='business-hours';box.innerHTML='<h3>Program</h3>'+hours.map(x=>`<p><strong>${esc(x.day)}</strong>: ${esc(x.open)}${x.close?' – '+esc(x.close):''}</p>`).join('');footer.querySelector('.footer-grid')?.appendChild(box)}
 
 const currentFile=location.pathname.split('/').pop()||'index.html';
+const isHome=currentFile==='index.html'||location.pathname==='/'||location.pathname==='';
 const productSlug=p=>p?.slug||String(p?.file||'').replace(/\.md$/,'');
 const configEntries=p=>(Array.isArray(p.configuration_options)?p.configuration_options:[]).map((x,i)=>{const parts=String(x||'').split(':');const label=(parts.shift()||('Configurație '+(i+1))).trim();const opts=parts.join(':').split('|').map(v=>v.trim()).filter(Boolean);return{label,opts}}).filter(x=>x.opts.length);
 const selectedConfig=()=>[...document.querySelectorAll('.product-config select')].map(s=>`${s.dataset.label}: ${s.value}`).filter(Boolean);
@@ -52,5 +54,35 @@ document.querySelectorAll('a[href^="mailto:"]').forEach(a=>a.addEventListener('c
 document.querySelectorAll('.btn-primary,.nav-cta').forEach(a=>a.addEventListener('click',()=>send('cta_click')));
 send('page_view');
 
-fetch('/site-data.json',{cache:'no-store'}).then(r=>r.ok?r.json():null).then(data=>{if(!data){setLogo('/content/images/rosini-logo.svg');return}const s=data.siteSettings||{};setLogo(s.logo||'/content/images/rosini-logo.svg');renderPhones(s);document.querySelectorAll('a[href^="mailto:"]').forEach(a=>{if(s.email){a.href='mailto:'+s.email;a.textContent=s.email}});renderPortfolio(data);renderTestimonials(data);addFactoryGallery(data);const grid=document.querySelector('.product-grid');const params=new URLSearchParams(location.search);const categoryParam=params.get('category');if(grid&&Array.isArray(data.categories)){if(currentFile==='produse.html'&&categoryParam){const cat=data.categories.find(c=>c.slug===categoryParam),products=(data.products||[]).filter(p=>p.category===categoryParam||p.category===cat?.title);const hero=document.querySelector('.page-hero h1');if(hero)hero.textContent=cat?.title||'Categorie produse';if(products.length)renderProductCards(grid,products,s);else grid.innerHTML=`<div class="card"><h3>${esc(cat?.title||'Categorie')}</h3><p>${esc(cat?.description||'Nu există încă produse în această categorie.')}</p></div>`}else if(currentFile==='produse.html'){grid.innerHTML=data.categories.map(c=>`<a class="product-card" href="produse.html?category=${encodeURIComponent(c.slug)}"><img src="${esc(c.image||'https://placehold.co/700x500/png?text=Rosini')}" alt="${esc(c.title)} Rosini"><h3>${esc(c.title)}</h3><span>Vezi categoria →</span></a>`).join('')}}if(currentFile==='produs.html'){const requested=params.get('slug')||'';const p=(data.products||[]).find(x=>productSlug(x)===requested);if(p)renderProductDetail(p,s);else{const h=document.querySelector('.page-hero h1');if(h)h.textContent='Produs indisponibil';const intro=document.querySelector('.product-intro');if(intro)intro.textContent='Produsul solicitat nu mai este disponibil.'}}return fetch('/api/site-hours',{cache:'no-store'}).then(r=>r.ok?r.json():null)}).then(x=>{if(x?.hours)renderHours(x.hours)}).catch(()=>setLogo('/content/images/rosini-logo.svg'));
+if(!isHome){
+  window.rosiniSiteData.load().then(data=>{
+    if(!data){setLogo(FALLBACK_LOGO);return}
+    const s=data.siteSettings||{};
+    setLogo(s.logo||FALLBACK_LOGO);
+    renderPhones(s);
+    document.querySelectorAll('a[href^="mailto:"]').forEach(a=>{if(s.email){a.href='mailto:'+s.email;a.textContent=s.email}});
+    renderPortfolio(data);
+    renderTestimonials(data);
+    addFactoryGallery(data);
+    const grid=document.querySelector('.product-grid');
+    const params=new URLSearchParams(location.search);
+    const categoryParam=params.get('category');
+    if(grid&&Array.isArray(data.categories)){
+      if(currentFile==='produse.html'&&categoryParam){
+        const cat=data.categories.find(c=>c.slug===categoryParam),products=(data.products||[]).filter(p=>p.category===categoryParam||p.category===cat?.title);
+        const hero=document.querySelector('.page-hero h1');
+        if(hero)hero.textContent=cat?.title||'Categorie produse';
+        if(products.length)renderProductCards(grid,products,s);else grid.innerHTML=`<div class="card"><h3>${esc(cat?.title||'Categorie')}</h3><p>${esc(cat?.description||'Nu există încă produse în această categorie.')}</p></div>`;
+      }else if(currentFile==='produse.html'){
+        grid.innerHTML=data.categories.map(c=>`<a class="product-card" href="produse.html?category=${encodeURIComponent(c.slug)}"><img src="${esc(c.image||'https://placehold.co/700x500/png?text=Rosini')}" alt="${esc(c.title)} Rosini"><h3>${esc(c.title)}</h3><span>Vezi categoria →</span></a>`).join('')
+      }
+    }
+    if(currentFile==='produs.html'){
+      const requested=params.get('slug')||'';
+      const p=(data.products||[]).find(x=>productSlug(x)===requested);
+      if(p)renderProductDetail(p,s);else{const h=document.querySelector('.page-hero h1');if(h)h.textContent='Produs indisponibil';const intro=document.querySelector('.product-intro');if(intro)intro.textContent='Produsul solicitat nu mai este disponibil.'}
+    }
+    return fetch('/api/site-hours',{cache:'no-store'}).then(r=>r.ok?r.json():null)
+  }).then(x=>{if(x?.hours)renderHours(x.hours)}).catch(error=>{console.error('Rosini site data:',error);setLogo(FALLBACK_LOGO)});
+}
 });
