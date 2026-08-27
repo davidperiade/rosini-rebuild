@@ -14,6 +14,7 @@ email: rosinigrup@yahoo.com
 address: Șos. Păcurari Nr. 54, Bl. 554, Sc. B, P, Iași
 warranty_months: 24
 delivery_weeks: 5
+experience_since: 2006
 facebook_url: https://www.facebook.com/rosini.canapele
 tiktok_url: ""
 hero_eyebrow: Rosini · Iași · din 2006
@@ -21,6 +22,7 @@ hero_title: Confortul începe cu o piesă făcută bine.
 hero_subtitle: Creăm mobilier tapițat la comandă pentru case, apartamente și spații comerciale. Fiecare proiect pornește de la spațiul tău și ajunge la o piesă construită pentru utilizare reală.
 hero_overlay_label: ROSINI · IAȘI
 hero_overlay_title: Mobilier creat pentru spațiul tău.
+hero_overlay_cta: Descoperă colecțiile →
 hero_primary_cta: Descoperă produsele
 hero_whatsapp_cta: Cere o ofertă pe WhatsApp
 story_eyebrow: Povestea noastră
@@ -64,6 +66,7 @@ showroom_gallery:
   - image: ""
 reviews_eyebrow: Recenzii
 reviews_title: Experiențe reale de la clienții Rosini.
+reviews_cta: Toate recenziile →
 review_invite_text: Ai comandat mobilier de la noi? Spune-ne cum a fost experiența ta și ajută-i și pe ceilalți să aleagă.
 review_invite_cta: Publică o recenzie →
 footer_tagline: Mobilier tapițat la comandă din 2006.
