@@ -1,14 +1,10 @@
 {
   "name": "rosini-site",
   "private": true,
-  "version": "1.0.0",
+  "version": "2.0.0",
   "type": "module",
-  "engines": {
-    "node": ">=20.12.2"
-  },
-  "scripts": {
-    "build": "node build.mjs"
-  },
+  "engines": { "node": ">=20.12.2" },
+  "scripts": { "build": "node build.mjs" },
   "dependencies": {
     "@netlify/blobs": "10.7.7",
     "@netlify/functions": "5.3.0",

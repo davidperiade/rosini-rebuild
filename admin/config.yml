@@ -1,143 +1,183 @@
 backend:
   name: git-gateway
   branch: main
-publish_mode: editorial_workflow
-media_folder: content/images
-public_folder: /content/images
-site_url: https://main--rosini-site.netlify.app
+media_folder: "content/images/uploads"
+public_folder: "/content/images/uploads"
+locale: "ro"
+site_url: "https://rosini-site.netlify.app"
 collections:
-  - name: products
-    label: Produse
-    folder: content/products
-    create: true
-    delete: true
-    slug: '{{slug}}'
-    fields:
-      - {label: Titlu, name: title, widget: string}
-      - {label: Slug, name: slug, widget: string}
-      - {label: Categorie, name: category, widget: string}
-      - {label: Descriere, name: description, widget: text}
-      - {label: Caracteristici, name: features, widget: list, required: false}
-      - {label: Livrare, name: delivery_time, widget: string, required: false}
-      - {label: Garanție, name: warranty, widget: string, required: false}
-      - {label: Imagine principală, name: image, widget: image, required: false}
-      - label: Galerie foto produs
-        name: gallery
-        widget: list
-        required: false
-        field: {label: Fotografie, name: image, widget: image}
-      - label: Configurații produs
-        name: configuration_options
-        widget: list
-        required: false
-      - label: Imagini 360°
-        name: gallery_360
-        widget: list
-        required: false
-        field: {label: Imagine, name: image, widget: image}
-      - {label: Activare Vezi în camera ta cu AI, name: ai_room_preview, widget: boolean, default: false, required: false}
-      - {label: Conținut, name: body, widget: markdown, required: false}
-  - name: categories
-    label: Categorii produse
-    folder: content/categories
-    create: true
-    delete: true
-    slug: '{{slug}}'
-    fields:
-      - {label: Titlu, name: title, widget: string}
-      - {label: Slug, name: slug, widget: string}
-      - {label: Imagine, name: image, widget: image, required: false}
-      - {label: Descriere, name: description, widget: text, required: false}
-  - name: testimonials
-    label: Recenzii
-    folder: content/testimonials
-    create: true
-    delete: true
-    slug: '{{slug}}'
-    fields:
-      - {label: Titlu, name: title, widget: string, required: false}
-      - {label: Autor, name: author, widget: string}
-      - {label: Rating, name: rating, widget: number, value_type: int, min: 1, max: 5, default: 5}
-      - {label: Data, name: date, widget: datetime, required: false}
-      - {label: Text, name: body, widget: markdown}
-  - name: site_settings
-    label: Setări și pagină principală
+  - name: "settings"
+    label: "Setări Rosini și homepage"
     files:
-      - label: Conținut Rosini
-        name: general
-        file: content/site-settings.md
+      - label: "Setări generale + homepage"
+        name: "site"
+        file: "content/site-settings.md"
         fields:
-          - {label: Titlu site, name: site_title, widget: string}
-          - {label: Descriere SEO, name: site_description, widget: text}
-          - {label: Logo, name: logo, widget: image, required: false}
-          - {label: Telefon principal, name: phone_primary, widget: string}
-          - {label: Telefon secundar, name: phone_secondary, widget: string, required: false}
-          - {label: Email, name: email, widget: string}
-          - {label: Adresă, name: address, widget: string}
-          - {label: Link WhatsApp / număr, name: whatsapp_phone, widget: string}
-          - {label: Mesaj WhatsApp, name: whatsapp_message, widget: string}
-          - {label: Afișează buton apel, name: show_call_button, widget: boolean, default: true}
-          - {label: Afișează buton WhatsApp, name: show_whatsapp_button, widget: boolean, default: true}
-          - {label: Imagine Hero, name: hero_image, widget: image, required: false}
-          - {label: Text mic Hero, name: hero_eyebrow, widget: string}
-          - {label: Titlu Hero, name: hero_title, widget: string}
-          - {label: Subtitlu Hero, name: hero_subtitle, widget: text}
-          - {label: Etichetă imagine Hero, name: hero_overlay_label, widget: string}
-          - {label: Titlu peste imagine Hero, name: hero_overlay_title, widget: string}
-          - {label: Link peste imagine Hero, name: hero_overlay_cta, widget: string}
-          - {label: CTA principal Hero, name: hero_primary_cta, widget: string}
-          - {label: CTA WhatsApp Hero, name: hero_whatsapp_cta, widget: string}
-          - {label: Etichetă Povestea noastră, name: story_eyebrow, widget: string}
-          - {label: Titlu Povestea noastră, name: story_title, widget: string}
-          - {label: Paragraf Povestea noastră 1, name: story_paragraph_1, widget: text}
-          - {label: Paragraf Povestea noastră 2, name: story_paragraph_2, widget: text}
-          - {label: CTA Povestea noastră, name: story_cta, widget: string}
-          - {label: Etichetă Diferențiatori, name: differentiators_eyebrow, widget: string}
-          - {label: Titlu Diferențiatori, name: differentiators_title, widget: string}
-          - {label: Intro Diferențiatori, name: differentiators_intro, widget: text}
-          - label: Ce nu se vede — cele 3 carduri
-            name: differentiators
-            widget: list
-            min: 3
-            max: 3
-            fields:
-              - {label: Titlu, name: title, widget: string}
-              - {label: Descriere, name: description, widget: text}
-          - {label: Etichetă Colecții, name: collections_eyebrow, widget: string}
-          - {label: Titlu Colecții, name: collections_title, widget: string}
-          - {label: Link toate produsele, name: collections_cta, widget: string}
-          - {label: Etichetă Proces, name: process_eyebrow, widget: string}
-          - {label: Titlu Proces, name: process_title, widget: string}
-          - label: Cei 3 pași ai procesului
-            name: process_steps
-            widget: list
-            min: 3
-            max: 3
-            fields:
-              - {label: Titlu pas, name: title, widget: string}
-              - {label: Descriere pas, name: description, widget: text}
-          - {label: Etichetă Showroom, name: showroom_eyebrow, widget: string}
-          - {label: Titlu Showroom, name: showroom_title, widget: string}
-          - {label: Text invitație Showroom, name: showroom_text, widget: text}
-          - {label: Program Luni - Vineri, name: showroom_hours_weekdays, widget: string}
-          - {label: Program Sâmbătă, name: showroom_hours_saturday, widget: string}
-          - {label: Link Google Maps Showroom, name: showroom_maps_url, widget: string}
-          - {label: CTA Google Maps, name: showroom_cta, widget: string}
-          - label: Galerie Showroom
-            name: showroom_gallery
-            widget: list
-            max: 4
+          - { label: "Nume firmă", name: "site_title", widget: "string" }
+          - { label: "Descriere SEO globală", name: "site_description", widget: "text" }
+          - { label: "URL canonical", name: "canonical_url", widget: "string", required: false }
+          - { label: "Logo", name: "logo", widget: "image", required: false }
+          - { label: "Favicon", name: "favicon", widget: "image", required: false }
+          - { label: "Imagine Open Graph", name: "og_image", widget: "image", required: false }
+          - { label: "Telefon principal", name: "phone_primary", widget: "string" }
+          - { label: "Telefon secundar", name: "phone_secondary", widget: "string", required: false }
+          - { label: "WhatsApp", name: "whatsapp_phone", widget: "string" }
+          - { label: "Mesaj WhatsApp", name: "whatsapp_message", widget: "string" }
+          - { label: "Email", name: "email", widget: "string" }
+          - { label: "Adresă", name: "address", widget: "string" }
+          - { label: "Link Google Maps", name: "showroom_maps_url", widget: "string", required: false }
+          - { label: "Program Luni–Vineri", name: "showroom_hours_weekdays", widget: "string", required: false }
+          - { label: "Program Sâmbătă", name: "showroom_hours_saturday", widget: "string", required: false }
+          - { label: "Facebook", name: "facebook_url", widget: "string", required: false }
+          - { label: "Instagram", name: "instagram_url", widget: "string", required: false }
+          - { label: "TikTok", name: "tiktok_url", widget: "string", required: false }
+          - { label: "Link recenzii externe", name: "reviews_url", widget: "string", required: false }
+          - { label: "Afișează apelul", name: "show_call_button", widget: "boolean", default: true }
+          - { label: "Afișează WhatsApp", name: "show_whatsapp_button", widget: "boolean", default: true }
+          - { label: "Garanție (luni)", name: "warranty_months", widget: "number", required: false }
+          - { label: "Termen livrare (săptămâni)", name: "delivery_weeks", widget: "number", required: false }
+          - { label: "Experiență din", name: "experience_since", widget: "string", required: false }
+          - { label: "Tagline footer", name: "footer_tagline", widget: "string", required: false }
+          - { label: "Eyebrow hero", name: "hero_eyebrow", widget: "string" }
+          - { label: "Titlu hero", name: "hero_title", widget: "string" }
+          - { label: "Subtitlu hero", name: "hero_subtitle", widget: "text" }
+          - { label: "Imagine hero desktop", name: "hero_image", widget: "image", required: false }
+          - { label: "Imagine hero mobil", name: "hero_image_mobile", widget: "image", required: false }
+          - { label: "Alt text hero", name: "hero_alt_text", widget: "string", required: false }
+          - { label: "Text CTA produse", name: "hero_primary_cta", widget: "string" }
+          - { label: "Text CTA WhatsApp", name: "hero_whatsapp_cta", widget: "string" }
+          - { label: "Etichetă imagine hero", name: "hero_overlay_label", widget: "string", required: false }
+          - { label: "Titlu peste imagine hero", name: "hero_overlay_title", widget: "string", required: false }
+          - { label: "CTA peste imagine hero", name: "hero_overlay_cta", widget: "string", required: false }
+          - { label: "Eyebrow poveste", name: "story_eyebrow", widget: "string", required: false }
+          - { label: "Titlu poveste", name: "story_title", widget: "string", required: false }
+          - { label: "Paragraf poveste 1", name: "story_paragraph_1", widget: "text", required: false }
+          - { label: "Paragraf poveste 2", name: "story_paragraph_2", widget: "text", required: false }
+          - { label: "CTA poveste", name: "story_cta", widget: "string", required: false }
+          - { label: "Eyebrow diferențiatori", name: "differentiators_eyebrow", widget: "string", required: false }
+          - { label: "Titlu diferențiatori", name: "differentiators_title", widget: "string", required: false }
+          - { label: "Intro diferențiatori", name: "differentiators_intro", widget: "text", required: false }
+          - label: "Diferențiatori"
+            name: "differentiators"
+            widget: "list"
             required: false
-            field: {label: Fotografie, name: image, widget: image, required: false}
-          - {label: Etichetă Recenzii, name: reviews_eyebrow, widget: string}
-          - {label: Titlu Recenzii, name: reviews_title, widget: string}
-          - {label: Link toate recenziile, name: reviews_cta, widget: string}
-          - {label: Text invitație recenzie, name: review_invite_text, widget: text}
-          - {label: CTA publicare recenzie, name: review_invite_cta, widget: string}
-          - {label: Text footer, name: footer_tagline, widget: string}
-          - {label: Experiență din anul, name: experience_since, widget: string}
-          - {label: Facebook, name: facebook_url, widget: string, required: false}
-          - {label: Instagram, name: instagram_url, widget: string, required: false}
-          - {label: TikTok, name: tiktok_url, widget: string, required: false}
-          - {label: Garanție în luni, name: warranty_months, widget: number, value_type: int}
-          - {label: Livrare în săptămâni, name: delivery_weeks, widget: number}
+            fields:
+              - { label: "Titlu", name: "title", widget: "string" }
+              - { label: "Descriere", name: "description", widget: "text" }
+          - label: "Beneficii hero"
+            name: "benefits"
+            widget: "list"
+            required: false
+            fields:
+              - { label: "Titlu", name: "title", widget: "string" }
+              - { label: "Descriere", name: "description", widget: "string", required: false }
+          - { label: "Eyebrow colecții", name: "collections_eyebrow", widget: "string", required: false }
+          - { label: "Titlu colecții", name: "collections_title", widget: "string", required: false }
+          - { label: "CTA colecții", name: "collections_cta", widget: "string", required: false }
+          - { label: "Eyebrow proces", name: "process_eyebrow", widget: "string", required: false }
+          - { label: "Titlu proces", name: "process_title", widget: "string", required: false }
+          - label: "Pași comandă"
+            name: "process_steps"
+            widget: "list"
+            required: false
+            fields:
+              - { label: "Titlu", name: "title", widget: "string" }
+              - { label: "Descriere", name: "description", widget: "text" }
+          - { label: "Eyebrow showroom", name: "showroom_eyebrow", widget: "string", required: false }
+          - { label: "Titlu showroom", name: "showroom_title", widget: "string", required: false }
+          - { label: "Text showroom", name: "showroom_text", widget: "text", required: false }
+          - { label: "CTA showroom", name: "showroom_cta", widget: "string", required: false }
+          - label: "Galerie showroom"
+            name: "showroom_gallery"
+            widget: "list"
+            required: false
+            fields:
+              - { label: "Imagine", name: "image", widget: "image", required: false }
+          - { label: "Eyebrow recenzii", name: "reviews_eyebrow", widget: "string", required: false }
+          - { label: "Titlu recenzii", name: "reviews_title", widget: "string", required: false }
+          - { label: "CTA recenzii", name: "reviews_cta", widget: "string", required: false }
+          - { label: "Text invitație recenzie", name: "review_invite_text", widget: "text", required: false }
+          - { label: "CTA invitație recenzie", name: "review_invite_cta", widget: "string", required: false }
+  - name: "categories"
+    label: "Categorii"
+    folder: "content/categories"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Titlu", name: "title", widget: "string" }
+      - { label: "Slug", name: "slug", widget: "string" }
+      - { label: "Descriere", name: "description", widget: "text" }
+      - { label: "Imagine", name: "image", widget: "image", required: false }
+      - { label: "Alt text", name: "alt_text", widget: "string", required: false }
+      - { label: "Ordine", name: "order", widget: "number", value_type: "int", required: false }
+      - { label: "Activ", name: "active", widget: "boolean", default: true }
+      - { label: "Conținut suplimentar", name: "body", widget: "markdown", required: false }
+  - name: "products"
+    label: "Produse"
+    folder: "content/products"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Nume produs", name: "title", widget: "string" }
+      - { label: "Slug", name: "slug", widget: "string", required: false }
+      - { label: "Categorie", name: "category", widget: "string", required: false }
+      - { label: "Categorie slug", name: "category_slug", widget: "string", required: false }
+      - { label: "Activ", name: "active", widget: "boolean", default: true }
+      - { label: "Ordine", name: "order", widget: "number", value_type: "int", required: false }
+      - { label: "Imagine principală", name: "image", widget: "image", required: false }
+      - { label: "Alt text", name: "alt_text", widget: "string", required: false }
+      - label: "Galerie"
+        name: "gallery"
+        widget: "list"
+        required: false
+        field: { label: "Imagine", name: "image", widget: "image" }
+      - { label: "Descriere", name: "description", widget: "text", required: false }
+      - { label: "Caracteristici", name: "features", widget: "list", required: false, field: { label: "Caracteristică", name: "feature", widget: "string" } }
+      - { label: "Dimensiuni", name: "dimensions", widget: "string", required: false }
+      - { label: "Materiale", name: "materials", widget: "text", required: false }
+      - { label: "Opțiuni", name: "options", widget: "text", required: false }
+      - { label: "Termen livrare", name: "delivery_time", widget: "string", required: false }
+      - { label: "Garanție", name: "warranty", widget: "string", required: false }
+      - { label: "Notă imagine", name: "image_note", widget: "string", required: false }
+      - { label: "SEO title", name: "seo_title", widget: "string", required: false }
+      - { label: "SEO description", name: "seo_description", widget: "text", required: false }
+      - { label: "Imagine Open Graph", name: "og_image", widget: "image", required: false }
+      - { label: "Conținut complet", name: "body", widget: "markdown", required: false }
+  - name: "testimonials"
+    label: "Recenzii"
+    folder: "content/testimonials"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Titlu intern", name: "title", widget: "string", required: false }
+      - { label: "Nume / inițiale", name: "author", widget: "string" }
+      - { label: "Localitate", name: "location", widget: "string", required: false }
+      - { label: "Rating", name: "rating", widget: "number", value_type: "int", min: 1, max: 5, default: 5 }
+      - { label: "Data", name: "date", widget: "datetime", required: false }
+      - { label: "Aprobat", name: "approved", widget: "boolean", default: false }
+      - { label: "Ordine", name: "order", widget: "number", value_type: "int", required: false }
+      - { label: "Recenzia", name: "body", widget: "markdown" }
+  - name: "gallery"
+    label: "Galerie"
+    folder: "content/gallery"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Tip", name: "type", widget: "select", options: [showroom, fabrică, proiect] }
+      - { label: "Imagine", name: "image", widget: "image" }
+      - { label: "Alt text", name: "alt_text", widget: "string" }
+      - { label: "Titlu", name: "title", widget: "string", required: false }
+      - { label: "Descriere", name: "description", widget: "text", required: false }
+      - { label: "Activ", name: "active", widget: "boolean", default: true }
+      - { label: "Ordine", name: "order", widget: "number", value_type: "int", required: false }
+  - name: "pages"
+    label: "Pagini legale"
+    files:
+      - label: "Politica de confidențialitate"
+        name: "privacy"
+        file: "content/pages/politica-confidentialitate.md"
+        fields: [{ label: "Conținut", name: "body", widget: "markdown" }]
+      - label: "Politica de cookie-uri"
+        name: "cookies"
+        file: "content/pages/politica-cookie-uri.md"
+        fields: [{ label: "Conținut", name: "body", widget: "markdown" }]
