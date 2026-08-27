@@ -11,35 +11,27 @@ function parseScalar(value) {
   if (v === 'true') return true;
   if (v === 'false') return false;
   if (/^-?\d+(\.\d+)?$/.test(v)) return Number(v);
-  if (v.startsWith('[') && v.endsWith(']')) {
-    return v.slice(1, -1).split(',').map(x => parseScalar(x)).filter(x => x !== '');
-  }
+  if (v.startsWith('[') && v.endsWith(']')) return v.slice(1, -1).split(',').map(x => parseScalar(x)).filter(x => x !== '');
   return v;
 }
 
-function indentation(line) {
-  return line.match(/^\s*/)?.[0].length ?? 0;
-}
+function indentation(line) { return line.match(/^\s*/)?.[0].length ?? 0; }
 
 function parseFrontmatter(text) {
   const match = text.match(/^---\s*\n([\s\S]*?)\n---\s*\n?([\s\S]*)$/);
   if (!match) return { data: {}, body: text.trim() };
-
   const lines = match[1].split(/\r?\n/);
   const data = {};
   let i = 0;
-
   while (i < lines.length) {
     const raw = lines[i];
     if (!raw.trim()) { i++; continue; }
     if (indentation(raw) !== 0) { i++; continue; }
-
     const m = raw.match(/^([^:#][^:]*):\s*(.*)$/);
     if (!m) { i++; continue; }
     const key = m[1].trim();
     const value = m[2].trim();
-
-    if (value === '>- ' || value === '>' || value === '>-') {
+    if (value === '>' || value === '>-' || value === '>- ') {
       i++;
       const parts = [];
       while (i < lines.length && (lines[i].trim() === '' || indentation(lines[i]) > 0)) {
@@ -49,7 +41,6 @@ function parseFrontmatter(text) {
       data[key] = parts.join(' ').replace(/\s+/g, ' ').trim();
       continue;
     }
-
     if (value === '|' || value === '|-' || value === '|+') {
       i++;
       const parts = [];
@@ -60,27 +51,11 @@ function parseFrontmatter(text) {
       data[key] = parts.join('\n').trim();
       continue;
     }
-
-    if (value !== '') {
-      data[key] = parseScalar(value);
-      i++;
-      continue;
-    }
-
+    if (value !== '') { data[key] = parseScalar(value); i++; continue; }
     const next = i + 1;
-    if (next >= lines.length || !lines[next].trim()) {
-      data[key] = '';
-      i++;
-      continue;
-    }
-
+    if (next >= lines.length || !lines[next].trim()) { data[key] = ''; i++; continue; }
     const childIndent = indentation(lines[next]);
-    if (childIndent === 0) {
-      data[key] = '';
-      i++;
-      continue;
-    }
-
+    if (childIndent === 0) { data[key] = ''; i++; continue; }
     if (lines[next].trim().startsWith('- ')) {
       const list = [];
       i = next;
@@ -99,32 +74,24 @@ function parseFrontmatter(text) {
           i++;
           while (i < lines.length && lines[i].trim() && indentation(lines[i]) > childIndent) {
             const nested = lines[i].trim().match(/^([^:]+):\s*(.*)$/);
-            if (!nested) { i++; continue; }
-            obj[nested[1].trim()] = parseScalar(nested[2]);
+            if (nested) obj[nested[1].trim()] = parseScalar(nested[2]);
             i++;
           }
           list.push(obj);
-        } else {
-          list.push(parseScalar(itemText));
-          i++;
-        }
+        } else { list.push(parseScalar(itemText)); i++; }
       }
       data[key] = list;
       continue;
     }
-
     const obj = {};
     i = next;
-    while (i < lines.length && lines[i].trim()) {
-      if (indentation(lines[i]) <= 0) break;
+    while (i < lines.length && lines[i].trim() && indentation(lines[i]) > 0) {
       const nested = lines[i].trim().match(/^([^:]+):\s*(.*)$/);
-      if (!nested) { i++; continue; }
-      obj[nested[1].trim()] = parseScalar(nested[2]);
+      if (nested) obj[nested[1].trim()] = parseScalar(nested[2]);
       i++;
     }
     data[key] = obj;
   }
-
   return { data, body: match[2].trim() };
 }
 
@@ -134,8 +101,7 @@ async function load(directory) {
   try { names = await readdir(path); } catch { return []; }
   const result = [];
   for (const name of names.filter(n => n.endsWith('.md'))) {
-    const text = await readFile(join(path, name), 'utf8');
-    const parsed = parseFrontmatter(text);
+    const parsed = parseFrontmatter(await readFile(join(path, name), 'utf8'));
     result.push({ ...parsed.data, body: parsed.body, file: name });
   }
   return result;
@@ -144,7 +110,6 @@ async function load(directory) {
 const pages = await load('pages');
 const products = await load('products');
 const categories = await load('categories');
-const portfolio = await load('portfolio');
 const testimonials = await load('testimonials');
 const factory = await load('factory');
 let siteSettings = {};
@@ -156,9 +121,5 @@ for (const entry of await readdir(root, { withFileTypes: true })) {
   await cp(join(root, entry.name), join(out, entry.name), { recursive: true });
 }
 
-await writeFile(
-  join(out, 'site-data.json'),
-  JSON.stringify({ generatedAt: new Date().toISOString(), siteSettings, pages, products, categories, portfolio, testimonials, factory }, null, 2)
-);
-
-console.log(`Rosini data built: ${categories.length} categorii, ${products.length} produse, ${portfolio.length} proiecte, ${factory.length} fotografii din fabrică, ${testimonials.length} recenzii.`);
+await writeFile(join(out, 'site-data.json'), JSON.stringify({ generatedAt: new Date().toISOString(), siteSettings, pages, products, categories, testimonials, factory }, null, 2));
+console.log(`Rosini data built: ${categories.length} categorii, ${products.length} produse, ${factory.length} fotografii din fabrică, ${testimonials.length} recenzii.`);
