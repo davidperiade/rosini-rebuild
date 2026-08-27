@@ -1,4 +1,6 @@
 ---
+site_title: Rosini | Mobilier tapițat la comandă în Iași
+site_description: Rosini produce mobilier tapițat la comandă în Iași: canapele, paturi, fotolii și mobilier pentru spații comerciale.
 whatsapp_phone: 0742 056 286
 instagram_url: https://www.instagram.com/canapelerosini/
 phone_secondary: ""
@@ -26,6 +28,9 @@ story_title: Rosini înseamnă mobilier făcut cu atenție la ceea ce nu se vede
 story_paragraph_1: Din 2006, Rosini dezvoltă mobilier tapițat în Iași, cu accent pe structură, confort, mecanisme și finisaje. Nu urmărim doar o piesă care arată bine în fotografii, ci una care să funcționeze bine zi de zi.
 story_paragraph_2: Lucrăm cu soluții adaptate spațiului și utilizării: de la canapele și colțare pentru locuințe până la mobilier pentru proiecte comerciale și Horeca. Alegem configurația, materialele și detaliile în funcție de proiect.
 story_cta: Descoperă povestea Rosini →
+differentiators_eyebrow: Ce nu se vede
+differentiators_title: Diferența este în interiorul fiecărei piese.
+differentiators_intro: Alegem soluțiile constructive și materialele în funcție de felul în care mobilierul va fi folosit, nu doar de felul în care arată.
 differentiators:
   - title: Patent Structural Metalic
     description: Structură ultra-rezistentă realizată pe schelet metalic și mecanisme de extindere durabile.
@@ -33,6 +38,9 @@ differentiators:
     description: Tapițerii din piele naturală premium import Italia și textile de ultimă generație rezistente la uzură.
   - title: Personalizare la Centimetru
     description: Ajustăm dimensiunile, modulele și culorile exact după schița casei tale.
+collections_eyebrow: Colecții
+collections_title: Produse
+collections_cta: Vezi toate produsele →
 process_eyebrow: Simplu și transparent
 process_title: Cum funcționează realizarea mobilierului tău?
 process_steps:
@@ -42,6 +50,7 @@ process_steps:
     description: Alegi materialul, textura, culorile și configurația modulară.
   - title: Producție și Livrare
     description: Fabricăm piesa în Iași și o livrăm cu 24 de luni garanție completă.
+showroom_eyebrow: Vizitează-ne în Iași
 showroom_title: Te așteptăm în Showroom-ul Rosini
 showroom_text: Nimic nu se compară cu senzația de a testa confortul unei canapele în realitate. Vino în showroom-ul nostru din Iași pentru a descoperi calitatea materialelor, a testa mecanismele și a alege dintr-o colecție extinsă de peste 200 de stofe premium și piele naturală. Consultanța este gratuită!
 showroom_maps_url: https://www.google.com/maps/search/?api=1&query=5GFR%2BWF%20Ia%C8%99i
@@ -53,6 +62,10 @@ showroom_gallery:
   - image: ""
   - image: ""
   - image: ""
+reviews_eyebrow: Recenzii
+reviews_title: Experiențe reale de la clienții Rosini.
+review_invite_text: Ai comandat mobilier de la noi? Spune-ne cum a fost experiența ta și ajută-i și pe ceilalți să aleagă.
+review_invite_cta: Publică o recenzie →
 footer_tagline: Mobilier tapițat la comandă din 2006.
 ---
 Setările globale și conținutul editabil al paginii principale Rosini.
