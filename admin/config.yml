@@ -26,9 +26,9 @@ collections:
         widget: object
         required: false
         fields:
-          - {label: Lățime, name: width, widget: string, required: false, hint: 'Exemplu: 240 cm'}
-          - {label: Adâncime, name: depth, widget: string, required: false, hint: 'Exemplu: 100 cm'}
-          - {label: Înălțime, name: height, widget: string, required: false, hint: 'Exemplu: 85 cm'}
+          - {label: Lățime, name: width, widget: string, required: false}
+          - {label: Adâncime, name: depth, widget: string, required: false}
+          - {label: Înălțime, name: height, widget: string, required: false}
           - {label: Înălțime șezut, name: seat_height, widget: string, required: false}
           - {label: Lungime extinsă, name: extended_length, widget: string, required: false}
       - {label: Descriere produs, name: description, widget: text, required: false}
@@ -49,7 +49,7 @@ collections:
     fields:
       - {label: Titlu categorie, name: title, widget: string}
       - {label: Slug, name: slug, widget: string}
-      - {label: Imagine, name: image, widget: image, required: false}
+      - {label: Imagine categorie, name: image, widget: image, required: false}
       - {label: Descriere, name: description, widget: text, required: false}
   - name: factory
     label: Fotografii din fabrică
@@ -70,9 +70,10 @@ collections:
         file: content/site-settings.md
         fields:
           - {label: Logo, name: logo, widget: image, required: false}
+          - {label: Imagine informativă prima pagină, name: hero_image, widget: image, required: false, hint: 'Imaginea principală afișată în partea de sus a paginii Acasă.'}
           - {label: Telefon pentru apel, name: phone_primary, widget: string}
           - {label: Număr WhatsApp, name: whatsapp_phone, widget: string}
-          - {label: Mesaj prestabilit WhatsApp, name: whatsapp_message, widget: text, required: false, hint: 'Poți folosi {produs} pentru numele produsului.'}
+          - {label: Mesaj prestabilit WhatsApp, name: whatsapp_message, widget: text, required: false}
           - {label: Afișează caseta Apel, name: show_call_button, widget: boolean, default: true}
           - {label: Afișează caseta WhatsApp, name: show_whatsapp_button, widget: boolean, default: true}
           - {label: Email, name: email, widget: string}
