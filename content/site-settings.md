@@ -11,7 +11,7 @@ whatsapp_phone: "40742056286"
 whatsapp_message: Bună ziua! Aș dori să discutăm despre un produs Rosini.
 show_call_button: true
 show_whatsapp_button: true
-hero_image: /content/images/1000003765.png
+hero_image: /content/images/1000003779.jpg
 hero_eyebrow: MOBILIER TAPIȚAT LA COMANDĂ · IAȘI
 hero_title: Confortul creat exact pentru tine.
 hero_subtitle: Canapele, colțare și fotolii realizate la comandă, cu materiale
