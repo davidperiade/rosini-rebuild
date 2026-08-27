@@ -1,12 +1,10 @@
 backend:
   name: git-gateway
   branch: main
-
 publish_mode: editorial_workflow
 media_folder: content/images
 public_folder: /content/images
 site_url: https://main--rosini-site.netlify.app
-
 collections:
   - name: products
     label: Produse
@@ -39,7 +37,6 @@ collections:
         field: {label: Imagine, name: image, widget: image}
       - {label: Activare Vezi în camera ta cu AI, name: ai_room_preview, widget: boolean, default: false, required: false}
       - {label: Conținut, name: body, widget: markdown, required: false}
-
   - name: categories
     label: Categorii produse
     folder: content/categories
@@ -51,7 +48,6 @@ collections:
       - {label: Slug, name: slug, widget: string}
       - {label: Imagine, name: image, widget: image, required: false}
       - {label: Descriere, name: description, widget: text, required: false}
-
   - name: testimonials
     label: Recenzii
     folder: content/testimonials
@@ -64,7 +60,6 @@ collections:
       - {label: Rating, name: rating, widget: number, value_type: int, min: 1, max: 5, default: 5}
       - {label: Data, name: date, widget: datetime, required: false}
       - {label: Text, name: body, widget: markdown}
-
   - name: site_settings
     label: Setări și pagină principală
     files:
@@ -89,6 +84,7 @@ collections:
           - {label: Subtitlu Hero, name: hero_subtitle, widget: text}
           - {label: Etichetă imagine Hero, name: hero_overlay_label, widget: string}
           - {label: Titlu peste imagine Hero, name: hero_overlay_title, widget: string}
+          - {label: Link peste imagine Hero, name: hero_overlay_cta, widget: string}
           - {label: CTA principal Hero, name: hero_primary_cta, widget: string}
           - {label: CTA WhatsApp Hero, name: hero_whatsapp_cta, widget: string}
           - {label: Etichetă Povestea noastră, name: story_eyebrow, widget: string}
@@ -135,9 +131,11 @@ collections:
             field: {label: Fotografie, name: image, widget: image, required: false}
           - {label: Etichetă Recenzii, name: reviews_eyebrow, widget: string}
           - {label: Titlu Recenzii, name: reviews_title, widget: string}
+          - {label: Link toate recenziile, name: reviews_cta, widget: string}
           - {label: Text invitație recenzie, name: review_invite_text, widget: text}
           - {label: CTA publicare recenzie, name: review_invite_cta, widget: string}
           - {label: Text footer, name: footer_tagline, widget: string}
+          - {label: Experiență din anul, name: experience_since, widget: string}
           - {label: Facebook, name: facebook_url, widget: string, required: false}
           - {label: Instagram, name: instagram_url, widget: string, required: false}
           - {label: TikTok, name: tiktok_url, widget: string, required: false}
