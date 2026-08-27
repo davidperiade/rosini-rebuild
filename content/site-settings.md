@@ -7,7 +7,7 @@ phone_primary: 0742 056 286
 phone_secondary: ""
 email: rosinigrup@yahoo.com
 address: Șoseaua Păcurari Nr. 54, Bl. 554, P, Iași
-whatsapp_phone: 0742 056 286
+whatsapp_phone: "40742056286"
 whatsapp_message: Bună ziua! Aș dori să discutăm despre un produs Rosini.
 show_call_button: true
 show_whatsapp_button: true
