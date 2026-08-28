@@ -1,1 +1,22 @@
-<!doctype html><html lang="ro"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Rosini — Administrare</title><script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script></head><body><script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script></body></html>
+<!doctype html>
+<html lang="ro">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex,nofollow">
+  <title>Rosini — Administrare</title>
+  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+</head>
+<body>
+  <div style="font-family:system-ui,sans-serif;padding:24px">Se încarcă panoul de administrare Rosini…</div>
+  <script>
+    window.netlifyIdentity = window.netlifyIdentity || [];
+    window.netlifyIdentity.on('init', function () {
+      if (window.location.hash && window.location.hash.includes('invite_token')) {
+        window.netlifyIdentity.open('signup');
+      }
+    });
+  </script>
+  <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
+</body>
+</html>
