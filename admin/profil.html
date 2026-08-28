@@ -144,8 +144,12 @@
     const confirmPassword = $('ownPasswordConfirm').value;
     if (password.length < 10) return $('ownStatus').textContent='Parola trebuie să aibă minimum 10 caractere.';
     if (password !== confirmPassword) return $('ownStatus').textContent='Parolele nu coincid.';
-    try { await api('PATCH',{id:me,password}); $('ownStatus').textContent='Parola a fost schimbată cu succes.'; $('ownStatus').className='status ok'; e.target.reset(); }
-    catch(err){ $('ownStatus').textContent=err.message; $('ownStatus').className='status error'; }
+    try {
+      await api('PATCH',{id:me,password});
+      $('ownStatus').textContent='Parola a fost schimbată cu succes.';
+      $('ownStatus').className='status ok';
+      $('ownPassword').reset();
+    } catch(err){ $('ownStatus').textContent=err.message; $('ownStatus').className='status error'; }
   });
 
   $('addAdmin').addEventListener('submit', async (e) => {
