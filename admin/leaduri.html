@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="ro">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="robots" content="noindex,nofollow">
+  <title>Rosini — Leaduri și recenzii</title>
+  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+  <style>
+    :root{font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#171717;background:#f5f3ef}
+    *{box-sizing:border-box}body{margin:0}.wrap{max-width:1050px;margin:0 auto;padding:28px 18px 60px}.top{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-bottom:26px}.brand{font-weight:800;letter-spacing:-.02em}.back{color:#171717;text-decoration:none;border:1px solid #d8d4ce;background:#fff;padding:10px 14px}.card{background:#fff;border:1px solid #ddd8d0;padding:24px;margin-bottom:18px}.eyebrow{text-transform:uppercase;letter-spacing:.12em;font-size:11px;font-weight:800;color:#777}.title{font-size:clamp(30px,5vw,48px);line-height:1.02;letter-spacing:-.04em;margin:8px 0 10px}.muted{color:#666}.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}button{border:0;background:#171717;color:#fff;padding:11px 15px;font:inherit;font-weight:700;cursor:pointer;border-radius:8px}button.secondary{background:#fff;color:#171717;border:1px solid #cfcac2}button.approve{background:#22643c}button.reject{background:#8f3030}.status{margin-top:12px;font-size:14px}.status.error{color:#8f3030}.status.ok{color:#22643c}.switch{display:flex;align-items:center;justify-content:space-between;gap:20px;border:1px solid #ddd8d0;background:#faf9f7;padding:18px}.switch strong{display:block;font-size:18px}.switch span{display:block;color:#666;font-size:13px;margin-top:5px}.toggle{position:relative;width:54px;height:30px;flex:0 0 auto}.toggle input{opacity:0;width:0;height:0}.slider{position:absolute;inset:0;background:#bbb;border-radius:999px;cursor:pointer;transition:.2s}.slider:before{content:"";position:absolute;width:24px;height:24px;left:3px;top:3px;background:#fff;border-radius:50%;transition:.2s;box-shadow:0 1px 4px #0002}.toggle input:checked+.slider{background:#22643c}.toggle input:checked+.slider:before{transform:translateX(24px)}.notice{background:#f7f0e7;border-left:3px solid #a21c1c;padding:12px 14px;font-size:13px;margin-top:16px}.review{border-top:1px solid #e3dfd8;padding:20px 0}.review:first-child{border-top:0}.stars{letter-spacing:.08em}.meta{font-size:13px;color:#777;margin-top:6px}.review p{line-height:1.6;margin:10px 0}.empty{padding:20px 0;color:#777}@media(max-width:650px){.switch{align-items:flex-start}.title{font-size:36px}}
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top"><div class="brand">ROSINI · ADMIN</div><a class="back" href="/admin/">← Înapoi în panou</a></div>
+
+  <section class="card">
+    <div class="eyebrow">Campanie</div>
+    <h1 class="title">Leaduri și recenzii</h1>
+    <p class="muted">Controlează rapid dacă formularul de ofertă este disponibil public și gestionează recenziile trimise de clienți.</p>
+    <div class="switch">
+      <div><strong>Colectarea de leaduri</strong><span>Când este dezactivată, formularul nu mai poate fi folosit și vizitatorii văd un mesaj elegant că momentan nu există o campanie activă.</span></div>
+      <label class="toggle" aria-label="Colectarea de leaduri"><input id="leadEnabled" type="checkbox"><span class="slider"></span></label>
+    </div>
+    <div id="leadStatus" class="status"></div>
+    <div class="notice">Dezactivarea nu șterge leadurile existente. Doar oprește formularul public și ascunde CTA-ul „Vrei o reducere?” până reactivezi campania.</div>
+  </section>
+
+  <section class="card">
+    <div class="eyebrow">Recenzii</div>
+    <h2>Recenzii trimise de clienți</h2>
+    <p class="muted">Recenziile noi intră în așteptare. Le poți aproba sau respinge înainte să apară pe site.</p>
+    <div id="reviews">Se încarcă…</div>
+    <div id="reviewStatus" class="status"></div>
+  </section>
+</div>
+<script>
+  const $=id=>document.getElementById(id);
+  const api=async(method='GET',body,path='/api/runtime-settings')=>{const r=await fetch(path,{method,headers:body?{'Content-Type':'application/json'}:{},body:body?JSON.stringify(body):undefined,credentials:'same-origin',cache:'no-store'});const t=await r.text();let d;try{d=JSON.parse(t)}catch{d={error:t}}if(!r.ok)throw new Error(d.error||t||'Operațiunea a eșuat.');return d};
+  const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  async function loadSettings(){try{const d=await api();$('leadEnabled').checked=d.lead_collection_enabled!==false}catch(e){$('leadStatus').textContent=e.message;$('leadStatus').className='status error'}}
+  $('leadEnabled').addEventListener('change',async()=>{try{const current=await api();const d=await api('PUT',{whatsapp_phone:current.whatsapp_phone||'0742 056 286',whatsapp_message:current.whatsapp_message||'Bună ziua! Aș dori să discutăm despre un produs Rosini.',lead_collection_enabled:$('leadEnabled').checked});$('leadEnabled').checked=d.lead_collection_enabled!==false;$('leadStatus').textContent=$('leadEnabled').checked?'Colectarea de leaduri este activă.':'Colectarea de leaduri a fost dezactivată.';$('leadStatus').className='status ok'}catch(e){$('leadEnabled').checked=!$('leadEnabled').checked;$('leadStatus').textContent=e.message;$('leadStatus').className='status error'}});
+  async function loadReviews(){try{const d=await api('GET',undefined,'/api/reviews');const reviews=Array.isArray(d.reviews)?d.reviews:[];if(!reviews.length){$('reviews').innerHTML='<div class="empty">Nu există recenzii trimise.</div>';return}$('reviews').innerHTML=reviews.map(r=>`<article class="review"><div class="stars">${'★'.repeat(Math.max(1,Math.min(5,Number(r.rating||5))))}</div><strong>${esc(r.author||'Client')}</strong><div class="meta">${esc(r.createdAt?new Date(r.createdAt).toLocaleString('ro-RO'): '')} · Status: ${esc(r.status||'pending')}</div><p>„${esc(r.review||'')}”</p><div class="actions"><button class="approve" data-status="approved" data-id="${esc(r.id)}">Aprobă</button><button class="reject" data-status="rejected" data-id="${esc(r.id)}">Respinge</button><button class="secondary" data-delete="${esc(r.id)}">Șterge</button></div></article>`).join('');document.querySelectorAll('[data-status]').forEach(b=>b.onclick=()=>changeReview(b.dataset.id,b.dataset.status));document.querySelectorAll('[data-delete]').forEach(b=>b.onclick=()=>deleteReview(b.dataset.delete))}catch(e){$('reviews').textContent='Nu s-au putut încărca recenziile.';$('reviewStatus').textContent=e.message;$('reviewStatus').className='status error'}}
+  async function changeReview(id,status){try{await api('PATCH',{id,status},'/api/reviews');$('reviewStatus').textContent=status==='approved'?'Recenzia a fost aprobată și va apărea pe site.':'Recenzia a fost respinsă.';$('reviewStatus').className='status ok';loadReviews()}catch(e){$('reviewStatus').textContent=e.message;$('reviewStatus').className='status error'}}
+  async function deleteReview(id){if(!confirm('Sigur vrei să ștergi această recenzie?'))return;try{await api('DELETE',{id},'/api/reviews');loadReviews()}catch(e){$('reviewStatus').textContent=e.message;$('reviewStatus').className='status error'}}
+  window.netlifyIdentity=window.netlifyIdentity||[];window.netlifyIdentity.on('init',function(user){if(!user){window.netlifyIdentity.open('login');return}loadSettings();loadReviews()});
+</script>
+</body>
+</html>
