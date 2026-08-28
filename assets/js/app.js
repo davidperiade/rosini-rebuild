@@ -99,6 +99,58 @@
     document.head.appendChild(style);
   }
 
+  function socialIcon(name) {
+    if (name === 'Instagram') {
+      return '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="12" r="4.2" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="17.4" cy="6.7" r="1.15" fill="currentColor"/></svg>';
+    }
+    if (name === 'Facebook') {
+      return '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14 8h3V4h-3c-3.3 0-5 2-5 5v3H6v4h3v4h4v-4h3.2l.8-4H13V9c0-.7.3-1 1-1Z" fill="currentColor"/></svg>';
+    }
+    return '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14.4 4c.3 2 1.5 3.5 3.6 4v3.1c-1.5-.1-2.8-.6-4-1.4v6.1c0 3.3-2.2 5.2-5 5.2-2.5 0-4.5-1.8-4.5-4.2 0-2.7 2.2-4.5 5-4.5.5 0 1 .1 1.4.2v3.1c-.4-.2-.8-.3-1.3-.3-1 0-1.9.5-1.9 1.5 0 .8.7 1.4 1.5 1.4 1.1 0 1.8-.7 1.8-2.3V4h3.4Z" fill="currentColor"/></svg>';
+  }
+
+  function initSocialFooter() {
+    const contactHeading = [...document.querySelectorAll('.site-footer h2')].find((heading) => /contact/i.test(heading.textContent || ''));
+    if (!contactHeading) return;
+    const contactColumn = contactHeading.parentElement;
+    if (!contactColumn || contactColumn.querySelector('[data-social-footer]')) return;
+
+    const socials = [
+      { name: 'Instagram', url: settings.instagram_url },
+      { name: 'Facebook', url: settings.facebook_url },
+      { name: 'TikTok', url: settings.tiktok_url }
+    ].filter((item) => item.url && /^https?:\/\//i.test(String(item.url).trim()));
+
+    if (!socials.length) return;
+
+    const style = document.createElement('style');
+    style.id = 'rosini-social-footer-fix';
+    style.textContent = `
+      .rosini-social-footer{margin-top:30px;padding-top:22px;border-top:1px solid #3a3430}
+      .rosini-social-footer-title{margin:0 0 13px;color:#8f8781;font-size:.68rem;font-weight:800;letter-spacing:.18em;text-transform:uppercase}
+      .rosini-social-footer-list{display:flex;flex-direction:column;gap:9px}
+      .rosini-social-footer-link{display:inline-flex!important;align-items:center;gap:10px;width:max-content;color:#c9c0ba!important;font-size:.82rem;line-height:1.35;transition:color .2s ease,transform .2s ease}
+      .rosini-social-footer-link:hover{color:#fff!important;transform:translateX(2px)}
+      .rosini-social-footer-link svg{width:19px;height:19px;flex:0 0 19px}
+      @media(max-width:700px){.rosini-social-footer{margin-top:22px}.rosini-social-footer-list{gap:11px}}
+    `;
+    document.head.appendChild(style);
+
+    const block = document.createElement('div');
+    block.className = 'rosini-social-footer';
+    block.dataset.socialFooter = 'true';
+    block.innerHTML = `<p class="rosini-social-footer-title">Urmărește-ne</p><div class="rosini-social-footer-list">${socials.map((item) => `<a class="rosini-social-footer-link" href="${escapeHtml(item.url.trim())}" target="_blank" rel="noopener noreferrer" aria-label="Rosini pe ${item.name}">${socialIcon(item.name)}<span>${item.name}</span></a>`).join('')}</div>`;
+    contactColumn.appendChild(block);
+
+    const footerBottom = document.querySelector('.footer-bottom');
+    if (footerBottom) {
+      const oldSocial = footerBottom.querySelectorAll('a');
+      oldSocial.forEach((link) => {
+        if (/^(Facebook|Instagram|TikTok)$/i.test((link.textContent || '').trim())) link.parentElement?.remove();
+      });
+    }
+  }
+
   function initWhatsappFloat() {
     const button = document.getElementById('whatsapp-float');
     if (!button) return;
@@ -165,6 +217,7 @@
   initCategoryCards();
   initLeadFormTarget();
   initLeadAnchor();
+  initSocialFooter();
   initWhatsappFloat();
   initFilters();
   initProductPage();
