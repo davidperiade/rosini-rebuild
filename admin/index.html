@@ -7,32 +7,60 @@
   <title>Rosini — Administrare</title>
   <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
   <style>
-    #rosini-profile-link{position:fixed;right:18px;bottom:18px;z-index:999999;background:#171717;color:#fff;text-decoration:none;padding:12px 16px;border-radius:999px;font:700 13px/1 system-ui,-apple-system,sans-serif;box-shadow:0 8px 30px rgba(0,0,0,.18)}
+    #rosini-profile-link{
+      position:fixed;
+      top:18px;
+      right:18px;
+      z-index:2147483647;
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      background:#171717;
+      color:#fff;
+      text-decoration:none;
+      padding:11px 15px;
+      border-radius:999px;
+      font:700 13px/1 system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+      box-shadow:0 8px 28px rgba(0,0,0,.22);
+      border:1px solid rgba(255,255,255,.12);
+    }
     #rosini-profile-link:hover{background:#a21c1c}
+    #rosini-profile-link .icon{font-size:15px;line-height:1}
+    @media(max-width:700px){
+      #rosini-profile-link{top:10px;right:10px;padding:10px 12px;font-size:12px}
+    }
   </style>
 </head>
 <body>
   <div style="font-family:system-ui,sans-serif;padding:24px">Se încarcă panoul de administrare Rosini…</div>
   <script>
-    window.netlifyIdentity = window.netlifyIdentity || [];
-    window.netlifyIdentity.on('init', function () {
-      if (window.location.hash && window.location.hash.includes('invite_token')) {
-        window.netlifyIdentity.open('signup');
-      }
-      const addProfileLink = () => {
-        if (document.getElementById('rosini-profile-link')) return;
-        const user = window.netlifyIdentity.currentUser && window.netlifyIdentity.currentUser();
-        if (!user) return;
-        const a = document.createElement('a');
-        a.id = 'rosini-profile-link';
-        a.href = '/admin/profil.html';
-        a.textContent = 'Profil · Administratori';
-        a.title = 'Profil și gestionarea administratorilor';
+    (function(){
+      function ensureProfileLink(){
+        if(document.getElementById('rosini-profile-link')) return;
+        const a=document.createElement('a');
+        a.id='rosini-profile-link';
+        a.href='/admin/profil.html';
+        a.innerHTML='<span class="icon">⚙</span><span>Profil · Administratori</span>';
+        a.title='Profil, parolă și administratori';
         document.body.appendChild(a);
-      };
-      addProfileLink();
-      window.netlifyIdentity.on('login', addProfileLink);
-    });
+      }
+
+      window.netlifyIdentity=window.netlifyIdentity||[];
+      window.netlifyIdentity.on('init',function(){
+        if(window.location.hash&&window.location.hash.includes('invite_token')){
+          window.netlifyIdentity.open('signup');
+        }
+        ensureProfileLink();
+        window.netlifyIdentity.on('login',ensureProfileLink);
+      });
+
+      document.addEventListener('DOMContentLoaded',function(){
+        ensureProfileLink();
+        setTimeout(ensureProfileLink,500);
+        setTimeout(ensureProfileLink,1500);
+        setTimeout(ensureProfileLink,3000);
+      });
+    })();
   </script>
   <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
 </body>
