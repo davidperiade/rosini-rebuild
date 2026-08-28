@@ -44,7 +44,7 @@
     const cta = document.createElement('a');
     cta.className = 'nav-discount-cta';
     cta.dataset.discountNavCta = 'true';
-    cta.href = '#lead-form';
+    cta.href = '/contact.html#lead-form';
     cta.textContent = settings.lead_nav_label || 'Vrei o reducere?';
     cta.setAttribute('aria-label', 'Obține reducerea disponibilă în showroom');
 
@@ -73,6 +73,22 @@
         if (firstField) setTimeout(() => firstField.focus({ preventScroll: true }), 450);
       });
     });
+  }
+
+  function initCategoryCards() {
+    const style = document.createElement('style');
+    style.id = 'rosini-category-card-fix';
+    style.textContent = `
+      .category-grid{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px!important}
+      .category-card{display:flex!important;position:relative!important;min-height:145px!important;align-items:flex-end!important;padding:28px!important;background:#d8d2c7!important;border:1px solid #c9c1b5!important;color:#171717!important;text-decoration:none!important;overflow:hidden!important;transition:transform .2s ease,background .2s ease!important}
+      .category-card:hover{transform:translateY(-3px)!important;background:#cec6b9!important}
+      .category-card img,.category-card p{display:none!important}
+      .category-card>div{display:block!important;width:100%!important}
+      .category-card span{display:block!important;font-size:clamp(20px,2.2vw,30px)!important;font-weight:700!important;line-height:1.08!important;letter-spacing:-.025em!important;color:#171717!important}
+      @media(max-width:900px){.category-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}}
+      @media(max-width:600px){.category-grid{grid-template-columns:1fr!important}.category-card{min-height:118px!important;padding:22px!important}.category-card span{font-size:22px!important}}
+    `;
+    document.head.appendChild(style);
   }
 
   function initWhatsappFloat() {
@@ -138,6 +154,7 @@
   setLogo(settings.logo || FALLBACK_LOGO);
   initMenu();
   initDiscountNavCta();
+  initCategoryCards();
   initLeadAnchor();
   initWhatsappFloat();
   initFilters();
