@@ -6,6 +6,10 @@
   <meta name="robots" content="noindex,nofollow">
   <title>Rosini — Administrare</title>
   <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+  <style>
+    #rosini-profile-link{position:fixed;right:18px;bottom:18px;z-index:999999;background:#171717;color:#fff;text-decoration:none;padding:12px 16px;border-radius:999px;font:700 13px/1 system-ui,-apple-system,sans-serif;box-shadow:0 8px 30px rgba(0,0,0,.18)}
+    #rosini-profile-link:hover{background:#a21c1c}
+  </style>
 </head>
 <body>
   <div style="font-family:system-ui,sans-serif;padding:24px">Se încarcă panoul de administrare Rosini…</div>
@@ -15,6 +19,19 @@
       if (window.location.hash && window.location.hash.includes('invite_token')) {
         window.netlifyIdentity.open('signup');
       }
+      const addProfileLink = () => {
+        if (document.getElementById('rosini-profile-link')) return;
+        const user = window.netlifyIdentity.currentUser && window.netlifyIdentity.currentUser();
+        if (!user) return;
+        const a = document.createElement('a');
+        a.id = 'rosini-profile-link';
+        a.href = '/admin/profil.html';
+        a.textContent = 'Profil · Administratori';
+        a.title = 'Profil și gestionarea administratorilor';
+        document.body.appendChild(a);
+      };
+      addProfileLink();
+      window.netlifyIdentity.on('login', addProfileLink);
     });
   </script>
   <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
