@@ -59,9 +59,17 @@
     }
   }
 
+  function initLeadFormTarget() {
+    const form = document.querySelector('form[name="cerere-oferta"]');
+    if (!form) return;
+    const card = form.closest('.contact-card') || form;
+    card.id = 'lead-form';
+    if (location.hash === '#lead-form') {
+      requestAnimationFrame(() => card.scrollIntoView({ behavior: 'smooth', block: 'start' }));
+    }
+  }
+
   function initLeadAnchor() {
-    const lead = document.getElementById('lead-form');
-    if (!lead) return;
     document.querySelectorAll('a[href="#lead-form"]').forEach((link) => {
       link.addEventListener('click', (event) => {
         const target = document.getElementById('lead-form');
@@ -155,6 +163,7 @@
   initMenu();
   initDiscountNavCta();
   initCategoryCards();
+  initLeadFormTarget();
   initLeadAnchor();
   initWhatsappFloat();
   initFilters();
