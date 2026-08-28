@@ -99,64 +99,29 @@
     document.head.appendChild(style);
   }
 
-  function socialIcon(name) {
-    if (name === 'Instagram') {
-      return '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="12" r="4.2" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="17.4" cy="6.7" r="1.15" fill="currentColor"/></svg>';
-    }
-    if (name === 'Facebook') {
-      return '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14 8h3V4h-3c-3.3 0-5 2-5 5v3H6v4h3v4h4v-4h3.2l.8-4H13V9c0-.7.3-1 1-1Z" fill="currentColor"/></svg>';
-    }
-    return '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14.4 4c.3 2 1.5 3.5 3.6 4v3.1c-1.5-.1-2.8-.6-4-1.4v6.1c0 3.3-2.2 5.2-5 5.2-2.5 0-4.5-1.8-4.5-4.2 0-2.7 2.2-4.5 5-4.5.5 0 1 .1 1.4.2v3.1c-.4-.2-.8-.3-1.3-.3-1 0-1.9.5-1.9 1.5 0 .8.7 1.4 1.5 1.4 1.1 0 1.8-.7 1.8-2.3V4h3.4Z" fill="currentColor"/></svg>';
-  }
-
-  function initSocialFooter() {
-    const contactHeading = [...document.querySelectorAll('.site-footer h2')].find((heading) => /contact/i.test(heading.textContent || ''));
-    if (!contactHeading) return;
-    const contactColumn = contactHeading.parentElement;
-    if (!contactColumn || contactColumn.querySelector('[data-social-footer]')) return;
-
-    const socials = [
-      { name: 'Instagram', url: settings.instagram_url },
-      { name: 'Facebook', url: settings.facebook_url },
-      { name: 'TikTok', url: settings.tiktok_url }
-    ].filter((item) => item.url && /^https?:\/\//i.test(String(item.url).trim()));
-
-    if (!socials.length) return;
-
-    const style = document.createElement('style');
-    style.id = 'rosini-social-footer-fix';
-    style.textContent = `
-      .rosini-social-footer{margin-top:30px;padding-top:22px;border-top:1px solid #3a3430}
-      .rosini-social-footer-title{margin:0 0 13px;color:#8f8781;font-size:.68rem;font-weight:800;letter-spacing:.18em;text-transform:uppercase}
-      .rosini-social-footer-list{display:flex;flex-direction:column;gap:9px}
-      .rosini-social-footer-link{display:inline-flex!important;align-items:center;gap:10px;width:max-content;color:#c9c0ba!important;font-size:.82rem;line-height:1.35;transition:color .2s ease,transform .2s ease}
-      .rosini-social-footer-link:hover{color:#fff!important;transform:translateX(2px)}
-      .rosini-social-footer-link svg{width:19px;height:19px;flex:0 0 19px}
-      @media(max-width:700px){.rosini-social-footer{margin-top:22px}.rosini-social-footer-list{gap:11px}}
-    `;
-    document.head.appendChild(style);
-
-    const block = document.createElement('div');
-    block.className = 'rosini-social-footer';
-    block.dataset.socialFooter = 'true';
-    block.innerHTML = `<p class="rosini-social-footer-title">Urmărește-ne</p><div class="rosini-social-footer-list">${socials.map((item) => `<a class="rosini-social-footer-link" href="${escapeHtml(item.url.trim())}" target="_blank" rel="noopener noreferrer" aria-label="Rosini pe ${item.name}">${socialIcon(item.name)}<span>${item.name}</span></a>`).join('')}</div>`;
-    contactColumn.appendChild(block);
-
-    const footerBottom = document.querySelector('.footer-bottom');
-    if (footerBottom) {
-      const oldSocial = footerBottom.querySelectorAll('a');
-      oldSocial.forEach((link) => {
-        if (/^(Facebook|Instagram|TikTok)$/i.test((link.textContent || '').trim())) link.parentElement?.remove();
-      });
-    }
-  }
-
   function initWhatsappFloat() {
     const button = document.getElementById('whatsapp-float');
     if (!button) return;
-    const update = () => button.classList.toggle('is-visible', window.scrollY > 450);
-    window.addEventListener('scroll', update, { passive: true });
-    update();
+
+    const phone = String(settings.whatsapp_phone || settings.phone_primary || '0742056286').replace(/\D/g, '');
+    const intl = phone.startsWith('0') ? `40${phone.slice(1)}` : phone;
+    const message = String(settings.whatsapp_message || 'Bună ziua! Aș dori să discutăm despre un produs Rosini.');
+    button.href = `https://wa.me/${intl}?text=${encodeURIComponent(message)}`;
+    button.target = '_blank';
+    button.rel = 'noopener noreferrer';
+    button.setAttribute('aria-label', 'Contactează Rosini pe WhatsApp');
+    button.innerHTML = `<svg aria-hidden="true" viewBox="0 0 24 24" width="21" height="21" fill="currentColor"><path d="M20.52 3.48A11.84 11.84 0 0 0 12.08 0C5.54 0 .22 5.32.22 11.86c0 2.09.55 4.13 1.59 5.93L.12 24l6.35-1.66a11.84 11.84 0 0 0 5.61 1.42h.01c6.54 0 11.86-5.32 11.86-11.86 0-3.17-1.23-6.14-3.43-8.42ZM12.09 21.7h-.01a9.83 9.83 0 0 1-5.01-1.37l-.36-.21-3.77.99 1.01-3.68-.23-.38a9.84 9.84 0 0 1-1.51-5.19C2.21 6.43 6.64 2 12.09 2a9.8 9.8 0 0 1 6.96 2.89 9.84 9.84 0 0 1 2.9 6.99c0 5.42-4.42 9.82-9.86 9.82Zm5.39-7.36c-.29-.15-1.71-.84-1.98-.94-.27-.1-.47-.15-.67.15-.2.29-.77.94-.94 1.13-.17.2-.35.22-.64.07-.29-.15-1.22-.45-2.32-1.43-.86-.77-1.44-1.72-1.61-2.01-.17-.29-.02-.45.13-.6.13-.13.29-.35.44-.52.15-.17.2-.29.29-.49.1-.2.05-.37-.02-.52-.07-.15-.67-1.61-.92-2.2-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.79.37-.27.29-1.04 1.01-1.04 2.47s1.06 2.86 1.21 3.05c.15.2 2.09 3.2 5.07 4.49.71.31 1.26.5 1.69.64.71.23 1.35.2 1.86.12.57-.08 1.71-.7 1.95-1.38.24-.68.24-1.26.17-1.38-.07-.12-.27-.2-.57-.35Z"/></svg><span>WhatsApp</span>`;
+
+    const style = document.createElement('style');
+    style.id = 'rosini-whatsapp-fix';
+    style.textContent = `
+      .whatsapp-float{opacity:1!important;visibility:visible!important;pointer-events:auto!important;transform:none!important;background:#25D366!important;color:#fff!important;gap:9px!important;padding:12px 18px!important;border-radius:999px!important;box-shadow:0 10px 28px rgba(37,211,102,.28)!important;font-weight:800!important}
+      .whatsapp-float:hover{background:#1ebe5d!important;transform:translateY(-2px)!important}
+      .whatsapp-float svg{flex:0 0 auto}
+      .whatsapp-float span{line-height:1}
+    `;
+    document.head.appendChild(style);
+    button.classList.add('is-visible');
   }
 
   function initFilters() {
@@ -217,7 +182,6 @@
   initCategoryCards();
   initLeadFormTarget();
   initLeadAnchor();
-  initSocialFooter();
   initWhatsappFloat();
   initFilters();
   initProductPage();
