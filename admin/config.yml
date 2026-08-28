@@ -4,7 +4,7 @@ backend:
 media_folder: "content/images/uploads"
 public_folder: "/content/images/uploads"
 locale: "ro"
-site_url: "https://rosini-site.netlify.app"
+site_url: "https://rosini-website.netlify.app"
 collections:
   - name: "settings"
     label: "Setări Rosini și homepage"
@@ -16,9 +16,9 @@ collections:
           - { label: "Nume firmă", name: "site_title", widget: "string" }
           - { label: "Descriere SEO globală", name: "site_description", widget: "text" }
           - { label: "URL canonical", name: "canonical_url", widget: "string", required: false }
-          - { label: "Logo", name: "logo", widget: "image", required: false }
-          - { label: "Favicon", name: "favicon", widget: "image", required: false }
-          - { label: "Imagine Open Graph", name: "og_image", widget: "image", required: false }
+          - { label: "Logo", name: "logo", widget: "image", required: false, hint: "JPG, PNG, WebP sau SVG. Pentru logo: aprox. 600×200 px; max. recomandat 2 MB." }
+          - { label: "Favicon", name: "favicon", widget: "image", required: false, hint: "SVG sau PNG; recomandat 512×512 px." }
+          - { label: "Imagine Open Graph", name: "og_image", widget: "image", required: false, hint: "JPG/WebP, recomandat 1200×630 px; max. recomandat 5 MB." }
           - { label: "Telefon principal", name: "phone_primary", widget: "string" }
           - { label: "Telefon secundar", name: "phone_secondary", widget: "string", required: false }
           - { label: "WhatsApp", name: "whatsapp_phone", widget: "string" }
@@ -41,8 +41,8 @@ collections:
           - { label: "Eyebrow hero", name: "hero_eyebrow", widget: "string" }
           - { label: "Titlu hero", name: "hero_title", widget: "string" }
           - { label: "Subtitlu hero", name: "hero_subtitle", widget: "text" }
-          - { label: "Imagine hero desktop", name: "hero_image", widget: "image", required: false }
-          - { label: "Imagine hero mobil", name: "hero_image_mobile", widget: "image", required: false }
+          - { label: "Imagine hero desktop", name: "hero_image", widget: "image", required: false, hint: "JPG/WebP recomandat. Desktop: 1920×1080 px sau 1920×1200 px; max. recomandat 5 MB." }
+          - { label: "Imagine hero mobil", name: "hero_image_mobile", widget: "image", required: false, hint: "JPG/WebP recomandat. Mobil: aprox. 1080×1350 px; max. recomandat 5 MB." }
           - { label: "Alt text hero", name: "hero_alt_text", widget: "string", required: false }
           - { label: "Text CTA produse", name: "hero_primary_cta", widget: "string" }
           - { label: "Text CTA WhatsApp", name: "hero_whatsapp_cta", widget: "string" }
@@ -92,7 +92,7 @@ collections:
             widget: "list"
             required: false
             fields:
-              - { label: "Imagine", name: "image", widget: "image", required: false }
+              - { label: "Imagine", name: "image", widget: "image", required: false, hint: "JPG/WebP, recomandat aprox. 1600×1000 px; max. 5 MB." }
           - { label: "Eyebrow recenzii", name: "reviews_eyebrow", widget: "string", required: false }
           - { label: "Titlu recenzii", name: "reviews_title", widget: "string", required: false }
           - { label: "CTA recenzii", name: "reviews_cta", widget: "string", required: false }
@@ -102,12 +102,13 @@ collections:
     label: "Categorii"
     folder: "content/categories"
     create: true
+    delete: true
     slug: "{{slug}}"
     fields:
       - { label: "Titlu", name: "title", widget: "string" }
       - { label: "Slug", name: "slug", widget: "string" }
-      - { label: "Descriere", name: "description", widget: "text" }
-      - { label: "Imagine", name: "image", widget: "image", required: false }
+      - { label: "Descriere", name: "description", widget: "text", required: false }
+      - { label: "Imagine", name: "image", widget: "image", required: false, hint: "JPG/WebP recomandat, aprox. 1600×1000 px; max. 5 MB. Poți trage fișierul în zona de upload sau îl poți alege din telefon/PC." }
       - { label: "Alt text", name: "alt_text", widget: "string", required: false }
       - { label: "Ordine", name: "order", widget: "number", value_type: "int", required: false }
       - { label: "Activ", name: "active", widget: "boolean", default: true }
@@ -116,6 +117,7 @@ collections:
     label: "Produse"
     folder: "content/products"
     create: true
+    delete: true
     slug: "{{slug}}"
     fields:
       - { label: "Nume produs", name: "title", widget: "string" }
@@ -124,13 +126,13 @@ collections:
       - { label: "Categorie slug", name: "category_slug", widget: "string", required: false }
       - { label: "Activ", name: "active", widget: "boolean", default: true }
       - { label: "Ordine", name: "order", widget: "number", value_type: "int", required: false }
-      - { label: "Imagine principală", name: "image", widget: "image", required: false }
+      - { label: "Imagine principală", name: "image", widget: "image", required: false, hint: "JPG/WebP recomandat, aprox. 1600×1000 px; max. 5 MB. Poți folosi drag-and-drop sau Choose file." }
       - { label: "Alt text", name: "alt_text", widget: "string", required: false }
       - label: "Galerie"
         name: "gallery"
         widget: "list"
         required: false
-        field: { label: "Imagine", name: "image", widget: "image" }
+        field: { label: "Imagine", name: "image", widget: "image", hint: "JPG/WebP, aprox. 1600×1000 px; max. 5 MB." }
       - { label: "Descriere", name: "description", widget: "text", required: false }
       - { label: "Caracteristici", name: "features", widget: "list", required: false, field: { label: "Caracteristică", name: "feature", widget: "string" } }
       - { label: "Dimensiuni", name: "dimensions", widget: "string", required: false }
@@ -141,12 +143,13 @@ collections:
       - { label: "Notă imagine", name: "image_note", widget: "string", required: false }
       - { label: "SEO title", name: "seo_title", widget: "string", required: false }
       - { label: "SEO description", name: "seo_description", widget: "text", required: false }
-      - { label: "Imagine Open Graph", name: "og_image", widget: "image", required: false }
+      - { label: "Imagine Open Graph", name: "og_image", widget: "image", required: false, hint: "JPG/WebP, 1200×630 px; max. 5 MB." }
       - { label: "Conținut complet", name: "body", widget: "markdown", required: false }
   - name: "testimonials"
     label: "Recenzii"
     folder: "content/testimonials"
     create: true
+    delete: true
     slug: "{{slug}}"
     fields:
       - { label: "Titlu intern", name: "title", widget: "string", required: false }
@@ -161,10 +164,11 @@ collections:
     label: "Galerie"
     folder: "content/gallery"
     create: true
+    delete: true
     slug: "{{slug}}"
     fields:
       - { label: "Tip", name: "type", widget: "select", options: [showroom, fabrică, proiect] }
-      - { label: "Imagine", name: "image", widget: "image" }
+      - { label: "Imagine", name: "image", widget: "image", hint: "JPG/WebP recomandat, aprox. 1600×1000 px; max. 5 MB." }
       - { label: "Alt text", name: "alt_text", widget: "string" }
       - { label: "Titlu", name: "title", widget: "string", required: false }
       - { label: "Descriere", name: "description", widget: "text", required: false }
