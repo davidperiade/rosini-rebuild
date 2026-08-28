@@ -8,7 +8,7 @@
   <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
   <style>
     :root{font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#171717;background:#f5f3ef}
-    *{box-sizing:border-box}body{margin:0}.wrap{max-width:1050px;margin:0 auto;padding:28px 18px 60px}.top{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-bottom:26px}.brand{font-weight:800;letter-spacing:-.02em}.back{color:#171717;text-decoration:none;border:1px solid #d8d4ce;background:#fff;padding:10px 14px}.card{background:#fff;border:1px solid #ddd8d0;padding:24px;margin-bottom:18px}.eyebrow{text-transform:uppercase;letter-spacing:.12em;font-size:11px;font-weight:800;color:#777}.title{font-size:clamp(30px,5vw,48px);line-height:1.02;letter-spacing:-.04em;margin:8px 0 10px}.muted{color:#666}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}@media(max-width:700px){.grid{grid-template-columns:1fr}.top{align-items:flex-start;flex-direction:column}}label{display:block;font-weight:700;font-size:13px;margin-bottom:7px}input{width:100%;border:1px solid #cfcac2;padding:12px;font:inherit;background:#fff}button{border:0;background:#171717;color:#fff;padding:11px 15px;font:inherit;font-weight:700;cursor:pointer}button.secondary{background:#fff;color:#171717;border:1px solid #cfcac2}button.danger{background:#8f3030}.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}.status{margin-top:12px;font-size:14px}.status.error{color:#8f3030}.status.ok{color:#22643c}.user{border-top:1px solid #e3dfd8;padding:17px 0;display:flex;justify-content:space-between;gap:18px;align-items:center}.user:first-child{border-top:0}.user strong{display:block}.badge{display:inline-block;font-size:11px;font-weight:800;padding:4px 7px;background:#eee9e2;margin-top:6px}.small{font-size:12px;color:#777;margin-top:5px}.hidden{display:none}.notice{background:#f7f0e7;border-left:3px solid #a21c1c;padding:12px 14px;font-size:13px;margin-top:16px}
+    *{box-sizing:border-box}body{margin:0}.wrap{max-width:1050px;margin:0 auto;padding:28px 18px 60px}.top{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-bottom:26px}.brand{font-weight:800;letter-spacing:-.02em}.back{color:#171717;text-decoration:none;border:1px solid #d8d4ce;background:#fff;padding:10px 14px}.card{background:#fff;border:1px solid #ddd8d0;padding:24px;margin-bottom:18px}.eyebrow{text-transform:uppercase;letter-spacing:.12em;font-size:11px;font-weight:800;color:#777}.title{font-size:clamp(30px,5vw,48px);line-height:1.02;letter-spacing:-.04em;margin:8px 0 10px}.muted{color:#666}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}@media(max-width:700px){.grid{grid-template-columns:1fr}.top{align-items:flex-start;flex-direction:column}}label{display:block;font-weight:700;font-size:13px;margin-bottom:7px}input,textarea{width:100%;border:1px solid #cfcac2;padding:12px;font:inherit;background:#fff}textarea{min-height:105px;resize:vertical}button{border:0;background:#171717;color:#fff;padding:11px 15px;font:inherit;font-weight:700;cursor:pointer}button.secondary{background:#fff;color:#171717;border:1px solid #cfcac2}button.danger{background:#8f3030}.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}.status{margin-top:12px;font-size:14px}.status.error{color:#8f3030}.status.ok{color:#22643c}.user{border-top:1px solid #e3dfd8;padding:17px 0;display:flex;justify-content:space-between;gap:18px;align-items:center}.user:first-child{border-top:0}.user strong{display:block}.badge{display:inline-block;font-size:11px;font-weight:800;padding:4px 7px;background:#eee9e2;margin-top:6px}.small{font-size:12px;color:#777;margin-top:5px}.hidden{display:none}.notice{background:#f7f0e7;border-left:3px solid #a21c1c;padding:12px 14px;font-size:13px;margin-top:16px}.whatsapp-preview{display:flex;align-items:center;gap:12px;background:#25D366;color:#fff;padding:14px 16px;margin-top:14px}.whatsapp-preview svg{width:25px;height:25px;fill:currentColor}.hint{font-size:12px;color:#777;margin-top:7px}
   </style>
 </head>
 <body>
@@ -22,9 +22,20 @@
     <div class="eyebrow">Profil</div>
     <h1 class="title">Profil administrator</h1>
     <p id="identityText" class="muted">Se verifică sesiunea…</p>
-    <div class="actions">
-      <button class="secondary" id="logout">Deconectare</button>
-    </div>
+    <div class="actions"><button class="secondary" id="logout">Deconectare</button></div>
+  </section>
+
+  <section class="card">
+    <div class="eyebrow">WhatsApp</div>
+    <h2>Contact WhatsApp</h2>
+    <p class="muted">Numărul și mesajul de mai jos sunt folosite de butoanele WhatsApp de pe site. Modificările sunt salvate în Netlify Blobs și devin active pe site fără o nouă modificare în GitHub.</p>
+    <form id="whatsappSettings" class="grid">
+      <div><label for="whatsappPhone">Număr WhatsApp</label><input id="whatsappPhone" type="text" inputmode="tel" autocomplete="tel" value="0742 056 286" required><div class="hint">Exemplu: 0742 056 286</div></div>
+      <div><label for="whatsappMessage">Mesaj prestabilit</label><textarea id="whatsappMessage" required>Bună ziua! Aș dori să discutăm despre un produs Rosini.</textarea></div>
+      <div class="actions"><button>Salvează setările WhatsApp</button></div>
+    </form>
+    <div id="whatsappStatus" class="status"></div>
+    <div class="whatsapp-preview"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.52 3.48A11.84 11.84 0 0 0 12.08 0C5.54 0 .22 5.32.22 11.86c0 2.09.55 4.13 1.59 5.93L.12 24l6.35-1.66a11.84 11.84 0 0 0 5.61 1.42h.01c6.54 0 11.86-5.32 11.86-11.86 0-3.17-1.23-6.14-3.43-8.42ZM12.09 21.7h-.01a9.83 9.83 0 0 1-5.01-1.37l-.36-.21-3.77.99 1.01-3.68-.23-.38a9.84 9.84 0 0 1-1.51-5.19C2.21 6.43 6.64 2 12.09 2a9.8 9.8 0 0 1 6.96 2.89 9.84 9.84 0 0 1 2.9 6.99c0 5.42-4.42 9.82-9.86 9.82Zm5.39-7.36c-.29-.15-1.71-.84-1.98-.94-.27-.1-.47-.15-.67.15-.2.29-.77.94-.94 1.13-.17.2-.35.22-.64.07-.29-.15-1.22-.45-2.32-1.43-.86-.77-1.44-1.72-1.61-2.01-.17-.29-.02-.45.13-.6.13-.13.29-.35.44-.52.15-.17.2-.29.29-.49.1-.2.05-.37-.02-.52-.07-.15-.67-1.61-.92-2.2-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.79.37-.27.29-1.04 1.01-1.04 2.47s1.06 2.86 1.21 3.05c.15.2 2.09 3.2 5.07 4.49.71.31 1.26.5 1.69.64.71.23 1.35.2 1.86.12.57-.08 1.71-.7 1.95-1.38.24-.68.24-1.26.17-1.38-.07-.12-.27-.2-.57-.35Z"/></svg><strong>WhatsApp</strong><span id="previewText">0742 056 286</span></div>
   </section>
 
   <section class="card">
@@ -44,7 +55,6 @@
     <h2>Gestionare administratori</h2>
     <p class="muted">Aici poți adăuga, elimina sau schimba parola altor administratori ai site-ului.</p>
     <div class="notice">Regulă de siguranță: dacă există un singur administrator, acel administrator nu poate fi eliminat. Dacă există cel puțin doi, un administrator se poate elimina singur, dar numai dacă după eliminare rămâne cel puțin unul.</div>
-
     <h3>Adaugă administrator</h3>
     <form id="addAdmin" class="grid">
       <div><label for="newEmail">Email</label><input id="newEmail" type="email" autocomplete="off" required></div>
@@ -52,7 +62,6 @@
       <div class="actions"><button>Adaugă administrator</button></div>
     </form>
     <div id="addStatus" class="status"></div>
-
     <h3>Administratori existenți</h3>
     <div id="users">Se încarcă…</div>
     <div id="listStatus" class="status"></div>
@@ -64,22 +73,43 @@
   let me = null;
   let users = [];
 
-  async function api(method='GET', body) {
-    const res = await fetch('/api/admin-users', {
-      method,
-      headers: body ? {'Content-Type':'application/json'} : {},
-      body: body ? JSON.stringify(body) : undefined,
-      credentials:'same-origin'
-    });
+  async function api(method='GET', body, path='/api/admin-users') {
+    const res = await fetch(path, { method, headers: body ? {'Content-Type':'application/json'} : {}, body: body ? JSON.stringify(body) : undefined, credentials:'same-origin', cache:'no-store' });
     const text = await res.text();
     let data; try { data = JSON.parse(text); } catch { data = {error:text}; }
     if (!res.ok) throw new Error(data.error || text || 'Operațiunea a eșuat.');
     return data;
   }
 
-  function escapeHtml(value='') {
-    return String(value).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  function escapeHtml(value='') { return String(value).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+
+  async function loadWhatsappSettings() {
+    try {
+      const data = await api('GET', undefined, '/api/runtime-settings');
+      if (data.whatsapp_phone) $('whatsappPhone').value = data.whatsapp_phone;
+      if (data.whatsapp_message) $('whatsappMessage').value = data.whatsapp_message;
+      $('previewText').textContent = $('whatsappPhone').value;
+    } catch (e) {
+      $('whatsappStatus').textContent = 'Nu s-au putut încărca setările WhatsApp.';
+      $('whatsappStatus').className = 'status error';
+    }
   }
+
+  $('whatsappPhone').addEventListener('input', () => { $('previewText').textContent = $('whatsappPhone').value; });
+  $('whatsappSettings').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    try {
+      const data = await api('PUT', { whatsapp_phone: $('whatsappPhone').value, whatsapp_message: $('whatsappMessage').value }, '/api/runtime-settings');
+      $('whatsappPhone').value = data.whatsapp_phone;
+      $('whatsappMessage').value = data.whatsapp_message;
+      $('previewText').textContent = data.whatsapp_phone;
+      $('whatsappStatus').textContent = 'Setările WhatsApp au fost salvate. Site-ul public le va prelua automat.';
+      $('whatsappStatus').className = 'status ok';
+    } catch (err) {
+      $('whatsappStatus').textContent = err.message;
+      $('whatsappStatus').className = 'status error';
+    }
+  });
 
   async function load() {
     try {
@@ -89,6 +119,7 @@
       const current = users.find(u => u.id === me);
       $('identityText').textContent = current ? `Conectat ca ${current.email}` : 'Sesiune administrator activă.';
       renderUsers();
+      loadWhatsappSettings();
     } catch (e) {
       $('identityText').textContent = 'Sesiunea nu este validă sau contul nu are drepturi de administrator.';
       $('users').textContent = 'Acces refuzat.';
@@ -101,13 +132,7 @@
     $('users').innerHTML = users.map(u => {
       const isMe = u.id === me;
       const confirmed = u.confirmed ? 'Confirmat' : 'Neconfirmat';
-      return `<div class="user">
-        <div><strong>${escapeHtml(u.email)}</strong><span class="badge">Administrator${isMe ? ' · TU' : ''}</span><div class="small">${confirmed}</div></div>
-        <div class="actions">
-          <button class="secondary" data-password="${escapeHtml(u.id)}">Schimbă parola</button>
-          <button class="danger" data-delete="${escapeHtml(u.id)}">${isMe ? 'Elimină-mă' : 'Șterge'}</button>
-        </div>
-      </div>`;
+      return `<div class="user"><div><strong>${escapeHtml(u.email)}</strong><span class="badge">Administrator${isMe ? ' · TU' : ''}</span><div class="small">${confirmed}</div></div><div class="actions"><button class="secondary" data-password="${escapeHtml(u.id)}">Schimbă parola</button><button class="danger" data-delete="${escapeHtml(u.id)}">${isMe ? 'Elimină-mă' : 'Șterge'}</button></div></div>`;
     }).join('') || '<p class="muted">Nu există administratori.</p>';
 
     document.querySelectorAll('[data-password]').forEach(btn => btn.onclick = async () => {
@@ -126,12 +151,7 @@
       if (!confirm(`Sigur vrei să elimini administratorul ${user?.email || ''}?`)) return;
       try {
         const result = await api('DELETE',{id});
-        if (result.selfDeleted) {
-          alert('Contul tău de administrator a fost eliminat. Vei fi deconectat.');
-          window.netlifyIdentity?.logout();
-          location.href='/admin/';
-          return;
-        }
+        if (result.selfDeleted) { alert('Contul tău de administrator a fost eliminat. Vei fi deconectat.'); window.netlifyIdentity?.logout(); location.href='/admin/'; return; }
         $('listStatus').textContent='Administratorul a fost eliminat.'; $('listStatus').className='status ok';
         await load();
       } catch(e) { $('listStatus').textContent=e.message; $('listStatus').className='status error'; }
@@ -142,6 +162,7 @@
     e.preventDefault();
     const password = $('ownPasswordValue').value;
     const confirmPassword = $('ownPasswordConfirm').value;
+    if (!me) return $('ownStatus').textContent='Sesiunea administratorului nu este încărcată.';
     if (password.length < 10) return $('ownStatus').textContent='Parola trebuie să aibă minimum 10 caractere.';
     if (password !== confirmPassword) return $('ownStatus').textContent='Parolele nu coincid.';
     try {
@@ -164,7 +185,6 @@
   });
 
   $('logout').onclick = () => window.netlifyIdentity?.logout();
-
   window.netlifyIdentity = window.netlifyIdentity || [];
   window.netlifyIdentity.on('init', function(user) {
     if (!user) { window.netlifyIdentity.open('login'); return; }
