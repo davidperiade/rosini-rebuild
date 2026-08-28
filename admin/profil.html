@@ -1,195 +1,52 @@
 <!doctype html>
 <html lang="ro">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="robots" content="noindex,nofollow">
-  <title>Rosini — Profil administrator</title>
-  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow">
+  <title>Rosini — Profil administrator</title><script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
   <style>
-    :root{font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#171717;background:#f5f3ef}
-    *{box-sizing:border-box}body{margin:0}.wrap{max-width:1050px;margin:0 auto;padding:28px 18px 60px}.top{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-bottom:26px}.brand{font-weight:800;letter-spacing:-.02em}.back{color:#171717;text-decoration:none;border:1px solid #d8d4ce;background:#fff;padding:10px 14px}.card{background:#fff;border:1px solid #ddd8d0;padding:24px;margin-bottom:18px}.eyebrow{text-transform:uppercase;letter-spacing:.12em;font-size:11px;font-weight:800;color:#777}.title{font-size:clamp(30px,5vw,48px);line-height:1.02;letter-spacing:-.04em;margin:8px 0 10px}.muted{color:#666}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}@media(max-width:700px){.grid{grid-template-columns:1fr}.top{align-items:flex-start;flex-direction:column}}label{display:block;font-weight:700;font-size:13px;margin-bottom:7px}input,textarea{width:100%;border:1px solid #cfcac2;padding:12px;font:inherit;background:#fff}textarea{min-height:105px;resize:vertical}button{border:0;background:#171717;color:#fff;padding:11px 15px;font:inherit;font-weight:700;cursor:pointer}button.secondary{background:#fff;color:#171717;border:1px solid #cfcac2}button.danger{background:#8f3030}.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}.status{margin-top:12px;font-size:14px}.status.error{color:#8f3030}.status.ok{color:#22643c}.user{border-top:1px solid #e3dfd8;padding:17px 0;display:flex;justify-content:space-between;gap:18px;align-items:center}.user:first-child{border-top:0}.user strong{display:block}.badge{display:inline-block;font-size:11px;font-weight:800;padding:4px 7px;background:#eee9e2;margin-top:6px}.small{font-size:12px;color:#777;margin-top:5px}.hidden{display:none}.notice{background:#f7f0e7;border-left:3px solid #a21c1c;padding:12px 14px;font-size:13px;margin-top:16px}.whatsapp-preview{display:flex;align-items:center;gap:12px;background:#25D366;color:#fff;padding:14px 16px;margin-top:14px}.whatsapp-preview svg{width:25px;height:25px;fill:currentColor}.hint{font-size:12px;color:#777;margin-top:7px}
+    :root{font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#171717;background:#f5f3ef}*{box-sizing:border-box}body{margin:0}.wrap{max-width:1100px;margin:0 auto;padding:28px 18px 60px}.top{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-bottom:26px}.brand{font-weight:800;letter-spacing:-.02em}.back{color:#171717;text-decoration:none;border:1px solid #d8d4ce;background:#fff;padding:10px 14px;border-radius:8px}.card{background:#fff;border:1px solid #ddd8d0;padding:24px;margin-bottom:18px;border-radius:14px}.eyebrow{text-transform:uppercase;letter-spacing:.12em;font-size:11px;font-weight:800;color:#777}.title{font-size:clamp(30px,5vw,48px);line-height:1.02;letter-spacing:-.04em;margin:8px 0 10px}.muted{color:#666;line-height:1.55}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}@media(max-width:700px){.grid{grid-template-columns:1fr}.top{align-items:flex-start;flex-direction:column}}label{display:block;font-weight:700;font-size:13px;margin-bottom:7px}input,textarea,select{width:100%;border:1px solid #cfcac2;border-radius:8px;padding:12px;font:inherit;background:#fff}textarea{min-height:105px;resize:vertical}button{border:0;border-radius:8px;background:#171717;color:#fff;padding:11px 15px;font:inherit;font-weight:700;cursor:pointer}button.secondary{background:#fff;color:#171717;border:1px solid #cfcac2}button.danger{background:#8f3030}.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}.status{margin-top:12px;font-size:14px;line-height:1.5}.status.error{color:#8f3030}.status.ok{color:#22643c}.user{border-top:1px solid #e3dfd8;padding:17px 0;display:flex;justify-content:space-between;gap:18px;align-items:center}.user:first-child{border-top:0}.user strong{display:block}.badge{display:inline-block;font-size:11px;font-weight:800;padding:4px 7px;background:#eee9e2;margin-top:6px;border-radius:6px}.small,.hint{font-size:12px;color:#777;margin-top:5px}.notice{background:#f7f0e7;border-left:3px solid #a21c1c;padding:12px 14px;font-size:13px;margin-top:16px}.whatsapp-preview{display:flex;align-items:center;gap:12px;background:#25D366;color:#fff;padding:14px 16px;margin-top:14px;border-radius:10px}.category-toolbar{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:18px}.category-list{display:grid;gap:12px}.category-item{display:grid;grid-template-columns:120px 1fr auto;gap:16px;align-items:center;border:1px solid #e0dbd3;border-radius:12px;padding:12px;background:#faf9f7}.category-thumb{width:120px;height:78px;object-fit:cover;border-radius:9px;background:#eee}.category-meta h3{margin:0 0 5px;font-size:17px}.category-meta p{margin:0;color:#666;font-size:13px}.category-actions{display:flex;gap:7px;flex-wrap:wrap;justify-content:flex-end}.category-form{display:none;border-top:1px solid #e3dfd8;margin-top:18px;padding-top:20px}.category-form.is-open{display:block}.category-form-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.category-form-grid .full{grid-column:1/-1}.toggle{display:flex;align-items:center;gap:9px;font-weight:700}.toggle input{width:auto}.empty{padding:24px;border:1px dashed #cfcac2;border-radius:10px;color:#666;text-align:center}@media(max-width:760px){.category-item{grid-template-columns:88px 1fr}.category-thumb{width:88px;height:68px}.category-actions{grid-column:1/-1;justify-content:flex-start}.category-form-grid{grid-template-columns:1fr}}
   </style>
 </head>
-<body>
-<div class="wrap">
-  <div class="top">
-    <div class="brand">ROSINI · ADMIN</div>
-    <a class="back" href="/admin/">← Înapoi în panou</a>
-  </div>
+<body><div class="wrap">
+  <div class="top"><div class="brand">ROSINI · ADMIN</div><a class="back" href="/admin/">← Înapoi în panou</a></div>
+  <section class="card"><div class="eyebrow">Profil</div><h1 class="title">Profil administrator</h1><p id="identityText" class="muted">Se verifică sesiunea…</p><div class="actions"><button class="secondary" id="logout">Deconectare</button></div></section>
 
-  <section class="card">
-    <div class="eyebrow">Profil</div>
-    <h1 class="title">Profil administrator</h1>
-    <p id="identityText" class="muted">Se verifică sesiunea…</p>
-    <div class="actions"><button class="secondary" id="logout">Deconectare</button></div>
+  <section class="card" id="categoriesCard">
+    <div class="category-toolbar"><div><div class="eyebrow">Catalog</div><h2>Gestionare categorii</h2><p class="muted">Adaugă, editează, reordonează, activează/dezactivează sau șterge categoriile afișate în „Modele”. Modificările sunt salvate online și apar pe site fără să editezi codul.</p></div><button id="newCategory">+ Adaugă categorie</button></div>
+    <div class="notice">Imagine categorie: recomandat <strong>1600 × 1000 px</strong>, JPG/WebP, maximum 5 MB. Poți introduce URL-ul imaginii aici; uploadul din Media rămâne disponibil în colecția „Categorii” din panoul CMS.</div>
+    <form id="categoryForm" class="category-form"><input type="hidden" id="categoryId"><div class="category-form-grid">
+      <div><label for="categoryTitle">Denumire categorie</label><input id="categoryTitle" required maxlength="80" placeholder="Ex.: Canapele living"></div>
+      <div><label for="categorySlug">Slug</label><input id="categorySlug" maxlength="80" placeholder="canapele-living"><div class="hint">Nu îl schimba dacă ai deja produse asociate.</div></div>
+      <div><label for="categoryImage">URL imagine</label><input id="categoryImage" type="url" placeholder="https://..."><div class="hint">Previzualizarea se actualizează în lista categoriilor.</div></div>
+      <div><label for="categoryAlt">Alt text</label><input id="categoryAlt" maxlength="140" placeholder="Canapea living Rosini"></div>
+      <div><label for="categoryOrder">Ordine</label><input id="categoryOrder" type="number" step="1" value="0"><div class="hint">Număr mai mic = categorie mai sus.</div></div>
+      <div><label class="toggle"><input id="categoryActive" type="checkbox" checked> Categorie activă pe site</label></div>
+      <div class="full"><label for="categoryDescription">Descriere scurtă (opțional)</label><textarea id="categoryDescription" rows="3" maxlength="500"></textarea></div>
+    </div><div class="actions"><button id="saveCategory">Salvează categoria</button><button type="button" class="secondary" id="cancelCategory">Anulează</button></div><div id="categoryFormStatus" class="status"></div></form>
+    <div id="categoryList" class="category-list"><div class="empty">Se încarcă categoriile…</div></div><div id="categoryStatus" class="status"></div>
   </section>
 
-  <section class="card">
-    <div class="eyebrow">WhatsApp</div>
-    <h2>Contact WhatsApp</h2>
-    <p class="muted">Numărul și mesajul de mai jos sunt folosite de butoanele WhatsApp de pe site. Modificările sunt salvate în Netlify Blobs și devin active pe site fără o nouă modificare în GitHub.</p>
-    <form id="whatsappSettings" class="grid">
-      <div><label for="whatsappPhone">Număr WhatsApp</label><input id="whatsappPhone" type="text" inputmode="tel" autocomplete="tel" value="0742 056 286" required><div class="hint">Exemplu: 0742 056 286</div></div>
-      <div><label for="whatsappMessage">Mesaj prestabilit</label><textarea id="whatsappMessage" required>Bună ziua! Aș dori să discutăm despre un produs Rosini.</textarea></div>
-      <div class="actions"><button>Salvează setările WhatsApp</button></div>
-    </form>
-    <div id="whatsappStatus" class="status"></div>
-    <div class="whatsapp-preview"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.52 3.48A11.84 11.84 0 0 0 12.08 0C5.54 0 .22 5.32.22 11.86c0 2.09.55 4.13 1.59 5.93L.12 24l6.35-1.66a11.84 11.84 0 0 0 5.61 1.42h.01c6.54 0 11.86-5.32 11.86-11.86 0-3.17-1.23-6.14-3.43-8.42ZM12.09 21.7h-.01a9.83 9.83 0 0 1-5.01-1.37l-.36-.21-3.77.99 1.01-3.68-.23-.38a9.84 9.84 0 0 1-1.51-5.19C2.21 6.43 6.64 2 12.09 2a9.8 9.8 0 0 1 6.96 2.89 9.84 9.84 0 0 1 2.9 6.99c0 5.42-4.42 9.82-9.86 9.82Zm5.39-7.36c-.29-.15-1.71-.84-1.98-.94-.27-.1-.47-.15-.67.15-.2.29-.77.94-.94 1.13-.17.2-.35.22-.64.07-.29-.15-1.22-.45-2.32-1.43-.86-.77-1.44-1.72-1.61-2.01-.17-.29-.02-.45.13-.6.13-.13.29-.35.44-.52.15-.17.2-.29.29-.49.1-.2.05-.37-.02-.52-.07-.15-.67-1.61-.92-2.2-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.79.37-.27.29-1.04 1.01-1.04 2.47s1.06 2.86 1.21 3.05c.15.2 2.09 3.2 5.07 4.49.71.31 1.26.5 1.69.64.71.23 1.35.2 1.86.12.57-.08 1.71-.7 1.95-1.38.24-.68.24-1.26.17-1.38-.07-.12-.27-.2-.57-.35Z"/></svg><strong>WhatsApp</strong><span id="previewText">0742 056 286</span></div>
-  </section>
+  <section class="card"><div class="eyebrow">WhatsApp</div><h2>Contact WhatsApp</h2><p class="muted">Numărul și mesajul sunt folosite de butoanele WhatsApp de pe site. Modificările sunt salvate în Netlify Blobs.</p><form id="whatsappSettings" class="grid"><div><label for="whatsappPhone">Număr WhatsApp</label><input id="whatsappPhone" type="text" inputmode="tel" autocomplete="tel" value="0742 056 286" required></div><div><label for="whatsappMessage">Mesaj prestabilit</label><textarea id="whatsappMessage" required>Bună ziua! Aș dori să discutăm despre un produs Rosini.</textarea></div><div class="actions"><button>Salvează setările WhatsApp</button></div></form><div id="whatsappStatus" class="status"></div><div class="whatsapp-preview"><strong>WhatsApp</strong><span id="previewText">0742 056 286</span></div></section>
 
-  <section class="card">
-    <div class="eyebrow">Securitate</div>
-    <h2>Schimbă parola</h2>
-    <p class="muted">Parola trebuie să aibă minimum 10 caractere. Parola nu este stocată în această pagină.</p>
-    <form id="ownPassword" class="grid">
-      <div><label for="ownPasswordValue">Parolă nouă</label><input id="ownPasswordValue" type="password" minlength="10" autocomplete="new-password" required></div>
-      <div><label for="ownPasswordConfirm">Confirmă parola</label><input id="ownPasswordConfirm" type="password" minlength="10" autocomplete="new-password" required></div>
-      <div class="actions"><button>Schimbă parola</button></div>
-    </form>
-    <div id="ownStatus" class="status"></div>
-  </section>
+  <section class="card"><div class="eyebrow">Securitate</div><h2>Schimbă parola</h2><p class="muted">Parola trebuie să aibă minimum 10 caractere.</p><form id="ownPassword" class="grid"><div><label for="ownPasswordValue">Parolă nouă</label><input id="ownPasswordValue" type="password" minlength="10" autocomplete="new-password" required></div><div><label for="ownPasswordConfirm">Confirmă parola</label><input id="ownPasswordConfirm" type="password" minlength="10" autocomplete="new-password" required></div><div class="actions"><button>Schimbă parola</button></div></form><div id="ownStatus" class="status"></div></section>
 
-  <section class="card">
-    <div class="eyebrow">Administratori</div>
-    <h2>Gestionare administratori</h2>
-    <p class="muted">Aici poți adăuga, elimina sau schimba parola altor administratori ai site-ului.</p>
-    <div class="notice">Regulă de siguranță: dacă există un singur administrator, acel administrator nu poate fi eliminat. Dacă există cel puțin doi, un administrator se poate elimina singur, dar numai dacă după eliminare rămâne cel puțin unul.</div>
-    <h3>Adaugă administrator</h3>
-    <form id="addAdmin" class="grid">
-      <div><label for="newEmail">Email</label><input id="newEmail" type="email" autocomplete="off" required></div>
-      <div><label for="newPassword">Parolă inițială</label><input id="newPassword" type="password" minlength="10" autocomplete="new-password" required></div>
-      <div class="actions"><button>Adaugă administrator</button></div>
-    </form>
-    <div id="addStatus" class="status"></div>
-    <h3>Administratori existenți</h3>
-    <div id="users">Se încarcă…</div>
-    <div id="listStatus" class="status"></div>
-  </section>
+  <section class="card"><div class="eyebrow">Administratori</div><h2>Gestionare administratori</h2><p class="muted">Poți adăuga, elimina sau schimba parola altor administratori.</p><div class="notice">Dacă există un singur administrator, acesta nu poate fi eliminat.</div><h3>Adaugă administrator</h3><form id="addAdmin" class="grid"><div><label for="newEmail">Email</label><input id="newEmail" type="email" autocomplete="off" required></div><div><label for="newPassword">Parolă inițială</label><input id="newPassword" type="password" minlength="10" autocomplete="new-password" required></div><div class="actions"><button>Adaugă administrator</button></div></form><div id="addStatus" class="status"></div><h3>Administratori existenți</h3><div id="users">Se încarcă…</div><div id="listStatus" class="status"></div></section>
 </div>
-
 <script>
-  const $ = (id) => document.getElementById(id);
-  let me = null;
-  let users = [];
-
-  async function api(method='GET', body, path='/api/admin-users') {
-    const res = await fetch(path, { method, headers: body ? {'Content-Type':'application/json'} : {}, body: body ? JSON.stringify(body) : undefined, credentials:'same-origin', cache:'no-store' });
-    const text = await res.text();
-    let data; try { data = JSON.parse(text); } catch { data = {error:text}; }
-    if (!res.ok) throw new Error(data.error || text || 'Operațiunea a eșuat.');
-    return data;
-  }
-
-  function escapeHtml(value='') { return String(value).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
-
-  async function loadWhatsappSettings() {
-    try {
-      const data = await api('GET', undefined, '/api/runtime-settings');
-      if (data.whatsapp_phone) $('whatsappPhone').value = data.whatsapp_phone;
-      if (data.whatsapp_message) $('whatsappMessage').value = data.whatsapp_message;
-      $('previewText').textContent = $('whatsappPhone').value;
-    } catch (e) {
-      $('whatsappStatus').textContent = 'Nu s-au putut încărca setările WhatsApp.';
-      $('whatsappStatus').className = 'status error';
-    }
-  }
-
-  $('whatsappPhone').addEventListener('input', () => { $('previewText').textContent = $('whatsappPhone').value; });
-  $('whatsappSettings').addEventListener('submit', async (e) => {
-    e.preventDefault();
-    try {
-      const data = await api('PUT', { whatsapp_phone: $('whatsappPhone').value, whatsapp_message: $('whatsappMessage').value }, '/api/runtime-settings');
-      $('whatsappPhone').value = data.whatsapp_phone;
-      $('whatsappMessage').value = data.whatsapp_message;
-      $('previewText').textContent = data.whatsapp_phone;
-      $('whatsappStatus').textContent = 'Setările WhatsApp au fost salvate. Site-ul public le va prelua automat.';
-      $('whatsappStatus').className = 'status ok';
-    } catch (err) {
-      $('whatsappStatus').textContent = err.message;
-      $('whatsappStatus').className = 'status error';
-    }
-  });
-
-  async function load() {
-    try {
-      const data = await api();
-      me = data.currentUserId;
-      users = data.users.filter(u => u.isAdmin);
-      const current = users.find(u => u.id === me);
-      $('identityText').textContent = current ? `Conectat ca ${current.email}` : 'Sesiune administrator activă.';
-      renderUsers();
-      loadWhatsappSettings();
-    } catch (e) {
-      $('identityText').textContent = 'Sesiunea nu este validă sau contul nu are drepturi de administrator.';
-      $('users').textContent = 'Acces refuzat.';
-      $('listStatus').textContent = e.message;
-      $('listStatus').className = 'status error';
-    }
-  }
-
-  function renderUsers() {
-    $('users').innerHTML = users.map(u => {
-      const isMe = u.id === me;
-      const confirmed = u.confirmed ? 'Confirmat' : 'Neconfirmat';
-      return `<div class="user"><div><strong>${escapeHtml(u.email)}</strong><span class="badge">Administrator${isMe ? ' · TU' : ''}</span><div class="small">${confirmed}</div></div><div class="actions"><button class="secondary" data-password="${escapeHtml(u.id)}">Schimbă parola</button><button class="danger" data-delete="${escapeHtml(u.id)}">${isMe ? 'Elimină-mă' : 'Șterge'}</button></div></div>`;
-    }).join('') || '<p class="muted">Nu există administratori.</p>';
-
-    document.querySelectorAll('[data-password]').forEach(btn => btn.onclick = async () => {
-      const id = btn.dataset.password;
-      const user = users.find(u => u.id === id);
-      const password = prompt(`Parolă nouă pentru ${user?.email || 'administrator'} (minimum 10 caractere):`);
-      if (password === null) return;
-      if (password.length < 10) return alert('Parola trebuie să aibă minimum 10 caractere.');
-      try { await api('PATCH',{id,password}); $('listStatus').textContent='Parola a fost schimbată.'; $('listStatus').className='status ok'; }
-      catch(e){ $('listStatus').textContent=e.message; $('listStatus').className='status error'; }
-    });
-
-    document.querySelectorAll('[data-delete]').forEach(btn => btn.onclick = async () => {
-      const id = btn.dataset.delete;
-      const user = users.find(u => u.id === id);
-      if (!confirm(`Sigur vrei să elimini administratorul ${user?.email || ''}?`)) return;
-      try {
-        const result = await api('DELETE',{id});
-        if (result.selfDeleted) { alert('Contul tău de administrator a fost eliminat. Vei fi deconectat.'); window.netlifyIdentity?.logout(); location.href='/admin/'; return; }
-        $('listStatus').textContent='Administratorul a fost eliminat.'; $('listStatus').className='status ok';
-        await load();
-      } catch(e) { $('listStatus').textContent=e.message; $('listStatus').className='status error'; }
-    });
-  }
-
-  $('ownPassword').addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const password = $('ownPasswordValue').value;
-    const confirmPassword = $('ownPasswordConfirm').value;
-    if (!me) return $('ownStatus').textContent='Sesiunea administratorului nu este încărcată.';
-    if (password.length < 10) return $('ownStatus').textContent='Parola trebuie să aibă minimum 10 caractere.';
-    if (password !== confirmPassword) return $('ownStatus').textContent='Parolele nu coincid.';
-    try {
-      await api('PATCH',{id:me,password});
-      $('ownStatus').textContent='Parola a fost schimbată cu succes.';
-      $('ownStatus').className='status ok';
-      $('ownPassword').reset();
-    } catch(err){ $('ownStatus').textContent=err.message; $('ownStatus').className='status error'; }
-  });
-
-  $('addAdmin').addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const email = $('newEmail').value.trim();
-    const password = $('newPassword').value;
-    try {
-      await api('POST',{email,password});
-      $('addStatus').textContent='Administratorul a fost adăugat.'; $('addStatus').className='status ok';
-      e.target.reset(); await load();
-    } catch(err){ $('addStatus').textContent=err.message; $('addStatus').className='status error'; }
-  });
-
-  $('logout').onclick = () => window.netlifyIdentity?.logout();
-  window.netlifyIdentity = window.netlifyIdentity || [];
-  window.netlifyIdentity.on('init', function(user) {
-    if (!user) { window.netlifyIdentity.open('login'); return; }
-    load();
-  });
-</script>
-</body>
-</html>
+const $=id=>document.getElementById(id);let me=null,users=[],categories=[];
+async function api(method='GET',body,path='/api/admin-users'){const res=await fetch(path,{method,headers:body?{'Content-Type':'application/json'}:{},body:body?JSON.stringify(body):undefined,credentials:'same-origin',cache:'no-store'});const text=await res.text();let data;try{data=JSON.parse(text)}catch{data={error:text}}if(!res.ok)throw new Error(data.error||text||'Operațiunea a eșuat.');return data}
+function escapeHtml(value=''){return String(value).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}function slugify(value){return String(value||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().trim().replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'')}
+async function loadWhatsapp(){try{const d=await api('GET',undefined,'/api/runtime-settings');if(d.whatsapp_phone)$('whatsappPhone').value=d.whatsapp_phone;if(d.whatsapp_message)$('whatsappMessage').value=d.whatsapp_message;$('previewText').textContent=$('whatsappPhone').value}catch(_){}}
+$('whatsappPhone').addEventListener('input',()=>{$('previewText').textContent=$('whatsappPhone').value});$('whatsappSettings').addEventListener('submit',async e=>{e.preventDefault();try{const d=await api('PUT',{whatsapp_phone:$('whatsappPhone').value,whatsapp_message:$('whatsappMessage').value},'/api/runtime-settings');$('whatsappPhone').value=d.whatsapp_phone;$('whatsappMessage').value=d.whatsapp_message;$('previewText').textContent=d.whatsapp_phone;$('whatsappStatus').textContent='Setările WhatsApp au fost salvate.';$('whatsappStatus').className='status ok'}catch(err){$('whatsappStatus').textContent=err.message;$('whatsappStatus').className='status error'}});
+async function loadCategories(){try{const res=await fetch('/api/categories',{cache:'no-store',credentials:'same-origin'});const d=await res.json();if(!res.ok)throw new Error(d.error||'Categoriile nu au putut fi încărcate.');categories=Array.isArray(d)?d:[];renderCategories()}catch(e){$('categoryList').innerHTML='<div class="empty">Categoriile nu au putut fi încărcate.</div>';$('categoryStatus').textContent=e.message;$('categoryStatus').className='status error'}}
+function renderCategories(){const list=$('categoryList');if(!categories.length){list.innerHTML='<div class="empty">Nu există categorii. Apasă „+ Adaugă categorie”.</div>';return}list.innerHTML=categories.map(c=>{const id=escapeHtml(c.slug||c.file||'');const image=c.image?escapeHtml(c.image):'/content/images/placeholder-product.svg';return `<div class="category-item"><img class="category-thumb" src="${image}" alt=""><div class="category-meta"><h3>${escapeHtml(c.title||'Fără nume')}</h3><p>${escapeHtml(c.description||'Fără descriere')} · slug: ${escapeHtml(c.slug||'—')} · ordine: ${escapeHtml(c.order??0)} · ${c.active===false?'Dezactivată':'Activă'}</p></div><div class="category-actions"><button type="button" class="secondary" data-edit-category="${id}">Editează</button><button type="button" class="secondary" data-toggle-category="${id}">${c.active===false?'Activează':'Dezactivează'}</button><button type="button" class="danger" data-delete-category="${id}">Șterge</button></div></div>`}).join('');list.querySelectorAll('[data-edit-category]').forEach(b=>b.onclick=()=>openCategoryForm(categories.find(c=>(c.slug||c.file)===b.dataset.editCategory)));list.querySelectorAll('[data-toggle-category]').forEach(b=>b.onclick=async()=>{const c=categories.find(x=>(x.slug||x.file)===b.dataset.toggleCategory);if(!c)return;try{await categoryRequest('PUT',{id:c.slug||c.file,...c,active:c.active===false});$('categoryStatus').textContent=`Categoria „${c.title}” a fost ${c.active===false?'activată':'dezactivată'}.`;$('categoryStatus').className='status ok';await loadCategories()}catch(e){setCategoryStatus(e)}});list.querySelectorAll('[data-delete-category]').forEach(b=>b.onclick=async()=>{const c=categories.find(x=>(x.slug||x.file)===b.dataset.deleteCategory);if(!c)return;if(!confirm(`Ștergi categoria „${c.title}”?\n\nProdusele existente NU sunt șterse.`))return;try{await categoryRequest('DELETE',{id:c.slug||c.file});$('categoryStatus').textContent=`Categoria „${c.title}” a fost ștearsă.`;$('categoryStatus').className='status ok';await loadCategories()}catch(e){setCategoryStatus(e)}})}
+async function categoryRequest(method,body){const res=await fetch('/api/categories',{method,headers:{'Content-Type':'application/json'},credentials:'same-origin',cache:'no-store',body:JSON.stringify(body)});const text=await res.text();let d;try{d=JSON.parse(text)}catch{d={error:text}}if(!res.ok)throw new Error(d.error||'Operațiunea asupra categoriei a eșuat.');return d}function setCategoryStatus(e){$('categoryStatus').textContent=e.message||String(e);$('categoryStatus').className='status error'}
+function openCategoryForm(c){$('categoryForm').classList.add('is-open');$('categoryId').value=c?(c.slug||c.file):'';$('categoryTitle').value=c?.title||'';$('categorySlug').value=c?.slug||'';$('categoryImage').value=c?.image||'';$('categoryAlt').value=c?.alt_text||c?.title||'';$('categoryOrder').value=c?.order??0;$('categoryActive').checked=c?.active!==false;$('categoryDescription').value=c?.description||'';$('categoryTitle').focus()}function closeCategoryForm(){$('categoryForm').classList.remove('is-open');$('categoryForm').reset();$('categoryId').value='';$('categoryActive').checked=true;$('categoryOrder').value=0;$('categoryFormStatus').textContent=''}
+$('newCategory').onclick=()=>openCategoryForm(null);$('cancelCategory').onclick=closeCategoryForm;$('categoryTitle').addEventListener('input',()=>{if(!$('categoryId').value)$('categorySlug').value=slugify($('categoryTitle').value)});
+$('categoryForm').addEventListener('submit',async e=>{e.preventDefault();const button=$('saveCategory');button.disabled=true;$('categoryFormStatus').textContent='Se salvează…';$('categoryFormStatus').className='status';const id=$('categoryId').value;const body={id,title:$('categoryTitle').value.trim(),slug:$('categorySlug').value.trim(),image:$('categoryImage').value.trim(),alt_text:$('categoryAlt').value.trim(),order:Number($('categoryOrder').value||0),active:$('categoryActive').checked,description:$('categoryDescription').value.trim()};try{await categoryRequest(id?'PUT':'POST',body);$('categoryFormStatus').textContent=id?'Categoria a fost actualizată.':'Categoria a fost adăugată.';$('categoryFormStatus').className='status ok';closeCategoryForm();await loadCategories()}catch(err){$('categoryFormStatus').textContent=err.message;$('categoryFormStatus').className='status error'}finally{button.disabled=false}});
+async function load(){try{const d=await api();me=d.currentUserId;users=d.users.filter(u=>u.isAdmin);const current=users.find(u=>u.id===me);$('identityText').textContent=current?`Conectat ca ${current.email}`:'Sesiune administrator activă.';renderUsers();await loadWhatsapp();await loadCategories()}catch(e){$('identityText').textContent='Sesiunea nu este validă sau contul nu are drepturi de administrator.';$('users').textContent='Acces refuzat.';$('listStatus').textContent=e.message;$('listStatus').className='status error'}}
+function renderUsers(){$('users').innerHTML=users.map(u=>{const isMe=u.id===me;return `<div class="user"><div><strong>${escapeHtml(u.email)}</strong><span class="badge">Administrator${isMe?' · TU':''}</span><div class="small">${u.confirmed?'Confirmat':'Neconfirmat'}</div></div><div class="actions"><button class="secondary" data-password="${escapeHtml(u.id)}">Schimbă parola</button><button class="danger" data-delete="${escapeHtml(u.id)}">${isMe?'Elimină-mă':'Șterge'}</button></div></div>`}).join('')||'<p class="muted">Nu există administratori.</p>';document.querySelectorAll('[data-password]').forEach(btn=>btn.onclick=async()=>{const u=users.find(x=>x.id===btn.dataset.password);const p=prompt(`Parolă nouă pentru ${u?.email||'administrator'} (minimum 10 caractere):`);if(p===null)return;if(p.length<10)return alert('Parola trebuie să aibă minimum 10 caractere.');try{await api('PATCH',{id:btn.dataset.password,password:p});$('listStatus').textContent='Parola a fost schimbată.';$('listStatus').className='status ok'}catch(e){$('listStatus').textContent=e.message;$('listStatus').className='status error'}});document.querySelectorAll('[data-delete]').forEach(btn=>btn.onclick=async()=>{const u=users.find(x=>x.id===btn.dataset.delete);if(!confirm(`Sigur vrei să elimini administratorul ${u?.email||''}?`))return;try{const r=await api('DELETE',{id:btn.dataset.delete});if(r.selfDeleted){alert('Contul tău de administrator a fost eliminat. Vei fi deconectat.');window.netlifyIdentity?.logout();location.href='/admin/';return}$('listStatus').textContent='Administratorul a fost eliminat.';$('listStatus').className='status ok';await load()}catch(e){$('listStatus').textContent=e.message;$('listStatus').className='status error'}})}
+$('ownPassword').addEventListener('submit',async e=>{e.preventDefault();const p=$('ownPasswordValue').value,c=$('ownPasswordConfirm').value;if(!me)return;if(p.length<10)return $('ownStatus').textContent='Parola trebuie să aibă minimum 10 caractere.';if(p!==c)return $('ownStatus').textContent='Parolele nu coincid.';try{await api('PATCH',{id:me,password:p});$('ownStatus').textContent='Parola a fost schimbată cu succes.';$('ownStatus').className='status ok';e.target.reset()}catch(err){$('ownStatus').textContent=err.message;$('ownStatus').className='status error'}});
+$('addAdmin').addEventListener('submit',async e=>{e.preventDefault();try{await api('POST',{email:$('newEmail').value.trim(),password:$('newPassword').value});$('addStatus').textContent='Administratorul a fost adăugat.';$('addStatus').className='status ok';e.target.reset();await load()}catch(err){$('addStatus').textContent=err.message;$('addStatus').className='status error'}});
+$('logout').onclick=()=>window.netlifyIdentity?.logout();window.netlifyIdentity=window.netlifyIdentity||[];window.netlifyIdentity.on('init',user=>{if(!user){window.netlifyIdentity.open('login');return}load()});
+</script></body></html>
