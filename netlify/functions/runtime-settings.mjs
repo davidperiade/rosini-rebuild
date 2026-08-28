@@ -20,7 +20,7 @@ export default async (request) => {
 
   if (request.method === 'GET') {
     const value = await store.get(KEY, { type: 'json', consistency: 'strong' });
-    return Response.json(value || {}, {
+    return Response.json({ lead_collection_enabled: true, ...(value || {}) }, {
       headers: { 'Cache-Control': 'no-store, no-cache, must-revalidate' }
     });
   }
@@ -33,15 +33,21 @@ export default async (request) => {
 
   try {
     const body = await request.json();
-    const whatsapp_phone = cleanPhone(body.whatsapp_phone);
-    const whatsapp_message = String(body.whatsapp_message ?? '').trim();
+    const existing = await store.get(KEY, { type: 'json', consistency: 'strong' }) || {};
+    const whatsapp_phone = cleanPhone(body.whatsapp_phone ?? existing.whatsapp_phone);
+    const whatsapp_message = String(body.whatsapp_message ?? existing.whatsapp_message ?? '').trim();
+    const lead_collection_enabled = body.lead_collection_enabled === undefined
+      ? existing.lead_collection_enabled !== false
+      : Boolean(body.lead_collection_enabled);
 
     if (!whatsapp_phone) return Response.json({ error: 'Introdu numărul WhatsApp.' }, { status: 400 });
     if (!whatsapp_message) return Response.json({ error: 'Introdu mesajul WhatsApp.' }, { status: 400 });
 
     const value = {
+      ...existing,
       whatsapp_phone,
       whatsapp_message,
+      lead_collection_enabled,
       updatedAt: new Date().toISOString()
     };
     await store.setJSON(KEY, value);
@@ -50,7 +56,7 @@ export default async (request) => {
       headers: { 'Cache-Control': 'no-store' }
     });
   } catch (error) {
-    return Response.json({ error: error?.message || 'Nu s-au putut salva setările WhatsApp.' }, { status: 500 });
+    return Response.json({ error: error?.message || 'Nu s-au putut salva setările.' }, { status: 500 });
   }
 };
 
