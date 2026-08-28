@@ -34,6 +34,47 @@
     document.addEventListener('keydown', (event) => { if (event.key === 'Escape') close(); });
   }
 
+  function initDiscountNavCta() {
+    const nav = document.getElementById('site-navigation');
+    if (!nav || nav.querySelector('[data-discount-nav-cta]')) return;
+
+    const links = [...nav.querySelectorAll('a')];
+    const showroom = links.find((link) => /showroom/i.test(link.textContent || ''));
+    const contact = links.find((link) => /contact/i.test(link.textContent || ''));
+    const cta = document.createElement('a');
+    cta.className = 'nav-discount-cta';
+    cta.dataset.discountNavCta = 'true';
+    cta.href = '#lead-form';
+    cta.textContent = settings.lead_nav_label || 'Vrei o reducere?';
+    cta.setAttribute('aria-label', 'Obține reducerea disponibilă în showroom');
+
+    if (showroom && contact && showroom !== contact) {
+      contact.parentNode.insertBefore(cta, contact);
+    } else if (showroom) {
+      showroom.insertAdjacentElement('afterend', cta);
+    } else {
+      const primaryCta = nav.querySelector('.nav-cta');
+      if (primaryCta) primaryCta.insertAdjacentElement('beforebegin', cta);
+      else nav.appendChild(cta);
+    }
+  }
+
+  function initLeadAnchor() {
+    const lead = document.getElementById('lead-form');
+    if (!lead) return;
+    document.querySelectorAll('a[href="#lead-form"]').forEach((link) => {
+      link.addEventListener('click', (event) => {
+        const target = document.getElementById('lead-form');
+        if (!target) return;
+        event.preventDefault();
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        history.replaceState(null, '', '#lead-form');
+        const firstField = target.querySelector('input:not([type="hidden"]), textarea, select');
+        if (firstField) setTimeout(() => firstField.focus({ preventScroll: true }), 450);
+      });
+    });
+  }
+
   function initWhatsappFloat() {
     const button = document.getElementById('whatsapp-float');
     if (!button) return;
@@ -96,6 +137,8 @@
 
   setLogo(settings.logo || FALLBACK_LOGO);
   initMenu();
+  initDiscountNavCta();
+  initLeadAnchor();
   initWhatsappFloat();
   initFilters();
   initProductPage();
